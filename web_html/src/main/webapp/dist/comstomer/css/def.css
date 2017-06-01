@@ -1,0 +1,313 @@
+@CHARSET "UTF-8";
+/*载入动画CSS*/
+body_desable{
+  background-color: #dedede;
+  font-size: 12px;
+}
+#desablePageDIV{
+	position:fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: rgba(222,222,222,0.70);
+  	font-size: 12px;
+	z-index: 1009;
+}
+.base {
+  height: 9em;
+  left: 50%;
+  margin: -7.5em;
+  padding: 3em;
+  position: absolute;
+  top: 50%;
+  width: 9em;
+  transform: rotateX(45deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+}
+
+.cube,
+.cube:after,
+.cube:before {
+  content: '';
+  float: left;
+  height: 3em;
+  position: absolute;
+  width: 3em;
+}
+
+/* Top */
+.cube {
+  background-color: #05afd1;
+  position: relative;
+  transform: translateZ(3em);
+  transform-style: preserve-3d;
+  transition: .25s;
+  box-shadow: 13em 13em 1.5em rgba(0, 0, 0, 0.1);
+  animation: anim 1s infinite;
+}
+.cube:after {
+  background-color: #049dbc;
+  transform: rotateX(-90deg) translateY(3em);
+  transform-origin: 100% 100%;
+}
+.cube:before {
+  background-color: #048ca7;
+  transform: rotateY(90deg) translateX(3em);
+  transform-origin: 100% 0;
+}
+.cube:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.cube:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.cube:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.cube:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.cube:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.cube:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.cube:nth-child(7) {
+  animation-delay: 0.35s;
+}
+.cube:nth-child(8) {
+  animation-delay: 0.4s;
+}
+.cube:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+@keyframes anim {
+  50% {
+    transform: translateZ(0.5em);
+  }
+}
+
+/*载入动画CSS*/
+body{
+}
+
+
+
+.alertDivS{
+	position:fixed;
+	height: auto;
+	width: auto;
+	min-width:100px;
+	max-width:350px;
+	bottom: 0;
+	left: 0;
+	z-index: 10000;
+}
+.alert{
+min-width: 375px;
+}
+#activitiDIV{
+	min-width:100px;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	padding-top:100px;
+	background-color:rgba(0,0,0,0.48);
+	z-index:  1030;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#activitiDIV div{
+	margin-left: auto;
+	margin-right: auto;
+}
+#activitiDIV div h3{
+	overflow: hidden;
+}
+
+/*盒子定位 -begin*/
+
+.products-list-box-left-icon{
+	float: left;
+	line-height: 40px;
+	text-align: center;
+	height: 50px;
+	width: 50px;
+	font-size: 35px;
+}
+
+/*盒子定位 -end*/
+
+
+
+/*颜色配置 Begin*/
+	.successColor{
+		background-color:rgba(0,166,90,0.70);
+	}
+	.infoColor{
+		background-color:rgba(91,155,213,0.94);
+	}
+	#infoColor{
+		background-color:rgba(91,155,213,0.94);
+	}
+	.one {
+	background: #16A085; }
+	
+	.two {
+	background: #2ECC71; }
+	
+	.three {
+	background: #27AE60; }
+	
+	.four {
+	background: #3498DB; }
+	
+	.five {
+	background: #2980B9; }
+	
+	.six {
+	background: #9B59B6; }
+	
+	.seven {
+	background: #8E44AD; }
+	
+	.eight {
+	background: #34495E; }
+	
+	.nine {
+	background: #2C3E50; }
+	
+	.ten {
+	background: #22313f; }
+	
+	.elleven {
+	background: #F1C40F; }
+	
+	.twelve {
+	background: #F39C12; }
+	
+	.thirteen {
+	background: #E67E22; }
+	
+	.fourteen {
+	background: #D35400; }
+	
+	.fifteen {
+	background: #E74C3C; }
+	
+	.sixteen {
+	background: #C0392B; }
+	
+	.seventeen {
+	background: #ECF0F1; }
+	
+	.eighteen {
+	background: #BDC3C7; }
+	
+	.nineteen {
+	background: #95A5A6; }
+	
+	.twenty {
+	background: #7F8C8D; }
+	
+	.twentyOne {
+	background: #BDC3C7; }
+	
+	.twentyTwo {
+	background: #66FFCC; }
+
+/*颜色配置 End*/
+
+/**字体大小**/
+	.fontsize10px{
+		font-size: 10px;
+	}
+	.fontsize18px{
+		font-size: 18px;
+	}
+/**字体颜色  Begin**/
+	
+	.fontWhite{
+		color:rgba(255,255,255,1);
+	}
+	.fontsuccessColor{
+		color:rgba(0,166,90,0.70);
+	}
+	.fontinfoColor{
+		color:rgba(91,155,213,0.94);
+	}
+	#fontinfoColor{
+		color:rgba(91,155,213,0.94);
+	}
+	.fontone {
+	color: #16A085; }
+	
+	.fonttwo {
+	color: #2ECC71; }
+	
+	.fontthree {
+	color: #27AE60; }
+	
+	.fontfour {
+	color: #3498DB; }
+	
+	.fontfive {
+	color: #2980B9; }
+	
+	.fontsix {
+	color: #9B59B6; }
+	
+	.fontseven {
+	color: #8E44AD; }
+	
+	.fonteight {
+	color: #34495E; }
+	
+	.fontnine {
+	color: #2C3E50; }
+	
+	.fontten {
+	color: #22313f; }
+	
+	.fontelleven {
+	color: #F1C40F; }
+	
+	.fonttwelve {
+	color: #F39C12; }
+	
+	.fontthirteen {
+	color: #E67E22; }
+	
+	.fontfourteen {
+	color: #D35400; }
+	
+	.fontfifteen {
+	color: #E74C3C; }
+	
+	.fontsixteen {
+	color: #C0392B; }
+	
+	.fontseventeen {
+	color: #ECF0F1; }
+	
+	.fontseventeen {
+	color: #BDC3C7; }
+	
+	.fonteighteen {
+	color: #BDC3C7; }
+	
+	.fontnineteen {
+	color: #95A5A6; }
+	
+	.fonttwenty {
+	color: #7F8C8D; }
+/**字体颜色 End**/
+
+#logo{
+	background-image: linear-gradient(120deg, #155799, #159957);
+}
