@@ -14,7 +14,7 @@
 	<properties>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<spring.data.version>1.11.1.RELEASE</spring.data.version>
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<shiro.version>1.2.3</shiro.version>
 	</properties>
@@ -272,7 +272,21 @@
 
 
 	</dependencies>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<defaultGoal>compile</defaultGoal>
+	</build>
 
 
 </project>

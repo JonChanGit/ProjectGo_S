@@ -24,7 +24,6 @@ public class SecurityTool {
 	public static String getRandomString(){
 		
 		Random random = new Random();
-		
 		StringBuilder salt = new StringBuilder("");
 		
 		//长度

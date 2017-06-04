@@ -1,12 +1,6 @@
 package cn.com.jonpad.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "t_sys_user")
@@ -40,15 +34,10 @@ public class SysUser {
 	@Column(name="i_locked")
 	private int locked;
 
-	@Column(name="c_password")
-	private String password;
 
+	@OneToOne(mappedBy="sysUser")
+	private SysUserSecurity security;
 
-	/**
-	 * 盐
-	 */
-	@Column(name="c_salt")
-	private String salt;
 
 	/**
 	 * usercode
@@ -90,14 +79,6 @@ public class SysUser {
 
  
 
-	public String getPassword() {
-		return password;
-	}
-
-
-	public String getSalt() {
-		return salt;
-	}
 
 	public String getUsercode() {
 		return usercode;
@@ -129,15 +110,6 @@ public class SysUser {
 		this.locked = locked;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
 
 	public void setUsercode(String usercode) {
 		this.usercode = usercode.trim();
@@ -147,4 +119,12 @@ public class SysUser {
 		this.username = username.trim();
 	}
 
+
+	public SysUserSecurity getSecurity() {
+		return security;
+	}
+
+	public void setSecurity(SysUserSecurity security) {
+		this.security = security;
+	}
 }

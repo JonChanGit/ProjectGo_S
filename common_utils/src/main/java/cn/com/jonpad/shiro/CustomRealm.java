@@ -68,7 +68,7 @@ public class CustomRealm extends AuthorizingRealm {
 			return null;
 		}
 		// 从数据库查询到密码，密文
-		String password = sysUser.getPassword();
+		String password = sysUser.getSecurity().getPassword();
 		ActiveUser activeUser = new ActiveUser();
 		activeUser.setUserid("" + sysUser.getId());
 		activeUser.setUsercode(sysUser.getUsercode());
@@ -81,7 +81,7 @@ public class CustomRealm extends AuthorizingRealm {
 
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser,
 				password,
-				ByteSource.Util.bytes(sysUser.getSalt()),
+				ByteSource.Util.bytes(sysUser.getSecurity().getSalt()),
 				this.getName());
 
 		return simpleAuthenticationInfo;
