@@ -249,6 +249,27 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- jsp servlet -->
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>8.0.44</version>
+		</dependency>
+		<!-- jstl begin -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<!-- jstl end -->
+		<!-- jsp servlet -->
+
 
 	</dependencies>
 

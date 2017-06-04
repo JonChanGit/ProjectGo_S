@@ -30,8 +30,8 @@
       <div class="login-box-body">
         <p class="login-box-msg">登陆</p>
         
-        <c:if test="${!empty message}">
-        	<div class="alert alert-warning" role="alert">${message}</div>
+        <c:if test="${!empty msg}">
+        	<div class="alert alert-warning" role="alert">${msg}</div>
         </c:if>
         
         <form action="login.do" method="post" id="login-form">
@@ -40,7 +40,7 @@
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input  type="password" class="form-control" placeholder="请输入密码" name="upassword" id="upassword" required="required"/>
+            <input  type="password" class="form-control" placeholder="请输入密码" name="password" id="upassword" required="required"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="input-group input-group-lg"> 

@@ -10,12 +10,32 @@
 		<!-- 通过unauthorizedUrl 指定没有权限操作时跳转页面 -->
 		<property name="unauthorizedUrl" value="/admin_access/no_Permissions.do" />
 		<!-- 自定义filter配置 -->
-
+		<!-- 自定义filter配置 -->
+		<property name="filters">
+			<map>
+				<!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中-->
+				<entry key="authc" value-ref="formAuthenticationFilter" />
+			</map>
+		</property>
 		<!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- 对静态资源设置匿名访问 -->
-				/** = anon
+				/dist/** = anon
+				<!-- 验证码，可匿名访问 -->
+				/validatecode.jsp = anon
+
+				<!-- 退出地址 -->
+				/logout.do = logout
+
+				<!-- 配置记住我或认证通过可以访问的地址 -->
+				/access/*  = user
+				/client/*  = user
+				/materials/*  = user
+				/article/*  = user
+
+				<!-- 所有URL都必须认证后访问 -->
+				/** = authc
 			</value>
 		</property>
 	</bean>
@@ -26,8 +46,28 @@
 	</bean>
 
 	<!-- 自定义 realm -->
-	<!--<bean id="customRealm" class="cn.com.jonpad.shiro.CustomRealm">
-	</bean>-->
+	<bean id="customRealm" class="cn.com.jonpad.shiro.CustomRealm">
+		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
 
+	<!-- 凭证匹配器 -->
+	<bean id="credentialsMatcher"
+		  class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5" />
+		<property name="hashIterations" value="1" />
+	</bean>
+
+
+	<!-- 自定义form认证过虑器 -->
+	<!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
+	<bean id="formAuthenticationFilter" class="cn.com.jonpad.shiro.CustomFormAuthenticationFilter ">
+		<!-- 表单中账号的input名称 -->
+		<property name="usernameParam" value="username" />
+		<!-- 表单中密码的input名称 -->
+		<property name="passwordParam" value="password" />
+		<!-- 记住我input的名称 -->
+		<property name="rememberMeParam" value="rememberMe" />
+	</bean>
 
 </beans>

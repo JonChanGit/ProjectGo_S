@@ -42,15 +42,15 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <!-- 	加载全局数据 -->
-<!--  <servlet>
+ <servlet>
     <servlet-name>resourceSetupServlet</servlet-name>
-    <servlet-class>com.mz.servlet.ResourceSetupServlet</servlet-class>
+    <servlet-class>cn.com.jonpad.servlet.ResourceSetUpServlet</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>resourceSetupServlet</servlet-name>
     <url-pattern>/servlet/resourceSetup</url-pattern>
-  </servlet-mapping>-->
+  </servlet-mapping>
 
   <!-- 乱码处理 -->
   <!-- 字符编码过滤器必须配置在所有过滤器的最前面! -->
@@ -100,7 +100,26 @@
 
 
   <!-- springMVC end -->
-
+  <!-- shiro过虑器，DelegatingFilterProxy通过代理模式将spring容器中的bean和filter关联起来 begin-->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <!-- 设置true由servlet容器控制filter的生命周期 -->
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- 设置spring容器filter的bean id，如果不设置则找与filter-name一致的bean-->
+    <init-param>
+      <param-name>targetBeanName</param-name>
+      <param-value>shiroFilter</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- shiro end -->
 
 
 </web-app>
