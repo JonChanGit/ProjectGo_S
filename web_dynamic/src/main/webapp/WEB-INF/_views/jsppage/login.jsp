@@ -52,7 +52,14 @@
         		</span>
           </div>
           <div class="row">
-            <div class="col-xs-8">    
+            <div class="col-xs-4">
+              <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox" name="rememberMe"> 记住我
+                </label>
+              </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
               <div class="checkbox icheck">
                 <label>
                 	<a href="register.do">没有账号?</a>

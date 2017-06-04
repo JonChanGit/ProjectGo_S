@@ -1,13 +1,14 @@
 package cn.com.jonpad.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by jon75 on 2017/6/4.
  */
 @Entity
 @Table(name = "t_sys_userSecurity")
-public class SysUserSecurity {
+public class SysUserSecurity  implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package cn.com.jonpad.shiro;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.entity.dto.ActiveUser;
+import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class CustomRealm extends AuthorizingRealm {
 	@Autowired
 	private SysUserService sus;
+	@Autowired
+	private SysPermissionServics sps;
 
 
 	/**
@@ -77,6 +80,7 @@ public class CustomRealm extends AuthorizingRealm {
 		activeUser.setSysUser(sysUser);
 		// 根据ID取菜单
 		Map<String, List<SysPermission>> menuMap = null;
+		menuMap = sps.findMenuTreeByUserId(sysUser.getId() + "");
 		activeUser.setMenus(menuMap);
 
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser,

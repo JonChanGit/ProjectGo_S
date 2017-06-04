@@ -27,7 +27,8 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 		HttpSession session = httpServletRequest.getSession();
 		// 取出session的验证码（正确的验证码）
 		String validateCode = (String) session.getAttribute("validateCode");
-
+		//暂时不验证验证码
+/*
 		if(validateCode == null || "".equals(validateCode)){
 			//如果校验失败，将验证码错误失败信息，通过shiroLoginFailure设置到request中
 			httpServletRequest.setAttribute("shiroLoginFailure", "randomCodeError");
@@ -54,7 +55,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 			session.setAttribute("validateCode",null);
 			//拒绝访问，不再校验账号和密码  返回true ，请求继续处理
 			return true; 
-		}
+		}*/
 
 		return super.onAccessDenied(request, response);
 	}

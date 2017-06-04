@@ -73,7 +73,7 @@ public class SysPermission implements java.io.Serializable{
 	private String sortstring;
 
 	/**
-	 * 资源类型：menu,button,
+	 * 资源类型：root,menu,button,
 	 */
 	@Column(name="c_type")
 	private String type;

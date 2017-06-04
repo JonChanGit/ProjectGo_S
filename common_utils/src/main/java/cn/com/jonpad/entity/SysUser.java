@@ -1,10 +1,11 @@
 package cn.com.jonpad.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "t_sys_user")
-public class SysUser {
+public class SysUser implements Serializable {
 	
 	/**
 	 * 账号签名
