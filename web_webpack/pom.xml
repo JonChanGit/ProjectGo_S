@@ -5,47 +5,21 @@
 		<groupId>cn.com.jonpad</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>web_dynamic</artifactId>
+	<artifactId>web_webpack</artifactId>
 	<packaging>war</packaging>
-	<name>web_dynamic Maven Webapp</name>
+	<name>web_webpack Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-
 	<dependencies>
-
 		<dependency>
 			<groupId>cn.com.jonpad</groupId>
-			<artifactId>web_webpack</artifactId>
+			<artifactId>web_html</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>war</type>
 		</dependency>
-		<!-- jstl begin -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-servlet-api</artifactId>
-			<version>8.0.41</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<!-- jstl end -->
 	</dependencies>
-
 	<build>
-		<finalName>web_dynamic</finalName>
+		<finalName>web_webpack</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

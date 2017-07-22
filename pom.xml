@@ -23,6 +23,7 @@
 		<module>web_html</module>
 		<module>web_dynamic</module>
 		<module>app_merge</module>
+		<module>web_webpack</module>
 	</modules>
 
 	<build>
