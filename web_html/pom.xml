@@ -20,11 +20,24 @@
 		<!--依赖引用 自己的类库-->
 		<dependency>
 			<groupId>cn.com.jonpad</groupId>
-			<artifactId>common_utils</artifactId>
+			<artifactId>app_merge</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
 		<finalName>web_html</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+		<defaultGoal>compile</defaultGoal>
 	</build>
 </project>

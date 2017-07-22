@@ -9,15 +9,16 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>common_utils</artifactId>
+	<artifactId>app_merge</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>cn.com.jonpad</groupId>
-			<artifactId>common_reference</artifactId>
+			<artifactId>common_utils</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

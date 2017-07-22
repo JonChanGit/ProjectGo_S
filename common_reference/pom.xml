@@ -11,13 +11,6 @@
 
 	<artifactId>common_reference</artifactId>
 
-	<properties>
-		<spring.version>4.3.7.RELEASE</spring.version>
-		<spring.data.version>1.11.1.RELEASE</spring.data.version>
-		<jdk.version>1.8</jdk.version>
-		<hibernate.version>4.3.11.Final</hibernate.version>
-		<shiro.version>1.2.3</shiro.version>
-	</properties>
 
 	<dependencies>
 
