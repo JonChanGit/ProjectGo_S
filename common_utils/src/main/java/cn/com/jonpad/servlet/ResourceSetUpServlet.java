@@ -46,7 +46,7 @@ public class ResourceSetUpServlet extends HttpServlet {
 
 
 		//页面标题后缀模板
-		application.setAttribute("app_PageTitle", "大学上课考勤系统");
+		application.setAttribute("app_PageTitle", "统一认证平台");
 
 		System.out.println("---------resource setup [Service] startED---------");
 	}

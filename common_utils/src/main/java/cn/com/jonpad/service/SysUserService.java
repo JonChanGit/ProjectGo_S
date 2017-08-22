@@ -7,6 +7,8 @@ import cn.com.jonpad.repository.SysUserSecurityRepository;
 import cn.com.jonpad.util.SecurityTool;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,10 @@ public class SysUserService {
 		return sur.count();
 	}
 
+	public Page<SysUser> getPage(int pageNo, int pageSize){
+		PageRequest pageRequest = new PageRequest(pageNo-1,pageSize);
+		return sur.findAll(pageRequest);
+	}
 
 	/**
 	 * 保存用户
