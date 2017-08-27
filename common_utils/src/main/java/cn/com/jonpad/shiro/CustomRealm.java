@@ -2,7 +2,7 @@ package cn.com.jonpad.shiro;
 
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysUser;
-import cn.com.jonpad.entity.dto.ActiveUser;
+import cn.com.jonpad.entity.ActiveUser;
 import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
@@ -15,7 +15,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;

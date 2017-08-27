@@ -1,4 +1,4 @@
-package cn.com.jonpad.entity.dto;
+package cn.com.jonpad.entity;
 
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysUser;

@@ -70,5 +70,67 @@ public class SysUserService {
 		susr.save(security);
 	}
 
+	@Transactional
+	public boolean addUser(SysUser user){
 
+		SysUser dbUser = sur.findByEmailOrUsercode(user.getEmail(), user.getUsercode());
+		if(dbUser != null){
+			return false;
+		}
+		addUser(user,"88888888");
+		return true;
+	}
+
+	@Transactional
+	public boolean deleteUser(long id) {
+		sur.delete(id);
+		return true;
+	}
+
+	public boolean modifyUser(SysUser user) {
+		SysUser oldUser = sur.findOne(user.getId());
+
+		if (oldUser != null) {
+			if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+				oldUser.setEmail(user.getEmail());
+			}
+			oldUser.setLocked(user.getLocked());
+
+			if (user.getUsercode() != null && !user.getUsercode().isEmpty()) {
+				oldUser.setUsercode(user.getUsercode());
+			}
+			if (user.getInfo() != null && !user.getInfo().isEmpty()){
+				oldUser.setInfo(user.getInfo());
+			}
+			if (user.getUsername() != null && !user.getUsername().isEmpty()) {
+				oldUser.setUsername(user.getUsername());
+			}
+			if(user.getHead() != null && !user.getHead().isEmpty()){
+				oldUser.setHead(user.getHead());
+			}
+			sur.saveAndFlush(oldUser);
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 权限加入后，要判断蓝光拥有管理员角色，不可进行次操作
+	 * @param userId
+	 * @return
+	 */
+	public boolean modifyUserState(long userId) {
+		SysUser oldUser = sur.findOne(userId);
+		if (oldUser != null) {
+			if (oldUser.getLocked() == 1) {
+				oldUser.setLocked(0);
+			} else {
+				oldUser.setLocked(1);
+			}
+			sur.saveAndFlush(oldUser);
+			return true;
+		}
+		return false;
+	}
 }
