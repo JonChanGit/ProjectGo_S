@@ -118,6 +118,7 @@ desired effect
 				</a>
 				<ul class="treeview-menu ">
 					<li class=""><a href="/access/user_and_permission/userIndex.do"><i class="fa fa-circle-o"></i>用户管理</a>
+					<li class=""><a href="/access/user_and_permission/roleIndex.do"><i class="fa fa-circle-o"></i>角色管理</a>
 					</li>
 				</ul>
 			</li>

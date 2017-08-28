@@ -1,6 +1,8 @@
 package cn.com.jonpad.controller;
 
+import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.service.SysUserService;
 import cn.com.jonpad.util.JsonTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by jon75 on 2017/8/22.
@@ -25,6 +28,8 @@ public class UserAndPermissionController extends BaseController{
 
 	@Autowired
 	private SysUserService sus;
+	@Autowired
+	private SysRoleService srs;
 
 
 	@RequestMapping(value = "/userIndex", method = RequestMethod.GET)
@@ -113,5 +118,105 @@ public class UserAndPermissionController extends BaseController{
 			JsonTool.toJson(false, "状态修改失败", response);
 		}
 	}
+
+
+	/**
+	 * 角色管理 进入
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/roleIndex", method = RequestMethod.GET)
+	// @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE)
+	public String roleIndexPage(Model model) {
+
+		List<SysRole> list = srs.getAllSysRole();
+
+		// 通过model传到页面
+		model.addAttribute("roleUser", list);
+
+		return MVC_VIEW_ROOT_PATH + "RoleManagement";
+	}
+
+	/**
+	 * 添加角色
+	 *
+	 * @param role
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/roleAdd", method = RequestMethod.POST)
+	// @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_ADD)
+	public void roleAdd(SysRole role, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		boolean b = srs.addRole(role);
+		if (b)
+			JsonTool.toJson(true, "角色添加成功", response);
+		else {
+			JsonTool.toJson(false, "角色添加失败", response);
+		}
+	}
+
+	/**
+	 * 修改角色 名称
+	 *
+	 * @param role
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/roleModify", method = RequestMethod.POST)
+	// @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_EDIT)
+	public void roleModify(SysRole role, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		boolean b = srs.modifyRoleName(role);
+		if (b)
+			JsonTool.toJson(true, "名称已改为" + role.getName(), response);
+		else {
+			JsonTool.toJson(false, "名称修改失败", response);
+		}
+	}
+
+	/**
+	 * 修改可用状态
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/roleChangeState", method = RequestMethod.POST)
+	// @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_STSTE)
+	public void roleChangeState(long id, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		boolean b = srs.modifyRoleAvailable(id);
+		if (b)
+			JsonTool.toJson(true, "状态修改成功", response);
+		else {
+			JsonTool.toJson(false, "状态修改失败", response);
+		}
+	}
+
+	/**
+	 * 删除角色
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/roleDelete", method = RequestMethod.POST)
+	// @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_DELETE)
+	public void roleDelete(long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		boolean b = srs.deleteRole(id);
+		if (b)
+			JsonTool.toJson(true, "删除成功", response);
+		else {
+			JsonTool.toJson(false, "删除失败", response);
+		}
+	}
+
+
 
 }
