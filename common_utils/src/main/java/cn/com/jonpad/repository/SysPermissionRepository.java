@@ -32,4 +32,32 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	 */
 	@Query(value = "select sp from SysPermission sp where available = 1 and type = ?1 and id in (select sysPermissionId from SysRolePermission where sysRoleId in (select sysRoleId from SysUserRole where  sysUserId = ?2 )) order by sortstring")
 	List<SysPermission> findMenuTreeByUserIdAndType(String type, String userid);
+
+
+	/**
+	 * 获取所有根节点
+	 * @return
+	 */
+	@Query(value = "select sp from SysPermission where type = 'root' order by sortstring")
+	List<SysPermission> getAllRootSysPermission();
+
+	@Query(value = "select sp from SysPermission where parentid = ?1 ")
+	List<SysPermission> getMenuByRoot(long rootId);
+
+	SysPermission findById(long parentid);
+
+	/**
+	 * 查找子节点
+	 * @param parentId
+	 * @return
+	 */
+	@Query(value = " select sp from SysPermission where parentid = ?1")
+	List<SysPermission> findChildPermission(long parentId);
+
+	@Query(value = "select sp from SysPermission where type='button' and parentid= ?1 ")
+	List<SysPermission> getButtonsByMeun(long parentid);
+
+
+	@Query(value = "select sp from SysPermission where parentid = ?1 or rootPparentid = ?1 ")
+	List<SysPermission> findChildrenSysPermission(long id);
 }

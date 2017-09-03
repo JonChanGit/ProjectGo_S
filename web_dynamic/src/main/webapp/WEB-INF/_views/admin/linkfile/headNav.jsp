@@ -108,8 +108,6 @@ desired effect
 		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu">
 			<li class="header">功能导航</li>
-			<li><a href="admin_access/class/list.do"><i class="fa fa-circle-o text-info"></i>班级管理</a></li>
-			<li><a href="admin_access/user/list.do"><i class="fa fa-circle-o text-info"></i>用户管理</a></li>
 
 
 			<li class="treeview">
@@ -119,6 +117,7 @@ desired effect
 				<ul class="treeview-menu ">
 					<li class=""><a href="/access/user_and_permission/userIndex.do"><i class="fa fa-circle-o"></i>用户管理</a>
 					<li class=""><a href="/access/user_and_permission/roleIndex.do"><i class="fa fa-circle-o"></i>角色管理</a>
+					<li class=""><a href="/access/user_and_permission/permissionIndex.do"><i class="fa fa-circle-o"></i>功能管理</a>
 					</li>
 				</ul>
 			</li>

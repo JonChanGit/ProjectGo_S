@@ -1,10 +1,14 @@
 package cn.com.jonpad.controller;
 
+import cn.com.jonpad.dto.MeunDetails;
+import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.service.SysUserService;
 import cn.com.jonpad.util.JsonTool;
+import cn.com.jonpad.util.JsonTransportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jon75 on 2017/8/22.
@@ -30,6 +35,8 @@ public class UserAndPermissionController extends BaseController{
 	private SysUserService sus;
 	@Autowired
 	private SysRoleService srs;
+	@Autowired
+	private SysPermissionServics sps;
 
 
 	@RequestMapping(value = "/userIndex", method = RequestMethod.GET)
@@ -216,6 +223,117 @@ public class UserAndPermissionController extends BaseController{
 			JsonTool.toJson(false, "删除失败", response);
 		}
 	}
+
+
+	/**
+	 * 权限管理 进入
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/permissionIndex", method = RequestMethod.GET)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
+	public String permissionIndexPage(Model model) {
+
+		List<SysPermission> list = sps.getAllRootSysPermission();
+
+		//获取权限的菜单节点
+		Map<Long, List<SysPermission>> map = sps.getAllChildPermission(list);
+
+
+		// 通过model传到页面
+		model.addAttribute("roleUser", list);
+		model.addAttribute("menuMap", map);
+
+		return MVC_VIEW_ROOT_PATH + "PermissionManagement";
+	}
+
+	/**
+	 * 添加权限/菜单/按钮等
+	 *
+	 * 对permission表的操作
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/permissionAdd", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_ADD)
+	public void permissionAdd(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		boolean b = sps.addPermission(permission);
+		if (b)
+			JsonTool.toJson(true, "功能添加成功", response);
+		else {
+			JsonTool.toJson(false, "功能添加失败", response);
+		}
+	}
+
+
+	/**
+	 * 删除permission
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/permissionDelete", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
+	public void permissionDelete(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		boolean b = sps.deletePermission(permission.getId());
+		if (b)
+			JsonTool.toJson(true, "删除成功", response);
+		else {
+			JsonTool.toJson(false, "删除失败", response);
+		}
+	}
+
+
+
+	/**
+	 * 获取菜单详情
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/permissionGetMeunDetails", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
+	public void permissionGetMeunDetails(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		MeunDetails ms= sps.getMeunDetails(permission.getId());
+		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
+		if(ms != null){
+			jsonTransportEntity.setFlag(true);
+			jsonTransportEntity.setEntity(ms);
+		}
+		JsonTool.toJson(jsonTransportEntity, response);
+	}
+
+	/**
+	 * 修改权限可用状态
+	 *
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/permissionChangeState", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_STATE)
+	public void permissionChangeState(SysPermission permission, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		boolean b = sps.modifypermissionState(permission);
+		if (b)
+			JsonTool.toJson(true, "状态修改成功", response);
+		else {
+			JsonTool.toJson(false, "状态修改失败", response);
+		}
+	}
+
+
+
+
 
 
 
