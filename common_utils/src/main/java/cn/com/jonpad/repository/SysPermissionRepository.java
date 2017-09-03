@@ -10,18 +10,6 @@ import java.util.List;
  * Created by jon75 on 2017/6/4.
  */
 public interface SysPermissionRepository extends JpaRepository<SysPermission, Long> {
-	/**
-	 * 菜单
-	 */
-	public static final String MENU_TREE_TYPE_MENU = "menu";
-	/**
-	 * 根
-	 */
-	public static final String MENU_TREE_TYPE_ROOT = "root";
-	/**
-	 * 按钮
-	 */
-	public static final String MENU_TREE_TYPE_BUTTON = "button";
 
 	/**
 	 * 根据用户ID和菜单类型 查找菜单
@@ -60,4 +48,6 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 
 	@Query(value = "select sp from SysPermission where parentid = ?1 or rootPparentid = ?1 ")
 	List<SysPermission> findChildrenSysPermission(long id);
+
+	List<SysPermission> findByAvailable(int available);
 }

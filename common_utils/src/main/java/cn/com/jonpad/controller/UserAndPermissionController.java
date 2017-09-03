@@ -4,8 +4,10 @@ import cn.com.jonpad.dto.MeunDetails;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.entity.SysUserRole;
 import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysRoleService;
+import cn.com.jonpad.service.SysUserRoleService;
 import cn.com.jonpad.service.SysUserService;
 import cn.com.jonpad.util.JsonTool;
 import cn.com.jonpad.util.JsonTransportEntity;
@@ -37,6 +39,8 @@ public class UserAndPermissionController extends BaseController{
 	private SysRoleService srs;
 	@Autowired
 	private SysPermissionServics sps;
+	@Autowired
+	private SysUserRoleService surs;
 
 
 	@RequestMapping(value = "/userIndex", method = RequestMethod.GET)
@@ -331,6 +335,146 @@ public class UserAndPermissionController extends BaseController{
 		}
 	}
 
+
+	/**
+	 * 授权管理 进入
+	 *  授权管理》给用户分配角色
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/authorizeIndex", method = RequestMethod.GET)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_AUTHORIZE)
+	public String authorizeIndexPage(Model model) {
+
+		List<SysUser> list = sus.getAllUser();
+
+		// 通过model传到页面
+		model.addAttribute("roleUser", list);
+
+
+		List<SysRole> roleList = srs.getAllAvailableSysRole();
+
+		// 通过model传到页面
+		model.addAttribute("roleList", roleList);
+
+
+		return MVC_VIEW_ROOT_PATH + "AuthorizeManagement";
+	}
+
+
+	/**
+	 * 获取用户对应的角色信息
+	 * @param user
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/authorizeGetUserRoleInfo", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_AUTHORIZE)
+	public void authorizeGetUserRoleInfo(long userId,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		List<SysUserRole> list = srs.getSysUserRoleList(userId);
+
+		if(list!= null && list.size() > 0){
+			JsonTransportEntity jte = new JsonTransportEntity();
+			jte.setEntity(list);			jte.setMessage("数据加载完成");
+			JsonTool.toJson(jte, response);
+		}else{
+			JsonTool.toJson(false, "不存在相应的数据", response);
+		}
+
+	}
+
+
+	/**
+	 * 注册对应信息
+	 * @param userId 用户ID
+	 * @param roleIds 角色ID列表  【使用，隔开】
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/authorizeRegist", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_AUTHORIZE_SAVE)
+	public void authorizeRegist(long userId,String roleIds,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		String[] roleStrArr = null;
+		if (roleIds != null && !"".equals(roleIds)) {
+			roleStrArr = roleIds.split(",");
+		}else{
+
+		}
+		boolean b = surs.addSysUserRole(userId,roleStrArr);
+		JsonTool.toJson(b, "数据操作完成", response);
+	}
+
+	/**
+	 * 角色功能分配 进入
+	 *  为角色授予功能
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/assignIndex", method = RequestMethod.GET)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
+	public String assignIndexPage(Model model) {
+		List<SysRole> listRole = srs.getAllAvailableSysRole();
+
+		// 通过model传到页面
+		model.addAttribute("roleList", listRole);
+
+		List<SysPermission> listPer = sps.getAllEnableSysPermission();
+		model.addAttribute("perList", listPer);
+
+		return MVC_VIEW_ROOT_PATH + "AssignManagement";
+	}
+
+
+	/**
+	 * 注册对应信息
+	 * @param roleId 用户ID
+	 * @param perIds 角色ID列表  【使用，隔开】
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/assignRegist", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN_SAVE)
+	public void assignRegist(long roleId,String perIds,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+
+		String[] perStrArr = null;
+		if (perIds != null && !"".equals(perIds)) {
+			perStrArr = perIds.split(",");
+		}else{
+
+		}
+		boolean b = sysService.addSysRolePermission(roleId,perStrArr);
+		JsonTool.toJson(b, "数据操作完成", response);
+	}
+
+
+	/**
+	 * 获取角色对应的权限信息
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/assignGetRolePermissionInfo", method = RequestMethod.POST)
+	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
+	public void assignGetRolePermissionInfo(SysRole role,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		List<SysRolePermission> list = sysService.getSysRolePermissionList(role.getId());
+
+		if(list!= null && list.size() > 0){
+			JsonTransportEntity jte = new JsonTransportEntity();
+			jte.setEntity(list);
+			jte.setFlag(true);
+			jte.setMessage("数据加载完成");
+			JsonTool.toJson(jte, response);
+		}else{
+			JsonTool.toJson(false, "该角色没有任何已分配的权限", response);
+		}
+
+	}
 
 
 

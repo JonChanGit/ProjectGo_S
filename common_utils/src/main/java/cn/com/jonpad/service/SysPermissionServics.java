@@ -25,8 +25,8 @@ public class SysPermissionServics {
 	 * @return
 	 */
 	public Map<String, List<SysPermission>> findMenuTreeByUserId(String userid){
-		List<SysPermission> menuTree = spr.findMenuTreeByUserIdAndType(SysPermissionRepository.MENU_TREE_TYPE_MENU, userid);
-		List<SysPermission> rootTree = spr.findMenuTreeByUserIdAndType(SysPermissionRepository.MENU_TREE_TYPE_ROOT, userid);
+		List<SysPermission> menuTree = spr.findMenuTreeByUserIdAndType(SysPermission.MENU_TREE_TYPE_MENU, userid);
+		List<SysPermission> rootTree = spr.findMenuTreeByUserIdAndType(SysPermission.MENU_TREE_TYPE_ROOT, userid);
 		Map<String, List<SysPermission>> map = new HashMap<String, List<SysPermission>>();
 		map.put("menu", menuTree);
 		map.put("root", rootTree);
@@ -154,5 +154,9 @@ public class SysPermissionServics {
 		}
 		spr.saveAndFlush(hPer);
 		return true;
+	}
+
+	public List<SysPermission> getAllEnableSysPermission() {
+		return  spr.findByAvailable(SysPermission.AVAILABLE_TREU);
 	}
 }

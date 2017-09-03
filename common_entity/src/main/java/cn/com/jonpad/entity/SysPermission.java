@@ -22,6 +22,24 @@ import javax.persistence.Table;
 @Table(name = "t_sys_permission")
 public class SysPermission implements java.io.Serializable{
 	/**
+	 * 菜单
+	 */
+	public static final String MENU_TREE_TYPE_MENU = "menu";
+	/**
+	 * 根
+	 */
+	public static final String MENU_TREE_TYPE_ROOT = "root";
+	/**
+	 * 按钮
+	 */
+	public static final String MENU_TREE_TYPE_BUTTON = "button";
+
+	public static final  int AVAILABLE_TREU = 1;
+	public static final  int AVAILABLE_FALSE = 0;
+
+
+
+	/**
 	 * 是否可用,1：可用，0不可用
 	 */
 	@Column(name="i_available")

@@ -10,6 +10,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_sys_role")
 public class SysRole {
+	public static  final int AVAILABLE_TRUE  = 1;
+	public static  final int AVAILABLE_FALSE  = 0;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="p_i_id")

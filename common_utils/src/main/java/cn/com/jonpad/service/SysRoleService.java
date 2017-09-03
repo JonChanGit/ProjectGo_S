@@ -1,7 +1,10 @@
 package cn.com.jonpad.service;
 
 import cn.com.jonpad.entity.SysRole;
+import cn.com.jonpad.entity.SysUserRole;
 import cn.com.jonpad.repository.SysRoleRepository;
+import cn.com.jonpad.repository.SysUserRepository;
+import cn.com.jonpad.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,9 @@ import java.util.List;
 public class SysRoleService {
 	@Autowired
 	private SysRoleRepository srr;
+	@Autowired
+	private SysUserRoleRepository surr;
+
 
 	public List<SysRole> getAllSysRole() {
 		return srr.findAll();
@@ -49,5 +55,13 @@ public class SysRoleService {
 	public boolean deleteRole(long id) {
 		srr.delete(id);
 		return true;
+	}
+
+	public List<SysRole> getAllAvailableSysRole() {
+		return srr.findByAvailable(SysRole.AVAILABLE_TRUE);
+	}
+
+	public List<SysUserRole> getSysUserRoleList(long id) {
+		return surr.findBySysUserId(String.valueOf(id));
 	}
 }

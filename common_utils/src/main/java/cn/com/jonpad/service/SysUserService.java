@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by jon75 on 2017/6/2.
  */
@@ -132,5 +134,9 @@ public class SysUserService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<SysUser> getAllUser() {
+		return sur.findAll();
 	}
 }
