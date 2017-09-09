@@ -1,14 +1,8 @@
 package cn.com.jonpad.controller;
 
 import cn.com.jonpad.dto.MeunDetails;
-import cn.com.jonpad.entity.SysPermission;
-import cn.com.jonpad.entity.SysRole;
-import cn.com.jonpad.entity.SysUser;
-import cn.com.jonpad.entity.SysUserRole;
-import cn.com.jonpad.service.SysPermissionServics;
-import cn.com.jonpad.service.SysRoleService;
-import cn.com.jonpad.service.SysUserRoleService;
-import cn.com.jonpad.service.SysUserService;
+import cn.com.jonpad.entity.*;
+import cn.com.jonpad.service.*;
 import cn.com.jonpad.util.JsonTool;
 import cn.com.jonpad.util.JsonTransportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +35,8 @@ public class UserAndPermissionController extends BaseController{
 	private SysPermissionServics sps;
 	@Autowired
 	private SysUserRoleService surs;
+	@Autowired
+	private SysRolePermissionService srps;
 
 
 	@RequestMapping(value = "/userIndex", method = RequestMethod.GET)
@@ -364,7 +360,6 @@ public class UserAndPermissionController extends BaseController{
 
 	/**
 	 * 获取用户对应的角色信息
-	 * @param user
 	 * @return
 	 * @throws IOException
 	 */
@@ -448,7 +443,7 @@ public class UserAndPermissionController extends BaseController{
 		}else{
 
 		}
-		boolean b = sysService.addSysRolePermission(roleId,perStrArr);
+		boolean b = srps.addSysRolePermission(roleId,perStrArr);
 		JsonTool.toJson(b, "数据操作完成", response);
 	}
 
@@ -462,7 +457,7 @@ public class UserAndPermissionController extends BaseController{
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
 	public void assignGetRolePermissionInfo(SysRole role,HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		List<SysRolePermission> list = sysService.getSysRolePermissionList(role.getId());
+		List<SysRolePermission> list = srps.getSysRolePermissionList(role.getId());
 
 		if(list!= null && list.size() > 0){
 			JsonTransportEntity jte = new JsonTransportEntity();
