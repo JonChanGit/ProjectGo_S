@@ -5,7 +5,7 @@
 <head>
 <base href="${baseurl}" />
 <%@include file="linkfile/headerInfo.jsp"%>
-<link href="dist/AdminLTE/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+<link href="require/AdminLTE/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 <title>欢迎<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
 </head>
 <body class="skin-black">
@@ -32,12 +32,12 @@
 					<h1>Hello, world!</h1>
 					<p>欢迎回来！</p>
 					<p>访问<a target="_blank" href='<c:out value="//${ClientHost}"></c:out>'>客户端</a></p>
-					
+
 				</div>
 
 				<div class="row">
 					<div class="col-lg-6">
-					
+
 						<!-- Calendar -->
 						<div class="box box-solid bg-green-gradient">
 							<div class="box-header">
@@ -45,7 +45,7 @@
 								<h3 class="box-title">日历和任务</h3>
 								<!-- tools box -->
 								<div class="pull-right box-tools">
-									
+
 									<button class="btn btn-success btn-sm" data-widget="collapse">
 										<i class="fa fa-minus"></i>
 									</button>
@@ -61,10 +61,10 @@
 							<div class="box-footer text-black">
 								<div class="row">
 									<div class="col-sm-12">
-										<!-- Progress bars --> 
+										<!-- Progress bars -->
 
 										<c:forEach items="${taskList}" var="item">
-										
+
 											<div class="clearfix">
 												<span class="pull-left" style="color: ${item.highlight}">${item.title}</span> <small
 													class="pull-right" style="color: ${item.highlight}">${item.endTime}</small>
@@ -73,9 +73,9 @@
 												<div class="progress-bar progress-bar-green"
 													style="width: ${item.progress}%;"></div>
 											</div>
-										
+
 										</c:forEach>
- 
+
 									</div>
 									<!-- /.col -->
 									<!-- /.col -->
@@ -84,7 +84,7 @@
 							</div>
 						</div>
 						<!-- /.box -->
-						
+
 					</div>
 					<div class="col-lg-6">
 						<div class="box">
@@ -114,11 +114,11 @@
 										<div class="progress-bar progress-bar-green" style="width: 100%;"></div>
 									</div>
 								</c:forEach>
-								
+
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer clearfix">
-								
+
 							</div>
 						</div>
 					</div>
@@ -136,7 +136,7 @@
 
 </body>
 <%@include file="linkfile/footInfo.jsp"%>
-<script src="dist/AdminLTE/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="require/AdminLTE/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 <script type="text/javascript">
 	function init() {
 		$("#calendar").datepicker({language:'zh-CN'});

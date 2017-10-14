@@ -9,8 +9,8 @@ module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
-    // 应该指向包含应用程序的所有静态资产的根目录
-    assetsRoot: path.resolve(__dirname, '../../web_html/src/main/webapp/npmdist'),
+    // 应该指向包含应用程序的所有静态资产的根目录 直接输出到运行目录下，省去编译过程
+    assetsRoot: path.resolve(__dirname, '../../web_dynamic/target/web_dynamic/npmdist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/npmdist/',
     productionSourceMap: true,

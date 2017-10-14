@@ -7,13 +7,13 @@
     <title>登录 | <c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="require/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="dist/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="dist/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="dist/AdminLTE/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+    <link href="require/AdminLTE/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

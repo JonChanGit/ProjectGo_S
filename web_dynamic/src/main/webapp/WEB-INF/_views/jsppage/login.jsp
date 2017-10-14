@@ -7,13 +7,13 @@
     <title>登录 | <c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="require/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="dist/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="dist/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="dist/AdminLTE/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+    <link href="require/AdminLTE/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,15 +25,15 @@
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="#"><img src="dist/img/logo.png" height="60px"/></a>
+        <a href="#"><img src="require/img/logo.png" height="60px"/></a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">登陆</p>
-        
+
         <c:if test="${!empty msg}">
         	<div class="alert alert-warning" role="alert">${msg}</div>
         </c:if>
-        
+
         <form action="login.do" method="post" id="login-form">
           <div class="form-group has-feedback">
             <input autofocus type="email" class="form-control" placeholder="请输入邮箱" name="username" id="uemail" required="required"/>
@@ -43,12 +43,12 @@
             <input  type="password" class="form-control" placeholder="请输入密码" name="password" id="upassword" required="required"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
-          <div class="input-group input-group-lg"> 
-          		<input type="text" class="form-control" placeholder="请输入验证码" aria-describedby="sizing-addon1" name="randomcode" required="required"> 
-          		<span class="input-group-btn"> 
+          <div class="input-group input-group-lg">
+          		<input type="text" class="form-control" placeholder="请输入验证码" aria-describedby="sizing-addon1" name="randomcode" required="required">
+          		<span class="input-group-btn">
           			<button onclick='reloadImg();' class="btn btn-default" type="button">
           				<img  id="randomcode_img" src="validatecode.jsp" alt="图像无法显示，请刷新页面" width="56" height="20" align='absMiddle' />
-       				</button> 
+       				</button>
         		</span>
           </div>
           <div class="row">
@@ -65,7 +65,7 @@
                 	<a href="register.do">没有账号?</a>
                 	<!--<a href="#">修改密码</a>  -->
                 </label>
-              </div>                        
+              </div>
             </div><!-- /.col -->
             <div class="col-xs-4">
               <button type="submit" class="btn btn-primary btn-block btn-flat" id="btn-submit"  >登录</button>
@@ -82,15 +82,15 @@
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
-    
-    
+
+
 
     <!-- jQuery 2.1.3 -->
-    <script src="dist/js/jquery.min.js"></script>
+    <script src="require/js/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="require/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="dist/AdminLTE/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="require/AdminLTE/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -99,7 +99,7 @@
           increaseArea: '20%' // optional
         });
       });
-	  
+
       function reloadImg(){
     		document.getElementById("randomcode_img").src='validatecode.jsp?'+ new Date().getTime();
 			console.log("click");

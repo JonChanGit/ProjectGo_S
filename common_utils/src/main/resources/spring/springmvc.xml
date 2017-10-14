@@ -25,7 +25,8 @@
 	<!-- 静态资源访问 begin -->
 	<!-- 允许直接访问 dist 目录下的所有文件 -->
 	<mvc:resources location="/index.html" mapping="/index.html" />
-	<mvc:resources location="/dist/" mapping="/dist/**" />
+	<mvc:resources location="/npmdist/" mapping="/npmdist/**" />
+	<mvc:resources location="/require/" mapping="/require/**" />
 	<!-- 静态资源访问 end -->
 
 	<mvc:annotation-driven></mvc:annotation-driven>

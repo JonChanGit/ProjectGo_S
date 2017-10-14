@@ -27,7 +27,7 @@ desired effect
 <!-- Main Header -->
 <header class="main-header">
 	<!-- Logo -->
-	<a href="javascript:void(0);" class="logo" id="logo"><img src="dist/img/logo.png" height="45px"></a>
+	<a href="javascript:void(0);" class="logo" id="logo"><img src="require/img/logo.png" height="45px"></a>
 	<!-- Header Navbar: style can be found in header.less -->
 	<nav class="navbar navbar-static-top" role="navigation">
 		<!-- Sidebar toggle button-->
@@ -40,13 +40,13 @@ desired effect
 				<!-- User Account: style can be found in dropdown.less -->
 				<li class="dropdown user user-menu">
 					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-						<img src="dist/img/no_profile.png" class="user-image" alt="User Image"/>
+						<img src="require/img/no_profile.png" class="user-image" alt="User Image"/>
 						<span class="hidden-xs">${acUser.userName }</span>
 					</a>
 					<ul class="dropdown-menu">
 						<!-- User image sysUser-->
 						<li class="user-header">
-							<img src="dist/img/no_profile.png" class="img-circle" alt="User Image"/>
+							<img src="require/img/no_profile.png" class="img-circle" alt="User Image"/>
 							<p>
 								${acUser.userName }
 								<small><fmt:formatDate value="${now}" type="both" dateStyle="long"
@@ -87,7 +87,7 @@ desired effect
 		<!-- Sidebar user panel -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="dist/img/no_profile.png" class="img-circle" alt="User Image"/>
+				<img src="require/img/no_profile.png" class="img-circle" alt="User Image"/>
 			</div>
 			<div class="pull-left info">
 				<p>${acUser.userName }</p>

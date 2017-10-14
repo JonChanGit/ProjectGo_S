@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- 
+<%--
 	在需要使用模态窗的地方加入此文件
 
-	模态窗口的使用，请参考 http://v3.bootcss.com/javascript/#modals 
+	模态窗口的使用，请参考 http://v3.bootcss.com/javascript/#modals
 	在需要调用的按钮中，加入需要插入的HTML代码即可
 	使用onclick可以绑定
 	示例：
@@ -15,7 +15,7 @@
                   <input class="form-control" placeholder="Username" type="text">
                 </div>
 			</div>
-		
+
 		2.
 	    	function showUXDialog(e){
 	    		$("#myModalLabel").html("添加角色");
@@ -74,6 +74,6 @@
 
 <script>
 window.onload=function(){
-	load_js_css_file("dist/js/modal.js","js");
+	load_js_css_file("require/js/modal.js","js");
 };
 </script>

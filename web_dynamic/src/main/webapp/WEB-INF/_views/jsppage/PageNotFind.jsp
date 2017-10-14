@@ -7,16 +7,16 @@
     <title>Error!<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="dist/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/comstomer/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
-    <link href="dist/comstomer/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/comstomer/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="dist/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+    <link href="require/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="dist/AdminLTE/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="require/AdminLTE/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +27,7 @@
   </head>
   <body class="skin-blue sidebar-collapse">
     <div class="wrapper">
-      
+
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -63,14 +63,14 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.3 -->
-    <script src="dist/AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <script src="require/AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="require/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- FastClick -->
-    <script src='dist/AdminLTE/plugins/fastclick/fastclick.min.js'></script>
+    <script src='require/AdminLTE/plugins/fastclick/fastclick.min.js'></script>
     <!-- AdminLTE App -->
-    <script src="dist/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
+    <script src="require/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="dist/AdminLTE/dist/js/demo.js" type="text/javascript"></script>
+    <script src="require/AdminLTE/dist/js/demo.js" type="text/javascript"></script>
   </body>
 </html>
