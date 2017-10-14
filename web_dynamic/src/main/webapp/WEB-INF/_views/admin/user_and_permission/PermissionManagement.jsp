@@ -11,11 +11,11 @@
     <base href="<%=basePath %>" />
 <%@include file="../linkfile/headerInfo.jsp" %>
      <title>功能管理<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
-    <link href="/static/css/module/index.764cc8a312cebbe576343f316314f799.css?b29fef22b108755e1bb3" rel="stylesheet">
+    <link href="/npmdist/static/css/module/tmp.5df445f691afa33d3fd05b20df238cfa.css?2cd1788441387fbb0162" rel="stylesheet">
   </head>
   <body class="skin-black">
     <div class="wrapper">
-<%@include file="../linkfile/headNav.jsp" %>
+      <%@include file="../linkfile/headNav.jsp" %>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -44,8 +44,8 @@
 
   </body>
 <%@include file="../linkfile/footInfo.jsp" %>
-  <script type="text/javascript" src="/static/js/manifest.5d34c34b3f605ea5c539.js?b29fef22b108755e1bb3"></script><script type="text/javascript" src="/static/js/vendor.17a8324dfd4ab1c814fe.js?b29fef22b108755e1bb3"></script><script type="text/javascript" src="/static/js/module/index.fd179cfcb615bc2fc585.js?b29fef22b108755e1bb3"></script>
-    <script type="text/javascript">
+  <script type="text/javascript" src="/npmdist/static/js/manifest.js?0ae93207aadd0dec48bd"></script><script type="text/javascript" src="/npmdist/static/js/vendor.js?0ae93207aadd0dec48bd"></script><script type="text/javascript" src="/npmdist/static/js/module/tmp.js?0ae93207aadd0dec48bd"></script>
+  <script type="text/javascript">
 function init(){
 
 }
