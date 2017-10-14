@@ -165,3 +165,19 @@ for (var pathname in pages) {
 ```
 
 修改的代码不是很多，但是却为多页应用提供了强大的构建支持。欢迎大家使用，也希望大家多多交流。
+
+
+## 异步数据读取的写法
+```
+Axios.post('/feed/add',
+            Qs.stringify({
+              imgIds: [48,49],//todo:这是数组，传到后台获取不到，使用jquery ajax是可以的，求解决？
+            })
+          ).then(function (response) {
+            if(response.data.success){
+              that.back();
+            }
+          }).catch(function (error) {
+
+          })
+```
