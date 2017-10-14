@@ -9,9 +9,10 @@ module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
+    // 应该指向包含应用程序的所有静态资产的根目录
     assetsRoot: path.resolve(__dirname, '../../web_html/src/main/webapp/npmdist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/npmdist/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.

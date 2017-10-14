@@ -11,6 +11,7 @@
     <base href="<%=basePath %>" />
 <%@include file="../linkfile/headerInfo.jsp" %>
      <title>功能管理<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
+    <link href="/static/css/module/index.764cc8a312cebbe576343f316314f799.css?b29fef22b108755e1bb3" rel="stylesheet">
   </head>
   <body class="skin-black">
     <div class="wrapper">
@@ -43,6 +44,7 @@
 
   </body>
 <%@include file="../linkfile/footInfo.jsp" %>
+  <script type="text/javascript" src="/static/js/manifest.5d34c34b3f605ea5c539.js?b29fef22b108755e1bb3"></script><script type="text/javascript" src="/static/js/vendor.17a8324dfd4ab1c814fe.js?b29fef22b108755e1bb3"></script><script type="text/javascript" src="/static/js/module/index.fd179cfcb615bc2fc585.js?b29fef22b108755e1bb3"></script>
     <script type="text/javascript">
 function init(){
 

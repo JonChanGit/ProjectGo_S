@@ -17,3 +17,5 @@ npm-debug.log
 node_modules/
 *.iml
 npmdist/
+webapp/module/
+webapp/static/*
