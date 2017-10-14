@@ -1,3 +1,4 @@
+.DS_Store
 /target/
 .svn
 .vs
@@ -12,3 +13,7 @@ Desktop.ini
 .classpath
 ProjectGo.iml
 common_reference/.classpath
+npm-debug.log
+node_modules/
+*.iml
+npmdist/
