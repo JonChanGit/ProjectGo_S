@@ -22,7 +22,6 @@
 		<module>common_reference</module>
 		<module>web_html</module>
 		<module>web_dynamic</module>
-		<module>web_webpack</module>
 		<module>common_entity</module>
 	</modules>
 

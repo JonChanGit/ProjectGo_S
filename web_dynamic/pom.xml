@@ -16,7 +16,7 @@
 
 		<dependency>
 			<groupId>cn.com.jonpad</groupId>
-			<artifactId>web_webpack</artifactId>
+			<artifactId>web_html</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>war</type>
 		</dependency>

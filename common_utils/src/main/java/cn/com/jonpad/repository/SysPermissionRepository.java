@@ -26,10 +26,10 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	 * 获取所有根节点
 	 * @return
 	 */
-	@Query(value = "select sp from SysPermission where type = 'root' order by sortstring")
+	@Query(value = "select sp from SysPermission sp where type = 'root' order by sortstring")
 	List<SysPermission> getAllRootSysPermission();
 
-	@Query(value = "select sp from SysPermission where parentid = ?1 ")
+	@Query(value = "select sp from SysPermission sp where parentid = ?1 ")
 	List<SysPermission> getMenuByRoot(long rootId);
 
 	SysPermission findById(long parentid);
@@ -39,14 +39,14 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	 * @param parentId
 	 * @return
 	 */
-	@Query(value = " select sp from SysPermission where parentid = ?1")
+	@Query(value = " select sp from SysPermission sp where parentid = ?1")
 	List<SysPermission> findChildPermission(long parentId);
 
-	@Query(value = "select sp from SysPermission where type='button' and parentid= ?1 ")
+	@Query(value = "select sp from SysPermission sp where type='button' and parentid= ?1 ")
 	List<SysPermission> getButtonsByMeun(long parentid);
 
 
-	@Query(value = "select sp from SysPermission where parentid = ?1 or rootPparentid = ?1 ")
+	@Query(value = "select sp from SysPermission sp where parentid = ?1 or rootPparentid = ?1 ")
 	List<SysPermission> findChildrenSysPermission(long id);
 
 	List<SysPermission> findByAvailable(int available);
