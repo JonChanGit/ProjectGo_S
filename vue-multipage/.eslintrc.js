@@ -10,7 +10,7 @@ module.exports = {
     browser: true,
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-  extends: 'standard',
+  "extends": "eslint:recommended",
   // required to lint *.vue files
   plugins: [
     'html'
@@ -27,5 +27,10 @@ module.exports = {
     'no-unused-vars': ['warn'],
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
+    //增加分号
+    semi: ['error', 'always'],
+    // 允许控制台输出
+    'no-console': 0,
+    'spaced-comment': ["warn", "always"]
   }
 }

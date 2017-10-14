@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import Hello from '@/components/HelloWorld.vue'
+import Hello from '@/components/HelloWorld.vue';
 
 export default {
   name: 'app',
@@ -63,10 +63,11 @@ export default {
   },
   methods: {
     openMessageBox: function () {
-      console.log('openMessageBox!')
+      // sss
+      console.log('openMessageBox!');
     }
   }
-}
+};
 </script>
 
 <style>
