@@ -25,7 +25,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/access/user_and_permission")
 public class UserAndPermissionController extends BaseController{
-	private final String MVC_VIEW_ROOT_PATH = "admin\\user_and_permission\\";
+	private final String MVC_VIEW_ROOT_PATH = "admin/user_and_permission/";
 
 	@Autowired
 	private SysUserService sus;

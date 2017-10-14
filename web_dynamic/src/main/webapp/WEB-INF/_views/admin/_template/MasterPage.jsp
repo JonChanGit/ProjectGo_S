@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ include file="linkfile/tag.jsp"%>
+<%@ include file="../linkfile/tag.jsp"%>
 <%
 // String path = request.getContextPath();
 // String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -7,18 +7,18 @@
 %>
 <!DOCTYPE html>
 <html>
-  <head> 
+  <head>
     <base href="<%=basePath %>" />
-<%@include file="linkfile/headerInfo.jsp" %>
+<%@include file="../linkfile/headerInfo.jsp" %>
      <title>仪表板<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
   </head>
   <body class="skin-black">
     <div class="wrapper">
-<%@include file="linkfile/headNav.jsp" %>
+<%@include file="../linkfile/headNav.jsp" %>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        
+
 		<!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -31,25 +31,25 @@
           </ol>
         </section>
         <!-- Main content -->
-        <section class="content"> 
+        <section class="content">
             <div class="jumbotron">
               <h1>Hello, world!</h1>
               <p>欢迎回来！</p>
-              
+
             </div>
 
         </section><!-- /.content -->
 
       </div><!-- /.content-wrapper -->
-<%@include file="linkfile/foot.jsp" %>
+<%@include file="../linkfile/foot.jsp" %>
     </div><!-- ./wrapper -->
-   
+
   </body>
-<%@include file="linkfile/footInfo.jsp" %>
-    <script type="text/javascript"> 
+<%@include file="../linkfile/footInfo.jsp" %>
+    <script type="text/javascript">
 function init(){
 
 }
-init();		 
+init();
     </script>
 </html>
