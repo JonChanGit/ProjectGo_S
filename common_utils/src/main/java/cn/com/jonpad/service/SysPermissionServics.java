@@ -3,6 +3,7 @@ package cn.com.jonpad.service;
 import cn.com.jonpad.dto.MeunDetails;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.repository.SysPermissionRepository;
+import cn.com.jonpad.util.ValidateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,12 +52,12 @@ public class SysPermissionServics {
 
 	@Transactional
 	public boolean addPermission(SysPermission permission) {
-		if (permission.getName() != null && !"".equals(permission.getName().trim())) {
+    if (!ValidateTool.isEmptyString(permission.getName())) {
 			// if
 			// (sysPermissionDAO.findPermissionByNameAndType(permission.getName().trim(),
 			// permission.getType()) == null) {
 			if ("root".equals(permission.getType())) {
-
+        spr.save(permission);
 			} else {
 				// 直接父亲节点
 				SysPermission parentSp = spr.findById(permission.getParentid());
@@ -73,6 +74,7 @@ public class SysPermissionServics {
 					permission.setParentids(parentSp.getId() + "");
 				}
 			}
+      permission.setType(SysPermission.MENU_TREE_TYPE_MENU);
 			spr.save(permission);
 			return true;
 		}
@@ -116,6 +118,19 @@ public class SysPermissionServics {
 		spr.delete(id);
 		return  true;
 	}
+
+	public SysPermission getOne(long id){
+	  if(id == 0){
+      return spr.getRoot().get(0);
+    }else {
+	    return spr.findOne(id);
+    }
+  }
+
+  public long countSize(){
+    return spr.count();
+  }
+
 
 	public MeunDetails getMeunDetails(long id) {
 		MeunDetails ms = new MeunDetails();

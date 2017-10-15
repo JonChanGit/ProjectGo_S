@@ -38,7 +38,6 @@
     <script src="require/AdminLTE/plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
     <script src="require/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
-    <script src="require/pulgins/layui/layui.js"></script>
     <script src="require/pulgins/mustache.js"></script>
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -52,6 +51,7 @@
     <!-- 服务JS-->
     <script src="require/comstomer/js/service.js" type="text/javascript"></script>
     <script src="require/comstomer/js/alert.js" type="text/javascript"></script>
+    <script src="require/pulgins/layer/layer.js" type="text/javascript"></script>
     <script type="application/javascript">
     	$(document).ready(function(){
     		appendAlertSuccess("alertDivSID","页面加载完成");

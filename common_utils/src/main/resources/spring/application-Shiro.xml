@@ -23,6 +23,7 @@
 				<!-- 对静态资源设置匿名访问 -->
 				/dist/** = anon
 				/require/** = anon
+        /favicon.ico** = anon
 				<!-- 验证码，可匿名访问 -->
 				/validatecode.jsp = anon
 

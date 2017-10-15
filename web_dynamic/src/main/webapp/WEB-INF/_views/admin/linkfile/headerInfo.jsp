@@ -46,7 +46,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="require/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <!-- bootstrap wysihtml5 - text editor -->
     <link href="require/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="require/pulgins/layui/css/layui.css">
 <!--     自定义CSS -->
     <link href="require/comstomer/css/def.css" rel="stylesheet" type="text/css" />
 

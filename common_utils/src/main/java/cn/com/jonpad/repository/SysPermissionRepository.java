@@ -22,10 +22,15 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	List<SysPermission> findMenuTreeByUserIdAndType(String type, String userid);
 
 
+  @Query(value = "SELECT sp FROM SysPermission sp WHERE type = 'root' ORDER BY id")
+  List<SysPermission>  getRoot();
+
+
 	/**
 	 * 获取所有根节点
 	 * @return
 	 */
+	@Deprecated
 	@Query(value = "select sp from SysPermission sp where type = 'root' order by sortstring")
 	List<SysPermission> getAllRootSysPermission();
 

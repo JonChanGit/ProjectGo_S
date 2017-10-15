@@ -235,7 +235,7 @@ public class UserAndPermissionController extends BaseController{
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
 	public String permissionIndexPage(Model model) {
 
-		List<SysPermission> list = sps.getAllRootSysPermission();
+		/*List<SysPermission> list = sps.getAllRootSysPermission();
 
 		//获取权限的菜单节点
 		Map<Long, List<SysPermission>> map = sps.getAllChildPermission(list);
@@ -243,10 +243,19 @@ public class UserAndPermissionController extends BaseController{
 
 		// 通过model传到页面
 		model.addAttribute("roleUser", list);
-		model.addAttribute("menuMap", map);
+		model.addAttribute("menuMap", map);*/
 
 		return MVC_VIEW_ROOT_PATH + "PermissionManagement";
 	}
+
+  @RequestMapping(value = "/permissionGetNode" /*, method = RequestMethod.POST*/)
+	public void permissionGetNode(@RequestParam(value = "pid",defaultValue = "0") long pid,HttpServletResponse response) throws IOException {
+    SysPermission meun = sps.getOne(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    JsonTool.toJson(jte,response);
+  }
 
 	/**
 	 * 添加权限/菜单/按钮等

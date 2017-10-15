@@ -25,12 +25,12 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     quotes: ['error', 'single'],
     'no-unused-vars': ['warn'],
-    indent: ['error', 2],
+    indent: [0, 2],
     'linebreak-style': ['error', 'unix'],
     //增加分号
     semi: ['error', 'always'],
     // 允许控制台输出
     'no-console': 0,
-    'spaced-comment': ["warn", "always"]
+    'spaced-comment': ["warn", "always"],
   }
 }

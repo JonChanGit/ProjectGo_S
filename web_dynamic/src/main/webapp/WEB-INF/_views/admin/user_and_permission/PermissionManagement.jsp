@@ -11,7 +11,7 @@
     <base href="<%=basePath %>" />
 <%@include file="../linkfile/headerInfo.jsp" %>
      <title>功能管理<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
-    <link href="/npmdist/static/css/module/tmp.5df445f691afa33d3fd05b20df238cfa.css?2cd1788441387fbb0162" rel="stylesheet">
+    <link href="/npmdist/static/css/module/permissionIndex.233b2698477349fdbe73b045f229471d.css?18c842fc4a9765bfc5cf" rel="stylesheet">
   </head>
   <body class="skin-black">
     <div class="wrapper">
@@ -24,7 +24,7 @@
         <section class="content-header">
           <h1>
             ${app_WebServiceAppName }
-            <small>控制中心</small>
+            <small>功能管理</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="admin_access/index.do"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -44,7 +44,7 @@
 
   </body>
 <%@include file="../linkfile/footInfo.jsp" %>
-  <script type="text/javascript" src="/npmdist/static/js/manifest.js?0ae93207aadd0dec48bd"></script><script type="text/javascript" src="/npmdist/static/js/vendor.js?0ae93207aadd0dec48bd"></script><script type="text/javascript" src="/npmdist/static/js/module/tmp.js?0ae93207aadd0dec48bd"></script>
+  <script type="text/javascript" src="/npmdist/static/js/manifest.js?18c842fc4a9765bfc5cf"></script><script type="text/javascript" src="/npmdist/static/js/vendor.js?18c842fc4a9765bfc5cf"></script><script type="text/javascript" src="/npmdist/static/js/module/permissionIndex.js?18c842fc4a9765bfc5cf"></script>
   <script type="text/javascript">
 function init(){
 

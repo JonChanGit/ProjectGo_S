@@ -1,6 +1,8 @@
 package cn.com.jonpad.servlet;
 
+import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysUserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -67,6 +69,22 @@ public class ResourceSetUpServlet extends HttpServlet {
 			sus.addUser(user,"system");
 		}
 
-	}
+    SysPermissionServics sps = (SysPermissionServics)applicationContext.getBean("sysPermissionServics");
+    long spsSize = sps.countSize();
+    if(spsSize < 1){
+      SysPermission sp = new SysPermission();
+      sp.setAvailable(1);
+      sp.setName("Root");
+      sp.setParentid(0l);
+      sp.setParentids("0");
+      sp.setPercode("");
+      sp.setRootPparentid(0l);
+      sp.setSortstring("0");
+      sp.setType(SysPermission.MENU_TREE_TYPE_ROOT);
+      sp.setUrl("/#");
+      sps.addPermission(sp);
+    }
+
+  }
 
 }

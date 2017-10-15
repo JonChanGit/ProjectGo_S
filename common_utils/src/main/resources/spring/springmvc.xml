@@ -27,6 +27,7 @@
 	<mvc:resources location="/index.html" mapping="/index.html" />
 	<mvc:resources location="/npmdist/" mapping="/npmdist/**" />
 	<mvc:resources location="/require/" mapping="/require/**" />
+  <mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
 	<!-- 静态资源访问 end -->
 
 	<mvc:annotation-driven></mvc:annotation-driven>
