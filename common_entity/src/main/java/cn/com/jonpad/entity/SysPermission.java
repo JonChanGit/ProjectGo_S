@@ -65,7 +65,7 @@ public class SysPermission implements java.io.Serializable{
 	/**
 	 * 父结点id列表串
 	 *
-	 * 使用 js 数组显示标识
+	 * 使用 ，隔开，从0开始（Root之上）
 	 */
 	@Column(name="c_parentids")
 	private String parentids;
