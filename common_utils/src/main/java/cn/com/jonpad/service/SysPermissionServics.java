@@ -68,7 +68,7 @@ public class SysPermissionServics {
 				} else {
 					permission.setRootPparentid(parentSp.getId());
 				}
-				if (parentSp.getParentids() != null) {
+				if (!ValidateTool.isEmptyString(parentSp.getParentids())) {
 					permission.setParentids(parentSp.getParentids() + "," + parentSp.getId());
 				} else {
 					permission.setParentids(parentSp.getId() + "");

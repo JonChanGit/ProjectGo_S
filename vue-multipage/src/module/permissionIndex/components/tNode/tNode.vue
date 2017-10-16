@@ -9,11 +9,13 @@
       {{pnode.name}}&nbsp;
     </li>
     <li class="list-group-item tool-bar" :class="{'hidden':glyphiconDown}">
-      <div class="btn-group btn-group-sm" role="group" aria-label="...">
-        <button class="btn btn-app" @click="newDialog()">
-          <span class="glyphicon glyphicon-plus"></span>新增
-        </button>
-      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" @click="newDialog()"><span class="glyphicon glyphicon-plus"></span></button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+        <button type="button" class="btn btn-danger" disabled="disabled"><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+
       &nbsp;
     </li>
 
@@ -77,6 +79,7 @@
       },
       open: function () {
         console.log('open');
+        layer.load(2, {time: 10*1000});
         Axios.post('/access/user_and_permission/permissionGetChildrenNode.do',
           Qs.stringify({pid: this.pnode.id,})
         ).then((response) => {
@@ -87,8 +90,10 @@
             this.hasChild = true;
           }
           this.active = true;
+          layer.closeAll();
         }).catch((error) => {
           console.log(error);
+          layer.closeAll();
         });
         this.isOpen = true;
 
@@ -140,7 +145,7 @@
             ).then((response) => {
               let data = response.data;
               Tools.msg(data);
-
+              this.thisVue.open();
             }).catch((error) => {
               console.log(error);
             });
