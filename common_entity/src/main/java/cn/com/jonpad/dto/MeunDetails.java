@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class MeunDetails {
 	SysPermission details;
-	List<SysPermission> buttons;
+	List<SysPermission> children;
 
 	public SysPermission getDetails() {
 		return details;
@@ -20,11 +20,11 @@ public class MeunDetails {
 		this.details = details;
 	}
 
-	public List<SysPermission> getButtons() {
-		return buttons;
-	}
+  public List<SysPermission> getChildren() {
+    return children;
+  }
 
-	public void setButtons(List<SysPermission> buttons) {
-		this.buttons = buttons;
-	}
+  public void setChildren(List<SysPermission> children) {
+    this.children = children;
+  }
 }

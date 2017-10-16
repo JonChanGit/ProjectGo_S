@@ -140,8 +140,8 @@ public class SysPermissionServics {
 			return null;
 		}
 		ms.setDetails(item);
-		List<SysPermission> buttons = spr.getButtonsByMeun(item.getId());
-		ms.setButtons(buttons);
+		List<SysPermission> buttons = spr.findChildPermission(item.getId());
+		ms.setChildren(buttons);
 		return ms;
 	}
 

@@ -15,6 +15,12 @@
       </div>
       &nbsp;
     </li>
+
+
+    <div v-for="item in children" v-if="hasChild" >
+      <treeNode v-bind:isActive='item.active' :pnode="item"></treeNode>
+    </div>
+
   </div>
 </template>
 
@@ -23,15 +29,20 @@
   import Axios from 'axios';
   import Qs from 'qs';
   import Tools from '@/components/Tool.js';
+  import treeNode from './tNode.vue';
 
 
   export default {
-    name: 'app',
+    name: 'treeNode',
     data () {
       return {
-        'Children': {},
+        'children': {},
         isOpen: false,
+        'hasChild':false
       };
+    },
+    components: {
+      'treeNode': treeNode
     },
     props: {
       'isActive': Boolean,
@@ -51,22 +62,46 @@
     },
     methods: {
       clickMenu: function () {
-        if (this.isOpen) {
+        if (!this.isOpen) {
           this.open();
         } else {
           this.close();
         }
-        this.isOpen = !this.isOpen;
       },
       open: function () {
         console.log('open');
+        Axios.post('/access/user_and_permission/permissionGetChildrenNode.do',
+          Qs.stringify({pid: this.pnode.id,})
+        ).then((response) => {
+          let data = response.data;
+          if (data.flag == true) {
+            this.children = data.entity.children;
+
+            // this.child = root;
+          }
+          this.active = true;
+        }).catch((error) => {
+          console.log(error);
+        });
+        this.isOpen = true;
+
+        let list = [{'available':0,'id':2,'name':'1','parentid':1,'parentids':'0,1','percode':'1','rootPparentid':1,'sortstring':'1','url':'1'},{'available':0,'id':3,'name':'2','parentid':1,'parentids':'0,1','percode':'2','rootPparentid':1,'sortstring':'2','url':'2'},{'available':0,'id':4,'name':'3','parentid':1,'parentids':'0,1','percode':'3','rootPparentid':1,'sortstring':'3','type':'menu','url':'3'}];
+
+        this.children = list;
+        this.hasChild = true;
 
       },
       close: function () {
         console.log('close');
+        this.children = new Object;
+          this.isOpen = false;
       },
+      /**
+       * 添加数据
+       */
       newDialog: function () {
-        let index = layer.open({
+        // let index =
+        layer.open({
           title: '新增功能',
           content: `
             <div class="input-group">

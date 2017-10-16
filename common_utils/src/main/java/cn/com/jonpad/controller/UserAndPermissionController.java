@@ -248,6 +248,12 @@ public class UserAndPermissionController extends BaseController{
 		return MVC_VIEW_ROOT_PATH + "PermissionManagement";
 	}
 
+  /**
+   * 只有节点信息
+   * @param pid
+   * @param response
+   * @throws IOException
+   */
   @RequestMapping(value = "/permissionGetNode" /*, method = RequestMethod.POST*/)
 	public void permissionGetNode(@RequestParam(value = "pid",defaultValue = "0") long pid,HttpServletResponse response) throws IOException {
     SysPermission meun = sps.getOne(pid);
@@ -256,6 +262,27 @@ public class UserAndPermissionController extends BaseController{
     jte.setFlag(meun==null?false:true);
     JsonTool.toJson(jte,response);
   }
+
+  /**
+   * 节点和子节点
+   * @param pid
+   * @param response
+   * @throws IOException
+   */
+  @RequestMapping(value = "/permissionGetChildrenNode" /*, method = RequestMethod.POST*/)
+  public void permissionGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid,HttpServletResponse response) throws IOException {
+    if(pid<=0){
+      JsonTool.toJson(false,"参数不正确",response);
+      return;
+    }
+    MeunDetails meun = sps.getMeunDetails(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    JsonTool.toJson(jte,response);
+  }
+
+
 
 	/**
 	 * 添加权限/菜单/按钮等

@@ -31,14 +31,14 @@
         if (data.flag == true) {
           let root = data.entity;
           this.child = root;
+
         }
         this.active = true;
       }).catch((error) => {
         console.log(error);
       });
 
-      // let data = {'entity':{'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'},'flag':true};
-
+      this.child = {'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'};
     },
   };
 </script>
