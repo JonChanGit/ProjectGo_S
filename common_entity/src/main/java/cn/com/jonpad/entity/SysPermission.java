@@ -8,14 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 
  *
- * @Title: SysPermission.java 
- * @Package com.jon.web.entity 
+ *
+ * @Title: SysPermission.java
+ * @Package com.jon.web.entity
  * @Description: 权限 --- 菜单
  * @author JonChan
- * @date 2016年5月22日 上午8:44:03 
- * @version V1.0   
+ * @date 2016年5月22日 上午8:44:03
+ * @version V1.0
  *
  */
 @Entity
@@ -61,15 +61,15 @@ public class SysPermission implements java.io.Serializable{
 	 */
 	@Column(name="i_parentid")
 	private Long parentid;
-	
+
 	/**
 	 * 父结点id列表串
-	 * 
-	 * 使用 ',' 分割
+	 *
+	 * 使用 js 数组显示标识
 	 */
 	@Column(name="c_parentids")
 	private String parentids;
-	
+
 
 	/**
 	 * 权限代码字符串
@@ -110,7 +110,7 @@ public class SysPermission implements java.io.Serializable{
 		return id;
 	}
 
-	 
+
 
 	public String getName() {
 		return name;
@@ -143,7 +143,7 @@ public class SysPermission implements java.io.Serializable{
 	public String getUrl() {
 		return url;
 	}
-	 
+
 
 	public void setAvailable(int available) {
 		this.available = available;

@@ -5,9 +5,10 @@
       <span class="glyphicon"
             :class="{'glyphicon-chevron-down':glyphiconDown,'glyphicon-chevron-up':glyphiconUp}"></span>
     </span>
+      <span class="glyphicon glyphicon-chevron-right" v-for="item in parentids" v-if="false"></span>
       {{pnode.name}}&nbsp;
     </li>
-    <li class="list-group-item" :class="{'hidden':glyphiconDown}">
+    <li class="list-group-item tool-bar" :class="{'hidden':glyphiconDown}">
       <div class="btn-group btn-group-sm" role="group" aria-label="...">
         <button class="btn btn-app" @click="newDialog()">
           <span class="glyphicon glyphicon-plus"></span>新增
@@ -16,11 +17,11 @@
       &nbsp;
     </li>
 
-
-    <div v-for="item in children" v-if="hasChild" >
-      <treeNode v-bind:isActive='item.active' :pnode="item"></treeNode>
-    </div>
-
+    <ul>
+      <div v-for="item in children" v-if="hasChild" class="children-box">
+        <treeNode v-bind:isActive='item.active' :pnode="item"></treeNode>
+      </div>
+    </ul>
   </div>
 </template>
 
@@ -38,7 +39,8 @@
       return {
         'children': {},
         isOpen: false,
-        'hasChild':false
+        'hasChild': false,
+        'parentids': [],
       };
     },
     components: {
@@ -57,8 +59,13 @@
       }
     },
     created: function () {
-      console.log(this.pnode);
       this.isOpen = this.isActive;
+      try {
+        this.parentids = this.pnode.parentids.split(',');
+      } catch (e) {
+        console.log(this.parentids);
+      }
+
     },
     methods: {
       clickMenu: function () {
@@ -77,7 +84,7 @@
           if (data.flag == true) {
             this.children = data.entity.children;
 
-            // this.child = root;
+            this.hasChild = true;
           }
           this.active = true;
         }).catch((error) => {
@@ -85,16 +92,16 @@
         });
         this.isOpen = true;
 
-        let list = [{'available':0,'id':2,'name':'1','parentid':1,'parentids':'0,1','percode':'1','rootPparentid':1,'sortstring':'1','url':'1'},{'available':0,'id':3,'name':'2','parentid':1,'parentids':'0,1','percode':'2','rootPparentid':1,'sortstring':'2','url':'2'},{'available':0,'id':4,'name':'3','parentid':1,'parentids':'0,1','percode':'3','rootPparentid':1,'sortstring':'3','type':'menu','url':'3'}];
+        /* let list = [{'available':0,'id':2,'name':'1','parentid':1,'parentids':'[1]','percode':'1','rootPparentid':1,'sortstring':'1','url':'1'},{'available':0,'id':3,'name':'2','parentid':1,'parentids':'0,1','percode':'2','rootPparentid':1,'sortstring':'2','url':'2'},{'available':0,'id':4,'name':'3','parentid':1,'parentids':'0,1','percode':'3','rootPparentid':1,'sortstring':'3','type':'menu','url':'3'}];
 
-        this.children = list;
-        this.hasChild = true;
+         this.children = list;*/
+
 
       },
       close: function () {
         console.log('close');
         this.children = new Object;
-          this.isOpen = false;
+        this.isOpen = false;
       },
       /**
        * 添加数据
@@ -121,14 +128,14 @@
               <input type="text" class="form-control" id="p_percode" placeholder="权限标识字符串" aria-describedby="">
             </div>
             `,
-          'yes': function(index, layero){
+          'yes': function (index, layero) {
             Axios.post('/access/user_and_permission/permissionAdd.do',
               Qs.stringify({
                 'name': $('#p_Name').val(),
-                'percode':$('#p_percode').val(),
-                'sortstring':$('#p_c_sortstring').val(),
-                'url':$('#p_Url').val(),
-                'parentid':this.thisVue.pnode.id,
+                'percode': $('#p_percode').val(),
+                'sortstring': $('#p_c_sortstring').val(),
+                'url': $('#p_Url').val(),
+                'parentid': this.thisVue.pnode.id,
               })
             ).then((response) => {
               let data = response.data;
@@ -139,7 +146,7 @@
             });
             layer.close(index);
           },
-          thisVue:this
+          thisVue: this
         });
       }
     }
@@ -149,6 +156,15 @@
 <style scoped>
   .list-group-item {
     cursor: pointer;
+  }
+  .tool-bar{
+    border-bottom: 0px;
+    border-left: 0px;
+  }
+  .children-box{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
 
 </style>

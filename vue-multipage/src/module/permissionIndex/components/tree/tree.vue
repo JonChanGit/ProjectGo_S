@@ -31,18 +31,21 @@
         if (data.flag == true) {
           let root = data.entity;
           this.child = root;
-
         }
         this.active = true;
       }).catch((error) => {
         console.log(error);
       });
 
-      this.child = {'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'};
+      // this.child = {'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'};
     },
   };
 </script>
 
 <style scoped>
-
+.list-group{
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 </style>
