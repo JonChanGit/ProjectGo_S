@@ -26,7 +26,7 @@
 				<small>角色管理</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="admin_access/index.do"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="access/index.do"><i class="fa fa-dashboard"></i> Home</a></li>
 				<li>用户与权限</li>
 				<li class="active">角色管理</li>
 			</ol>
@@ -38,7 +38,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">操作面板</h3></div>
 				<div class="panel-body">
-					<button class="btn btn-app layerDemo" data-toggle="modal" data-target="#myModal" data-type="add">
+					<button class="btn btn-app layerDemo" id="addRolePanel" onclick="addRolePanelBtnClick();">
 						<i class="fa fa-plus"></i> 添加
 					</button>
 					<button class="btn btn-app" onclick="location.replace(location.href);">
@@ -82,8 +82,7 @@
 
 
 												<button type="button" class="btn btn-primary"
-														aria-label="编辑${item.name}" data-toggle="modal"
-														data-target="#myModal"
+														aria-label="编辑${item.name}"
 														onclick="showUXDialogModify(${item.id})">编辑
 												</button>
 
@@ -129,34 +128,44 @@
 
 </body>
 <%@include file="../linkfile/footInfo.jsp" %>
-<script>
-	var myformDiv = `
-			<h4>新角色名称</h4>
-                <div class="input-group">
-                		<input type="hidden"  id="roleID" value="{{id}}">
-                    <span class="input-group-addon">
+
+<template id="myformDiv">
+  <h4>新角色名称</h4>
+  <div class="input-group">
+    <input type="hidden"  id="roleID" value="{{id}}">
+    <span class="input-group-addon">
                       <input type="checkbox" checked="checked" id="formCheckBox">
                     </span>
-                    <input id="roleDes" class="form-control" type="text" placeholder="角色名称"/>
-                </div>`;
-</script>
+    <input id="roleDes" class="form-control" type="text" placeholder="角色名称"/>
+  </div>
+</template>
+
 <script type="text/javascript">
-	layui.use('layer', function () {
-		var $ = layui.jquery, layer = layui.layer;
-		var active = {
-			add: function () {
-				layer.open({
-					title: '${app_PageTitle}'
-					, content: myformDiv,
-					yes: submitNew
-				});
-			}
-		}
-		$('.layerDemo').on('click', function () {
-			var type = $(this).data('type');
-			active[type] ? active[type].call(this) : '';
-		});
-	});
+  function addRolePanelBtnClick () {
+    layer.open({
+      title:'添加角色',
+      content: $('#myformDiv').html(),
+      yes: function(index){
+        if($('#roleDes').val() == ''){
+          layer.msg('请输入角色名称', {icon: 7});
+          return false;
+        }
+        var cd = 0;
+        if(document.getElementById('formCheckBox').checked){
+          cd = 1;
+        }
+        miniAjax('access/user_and_permission/roleAdd.do',
+          {
+            'name': $('#roleDes').val(),
+            'available': cd
+          }, function (data) {
+            appendAlertInfo('alertDivSID', data.flag + ' ' + data.message);
+          }
+        );
+        layer.close(index);
+      }
+    });
+  }
 
 	/**
 	 * 提交新角色
@@ -197,7 +206,7 @@
 	}
 
 	function showUXDialogModify(roleId) {
-		var html = Mustache.render(myformDiv, {'id':roleId});
+		var html = Mustache.render($('#myformDiv').html(), {'id':roleId});
 		layer.open({
 			title: '${app_PageTitle}'
 			, content: html,
