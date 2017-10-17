@@ -3,8 +3,10 @@ package cn.com.jonpad.servlet;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.entity.SysUserRole;
 import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysRoleService;
+import cn.com.jonpad.service.SysUserRoleService;
 import cn.com.jonpad.service.SysUserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by jon75 on 2017/6/3.
@@ -68,9 +71,10 @@ public class ResourceSetUpServlet extends HttpServlet {
     }
 
     SysUserService sus =(SysUserService)applicationContext.getBean("sysUserService");
-		long size = sus.getUserCount();
-		if (size < 1){
-			SysUser user = new SysUser();
+    List<SysUserRole> administrationList = sus.getAdministration();
+    SysUser user = null;
+    if (administrationList.size() < 1){
+      user = new SysUser();
 			user.setEmail("admin@admin.com");
 			user.setInfo("超级管理员");
 			user.setLocked(0);
@@ -78,7 +82,14 @@ public class ResourceSetUpServlet extends HttpServlet {
 			user.setUsername("超级管理员");
 			user.setHead("dist/img/no_profile.png");
 			sus.addUser(user,"system");
-		}
+
+			// 注册权限
+      SysUserRoleService surs = applicationContext.getBean(SysUserRoleService.class);
+      surs.registerAdministration(user.getId());
+
+		}else{
+
+    }
 
     SysPermissionServics sps = (SysPermissionServics)applicationContext.getBean("sysPermissionServics");
     long spsSize = sps.countSize();
@@ -86,10 +97,10 @@ public class ResourceSetUpServlet extends HttpServlet {
       SysPermission sp = new SysPermission();
       sp.setAvailable(1);
       sp.setName("Root");
-      sp.setParentid(0l);
+      sp.setParentid(0L);
       sp.setParentids("0");
       sp.setPercode("root");
-      sp.setRootPparentid(0l);
+      sp.setRootPparentid(0L);
       sp.setSortstring("0");
       sp.setType(SysPermission.MENU_TREE_TYPE_ROOT);
       sp.setUrl("/#");

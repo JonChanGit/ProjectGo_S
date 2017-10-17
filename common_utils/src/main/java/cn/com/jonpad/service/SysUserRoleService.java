@@ -1,10 +1,16 @@
 package cn.com.jonpad.service;
 
+import cn.com.jonpad.entity.SysRole;
+import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.entity.SysUserRole;
+import cn.com.jonpad.repository.SysRoleRepository;
+import cn.com.jonpad.repository.SysUserRepository;
 import cn.com.jonpad.repository.SysUserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,7 +18,15 @@ import java.util.Set;
  */
 @Service
 public class SysUserRoleService {
+  @Autowired
 	private SysUserRoleRepository surr;
+
+  @Autowired
+	private SysRoleRepository srr;
+
+  @Autowired
+  private SysUserRepository sur;
+
 
 	public boolean addSysUserRole(long userId, String[] roleIdArr) {
 		/**
@@ -71,4 +85,22 @@ public class SysUserRoleService {
 		}
 		return true;
 	}
+
+	public boolean registerAdministration(long userId){
+    SysUser uOne = sur.getOne(userId);
+    if(uOne == null){
+      return false;
+    }
+    List<SysRole> all = srr.findAll();
+    if(all.size() > 0){
+      String[] roleArr = new String[all.size()];
+      for (int i = 0; i < roleArr.length; i++) {
+        roleArr[i] = String.valueOf(all.get(i).getId());
+      }
+      this.addSysUserRole(userId,roleArr);
+      return true;
+    }
+    return false;
+  }
+
 }

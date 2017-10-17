@@ -1,8 +1,11 @@
 package cn.com.jonpad.service;
 
+import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.entity.SysUserRole;
 import cn.com.jonpad.entity.SysUserSecurity;
 import cn.com.jonpad.repository.SysUserRepository;
+import cn.com.jonpad.repository.SysUserRoleRepository;
 import cn.com.jonpad.repository.SysUserSecurityRepository;
 import cn.com.jonpad.util.SecurityTool;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -23,8 +26,12 @@ public class SysUserService {
 	private SysUserRepository sur;
 	@Autowired
 	private SysUserSecurityRepository susr;
+  @Autowired
+  private SysUserRoleRepository surr;
+  @Autowired
+  private SysRoleService srs;
 
-	public boolean hasUser(String key){
+  public boolean hasUser(String key){
 		return sur.findByEmailOrUsercode(key,key) == null ?false:true;
 	}
 
@@ -139,4 +146,14 @@ public class SysUserService {
 	public List<SysUser> getAllUser() {
 		return sur.findAll();
 	}
+
+  /**
+   * 获取管理员对应列表
+   * @return
+   */
+	public List<SysUserRole> getAdministration(){
+    SysRole administratorRole = srs.getAdministratorRole();
+    return surr.findBySysRoleId(administratorRole.getId());
+  }
+
 }
