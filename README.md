@@ -12,5 +12,8 @@ IDEA项目
 
 `vue-multipage` > JS 代码库
 
+##关于编码
+> 请使用代码规范检测工具进行约束[link](https://github.com/alibaba/p3c/blob/master/idea-plugin/README_cn.md)
+
 ### 关于许可证的选择
 [阮一峰的这篇博客《如何选择开源许可证？》](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
