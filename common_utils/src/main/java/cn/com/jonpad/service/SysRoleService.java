@@ -26,16 +26,32 @@ public class SysRoleService {
 		return srr.findAll();
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean addRole(SysRole role) {
+    //不允许重复名称
+    long size = srr.countAllByName(role.getName());
+    if(size > 0){
+      return false;
+    }
 		srr.save(role);
 		return true;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean modifyRoleName(SysRole role) {
-		SysRole one = srr.getOne(role.getId());
+	  //不允许重复名称
+    long size = srr.countAllByName(role.getName());
+    if(size > 0){
+      return false;
+    }
+    SysRole one = srr.getOne(role.getId());
+    //如果是超级管理员，拒绝更改
 		if(one != null){
+
+		  if(SysRole.Super_Administrator_Name.equals(one.getName())){
+		    return false;
+      }
+
 			one.setName(role.getName());
 			srr.save(one);
 			return  true;
@@ -43,17 +59,29 @@ public class SysRoleService {
 		return false;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean modifyRoleAvailable(long id) {
 		SysRole role = srr.getOne(id);
-		role.setAvailable(role.getAvailable()==1?0:1);
-		srr.save(role);
-		return true;
+    if(role != null){
+      if(SysRole.Super_Administrator_Name.equals(role.getName())){
+        return false;
+      }
+      role.setAvailable(role.getAvailable()==1?0:1);
+      srr.save(role);
+      return true;
+    }
+    return false;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean deleteRole(long id) {
-		srr.delete(id);
+    SysRole role = srr.getOne(id);
+    if(role != null){
+      if (SysRole.Super_Administrator_Name.equals(role.getName())){
+        return false;
+      }
+      srr.delete(id);
+    }
 		return true;
 	}
 
@@ -64,4 +92,13 @@ public class SysRoleService {
 	public List<SysUserRole> getSysUserRoleList(long id) {
 		return surr.findBySysUserId(String.valueOf(id));
 	}
+
+	public long getRoleCount(){
+	  return srr.count();
+  }
+
+  public SysRole getAdministratorRole(){
+    return srr.findByName(SysRole.Super_Administrator_Name);
+  }
+
 }

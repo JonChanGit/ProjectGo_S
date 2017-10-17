@@ -13,7 +13,9 @@ public class SysRole {
 	public static  final int AVAILABLE_TRUE  = 1;
 	public static  final int AVAILABLE_FALSE  = 0;
 
-	@Id
+  public static  final String Super_Administrator_Name = "AdministratorRole";
+
+  @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="p_i_id")
 	private long id;

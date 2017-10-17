@@ -1,8 +1,10 @@
 package cn.com.jonpad.servlet;
 
 import cn.com.jonpad.entity.SysPermission;
+import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.service.SysPermissionServics;
+import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.service.SysUserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -56,7 +58,16 @@ public class ResourceSetUpServlet extends HttpServlet {
 	public void initDate(){
 		ApplicationContext applicationContext = getApplicationContext();
 
-		SysUserService sus =(SysUserService)applicationContext.getBean("sysUserService");
+    SysRoleService srs = applicationContext.getBean(SysRoleService.class);
+    SysRole administratorRole = srs.getAdministratorRole();
+    if(administratorRole == null){
+      administratorRole = new SysRole();
+      administratorRole.setAvailable(SysRole.AVAILABLE_TRUE);
+      administratorRole.setName(SysRole.Super_Administrator_Name);
+      srs.addRole(administratorRole);
+    }
+
+    SysUserService sus =(SysUserService)applicationContext.getBean("sysUserService");
 		long size = sus.getUserCount();
 		if (size < 1){
 			SysUser user = new SysUser();

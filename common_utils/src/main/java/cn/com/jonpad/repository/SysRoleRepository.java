@@ -10,4 +10,8 @@ import java.util.List;
  */
 public interface SysRoleRepository  extends JpaRepository<SysRole, Long> {
 	List<SysRole> findByAvailable(int available);
+
+	long countAllByName(String name);
+
+  SysRole findByName(String name);
 }
