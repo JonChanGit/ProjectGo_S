@@ -12,6 +12,10 @@ IDEA项目
 
 `vue-multipage` > JS 代码库
 
+### 请注意
+
+> 如果您要使用本项目,请保留项目原始LICENSE并且注明引用地址
+
 ##关于编码
 > 请使用代码规范检测工具进行约束[link](https://github.com/alibaba/p3c/blob/master/idea-plugin/README_cn.md)
 
