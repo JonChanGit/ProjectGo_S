@@ -9,6 +9,7 @@ import cn.com.jonpad.repository.SysUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,14 +36,15 @@ public class SysUserRoleService {
 		// Set<SysUserRole> sysUserRoleList =
 		// sysUserRoleDao.getSysUserRoleSet(userId);
 
-		/**
-		 * 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
-		 */
-		Set<SysUserRole> dbSet = surr.findBySysUserId(userId);
+		// 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
 
-		/**
-		 * 新的Set
-		 */
+    List<SysUserRole> bySysUserId = surr.findBySysUserId(String.valueOf(userId));
+    Set<SysUserRole> dbSet = new HashSet(Arrays.asList(bySysUserId));
+
+
+      /**
+		   * 新的Set
+		   */
 		Set<SysUserRole> newSet = new HashSet<>();
 
 		if (roleIdArr != null) {

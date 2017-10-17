@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,7 +154,13 @@ public class SysUserService {
    */
 	public List<SysUserRole> getAdministration(){
     SysRole administratorRole = srs.getAdministratorRole();
-    return surr.findBySysRoleId(administratorRole.getId());
+    try{
+      return  surr.findBySysRoleId(String.valueOf(administratorRole.getId()));
+    }catch (Exception e){
+      e.printStackTrace();
+      return new ArrayList<>();
+    }
+
   }
 
 }

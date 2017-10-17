@@ -70,7 +70,7 @@ public class ResourceSetUpServlet extends HttpServlet {
       srs.addRole(administratorRole);
     }
 
-    SysUserService sus =(SysUserService)applicationContext.getBean("sysUserService");
+    SysUserService sus =applicationContext.getBean(SysUserService.class);
     List<SysUserRole> administrationList = sus.getAdministration();
     SysUser user = null;
     if (administrationList.size() < 1){
@@ -91,7 +91,7 @@ public class ResourceSetUpServlet extends HttpServlet {
 
     }
 
-    SysPermissionServics sps = (SysPermissionServics)applicationContext.getBean("sysPermissionServics");
+    SysPermissionServics sps = applicationContext.getBean(SysPermissionServics.class);
     long spsSize = sps.countSize();
     if(spsSize < 1){
       SysPermission sp = new SysPermission();
