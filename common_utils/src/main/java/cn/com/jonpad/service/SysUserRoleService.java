@@ -20,89 +20,109 @@ import java.util.Set;
 @Service
 public class SysUserRoleService {
   @Autowired
-	private SysUserRoleRepository surr;
+  private SysUserRoleRepository surr;
 
   @Autowired
-	private SysRoleRepository srr;
+  private SysRoleRepository srr;
 
   @Autowired
   private SysUserRepository sur;
 
 
-	public boolean addSysUserRole(long userId, String[] roleIdArr) {
-		/**
-		 * 库中有的
-		 */
-		// Set<SysUserRole> sysUserRoleList =
-		// sysUserRoleDao.getSysUserRoleSet(userId);
+  public boolean addSysUserRole(long userId, String[] roleIdArr) {
+    /**
+     * 库中有的
+     */
+    // Set<SysUserRole> sysUserRoleList =
+    // sysUserRoleDao.getSysUserRoleSet(userId);
 
-		// 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
+    // 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
 
     List<SysUserRole> bySysUserId = surr.findBySysUserId(String.valueOf(userId));
     Set<SysUserRole> dbSet = new HashSet(Arrays.asList(bySysUserId));
 
 
-      /**
-		   * 新的Set
-		   */
-		Set<SysUserRole> newSet = new HashSet<>();
+    /**
+     * 新的Set
+     */
+    Set<SysUserRole> newSet = new HashSet<>();
 
-		if (roleIdArr != null) {
-			for (int index = 0; index < roleIdArr.length; index++) {
-				SysUserRole tmp = new SysUserRole();
-				tmp.setSysRoleId(roleIdArr[index]);
-				tmp.setSysUserId(userId + "");
-				newSet.add(tmp);
-			}
-		}
+    if (roleIdArr != null) {
+      for (int index = 0; index < roleIdArr.length; index++) {
+        SysUserRole tmp = new SysUserRole();
+        tmp.setSysRoleId(roleIdArr[index]);
+        tmp.setSysUserId(userId + "");
+        newSet.add(tmp);
+      }
+    }
 
-		// 临时Set 一个备份
-		Set<SysUserRole> tmpSet = tmpSet = new HashSet<>(dbSet);
+    // 临时Set 一个备份
+    Set<SysUserRole> tmpSet = tmpSet = new HashSet<>(dbSet);
 
-		if (dbSet.equals(newSet)) {
-			// 没有变动，不做任何操作
-			return true;
-		} else {
-			// 找出变动的元素
-			// 加入新增的
-			dbSet.addAll(newSet);
-			// 移除不存在的？
-			// 保留新集合中的元素
-			dbSet.retainAll(newSet);
-			// 需要删除的集合
-			tmpSet.removeAll(dbSet);
+    if (dbSet.equals(newSet)) {
+      // 没有变动，不做任何操作
+      return true;
+    } else {
+      // 找出变动的元素
+      // 加入新增的
+      dbSet.addAll(newSet);
+      // 移除不存在的？
+      // 保留新集合中的元素
+      dbSet.retainAll(newSet);
+      // 需要删除的集合
+      tmpSet.removeAll(dbSet);
 
-			// 提交更改
-			return this.saveOrUpdataAll(dbSet, tmpSet);
-		}
+      // 提交更改
+      return this.saveOrUpdataAll(dbSet, tmpSet);
+    }
 
-	}
+  }
 
-	private boolean saveOrUpdataAll(Set<SysUserRole> dbSet, Set<SysUserRole> deleteSet) {
-		for (SysUserRole item : dbSet) {
-			surr.saveAndFlush(item);
-		}
-		for (SysUserRole item : deleteSet) {
-			surr.saveAndFlush(item);
-		}
-		return true;
-	}
+  private boolean saveOrUpdataAll(Set<SysUserRole> dbSet, Set<SysUserRole> deleteSet) {
+    for (SysUserRole item : dbSet) {
+      surr.saveAndFlush(item);
+    }
+    for (SysUserRole item : deleteSet) {
+      surr.saveAndFlush(item);
+    }
+    return true;
+  }
 
-	public boolean registerAdministration(long userId){
+  public boolean registerAdministration(long userId) {
     SysUser uOne = sur.getOne(userId);
-    if(uOne == null){
+    if (uOne == null) {
       return false;
     }
     List<SysRole> all = srr.findAll();
-    if(all.size() > 0){
+    if (all.size() > 0) {
       String[] roleArr = new String[all.size()];
       for (int i = 0; i < roleArr.length; i++) {
         roleArr[i] = String.valueOf(all.get(i).getId());
       }
-      this.addSysUserRole(userId,roleArr);
+      this.addSysUserRole(userId, roleArr);
       return true;
     }
     return false;
   }
+
+  /**
+   * 判断是否为超级管理员
+   * @param userId
+   * @return
+   */
+  public boolean isAdministration(long userId) {
+    SysRole administration = srr.findByName(SysRole.Super_Administrator_Name);
+    if (administration == null) {
+      return false;
+    }
+
+    long size = surr.countBySysUserIdAndSysRoleId(String.valueOf(userId), String.valueOf(administration.getId()));
+    if(size == 1){
+      return true;
+    }else {
+      return false;
+    }
+  }
+
 
 }

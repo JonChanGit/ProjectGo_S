@@ -31,6 +31,8 @@ public class SysUserService {
   private SysUserRoleRepository surr;
   @Autowired
   private SysRoleService srs;
+  @Autowired
+  private SysUserRoleService surs;
 
   public boolean hasUser(String key){
 		return sur.findByEmailOrUsercode(key,key) == null ?false:true;
@@ -54,7 +56,7 @@ public class SysUserService {
 	 * @param user 用户基本消信息
 	 * @param password 明文密码
 	 */
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void addUser(SysUser user, String password) {
 		// 原始密码
 		String source = password;
@@ -80,7 +82,7 @@ public class SysUserService {
 		susr.save(security);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean addUser(SysUser user){
 
 		SysUser dbUser = sur.findByEmailOrUsercode(user.getEmail(), user.getUsercode());
@@ -91,13 +93,21 @@ public class SysUserService {
 		return true;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean deleteUser(long id) {
+	  if(surs.isAdministration(id)){
+	    return false;
+    }
 		sur.delete(id);
 		return true;
 	}
 
+  @Transactional(rollbackFor = Exception.class)
 	public boolean modifyUser(SysUser user) {
+    if(surs.isAdministration(user.getId())){
+      return false;
+    }
+
 		SysUser oldUser = sur.findOne(user.getId());
 
 		if (oldUser != null) {
@@ -130,7 +140,13 @@ public class SysUserService {
 	 * @param userId
 	 * @return
 	 */
+  @Transactional(rollbackFor = Exception.class)
 	public boolean modifyUserState(long userId) {
+
+    if(surs.isAdministration(userId)){
+      return false;
+    }
+
 		SysUser oldUser = sur.findOne(userId);
 		if (oldUser != null) {
 			if (oldUser.getLocked() == 1) {

@@ -15,4 +15,6 @@ public interface SysUserRoleRepository  extends JpaRepository<SysUserRole, Long>
 	//Set<SysUserRole> findBySysUserId(String userId);
 
 	List<SysUserRole> findBySysRoleId(String roleId);
+
+	long countBySysUserIdAndSysRoleId(String userId,String roleId);
 }
