@@ -59,9 +59,9 @@ public class UserAndPermissionController extends BaseController{
 	public void userAdd(SysUser user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = sus.addUser(user);
-		if (b)
-			JsonTool.toJson(true, "用户添加成功,初始密码【88888888】", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "用户添加成功,初始密码【88888888】", response);
+    } else {
 			JsonTool.toJson(false, "用户添加失败", response);
 		}
 	}
@@ -78,9 +78,9 @@ public class UserAndPermissionController extends BaseController{
 	public void userDelete(SysUser user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = sus.deleteUser(user.getId());
-		if (b)
-			JsonTool.toJson(true, "删除成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "删除成功", response);
+    } else {
 			JsonTool.toJson(false, "删除失败", response);
 		}
 	}
@@ -97,9 +97,9 @@ public class UserAndPermissionController extends BaseController{
 	public void userModify(SysUser user, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = sus.modifyUser(user);
-		if (b)
-			JsonTool.toJson(true, "修改用户完成", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "修改用户完成", response);
+    } else {
 			JsonTool.toJson(false, "修改用户失败", response);
 		}
 	}
@@ -119,9 +119,9 @@ public class UserAndPermissionController extends BaseController{
 			throws IOException {
 
 		boolean b = sus.modifyUserState(userId);
-		if (b)
-			JsonTool.toJson(true, "状态修改成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "状态修改成功", response);
+    } else {
 			JsonTool.toJson(false, "状态修改失败", response);
 		}
 	}
@@ -158,8 +158,9 @@ public class UserAndPermissionController extends BaseController{
 	public void roleAdd(SysRole role, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = srs.addRole(role);
-		if (b)
-			JsonTool.toJson(true, "角色添加成功", response);
+		if (b){
+      JsonTool.toJson(true, "角色添加成功", response);
+    }
 		else {
 			JsonTool.toJson(false, "角色添加失败", response);
 		}
@@ -178,9 +179,9 @@ public class UserAndPermissionController extends BaseController{
 	public void roleModify(SysRole role, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = srs.modifyRoleName(role);
-		if (b)
-			JsonTool.toJson(true, "名称已改为" + role.getName(), response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "名称已改为" + role.getName(), response);
+    } else {
 			JsonTool.toJson(false, "名称修改失败", response);
 		}
 	}
@@ -198,9 +199,9 @@ public class UserAndPermissionController extends BaseController{
 			throws IOException {
 
 		boolean b = srs.modifyRoleAvailable(id);
-		if (b)
-			JsonTool.toJson(true, "状态修改成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "状态修改成功", response);
+    } else {
 			JsonTool.toJson(false, "状态修改失败", response);
 		}
 	}
@@ -217,9 +218,9 @@ public class UserAndPermissionController extends BaseController{
 	public void roleDelete(long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = srs.deleteRole(id);
-		if (b)
-			JsonTool.toJson(true, "删除成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "删除成功", response);
+    } else {
 			JsonTool.toJson(false, "删除失败", response);
 		}
 	}
@@ -298,9 +299,9 @@ public class UserAndPermissionController extends BaseController{
 	public void permissionAdd(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = sps.addPermission(permission);
-		if (b)
-			JsonTool.toJson(true, "功能添加成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "功能添加成功", response);
+    } else {
 			JsonTool.toJson(false, "功能添加失败", response);
 		}
 	}
@@ -318,9 +319,9 @@ public class UserAndPermissionController extends BaseController{
 	public void permissionDelete(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		boolean b = sps.deletePermission(permission.getId());
-		if (b)
-			JsonTool.toJson(true, "删除成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "删除成功", response);
+    } else {
 			JsonTool.toJson(false, "删除失败", response);
 		}
 	}
@@ -360,9 +361,9 @@ public class UserAndPermissionController extends BaseController{
 			throws IOException {
 
 		boolean b = sps.modifypermissionState(permission);
-		if (b)
-			JsonTool.toJson(true, "状态修改成功", response);
-		else {
+		if (b) {
+      JsonTool.toJson(true, "状态修改成功", response);
+    } else {
 			JsonTool.toJson(false, "状态修改失败", response);
 		}
 	}

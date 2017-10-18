@@ -44,7 +44,7 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="input-group input-group-lg">
-          		<input type="text" class="form-control" placeholder="请输入验证码" aria-describedby="sizing-addon1" name="randomcode" required="required">
+          		<input type="text" class="form-control" placeholder="请输入验证码" aria-describedby="sizing-addon1" name="randomcode" >
           		<span class="input-group-btn">
           			<button onclick='reloadImg();' class="btn btn-default" type="button">
           				<img  id="randomcode_img" src="validatecode.jsp" alt="图像无法显示，请刷新页面" width="56" height="20" align='absMiddle' />

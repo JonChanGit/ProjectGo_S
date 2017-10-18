@@ -73,10 +73,10 @@ public class SysPermissionServics {
 				} else {
 					permission.setParentids(parentSp.getId() + "");
 				}
+        permission.setType(SysPermission.MENU_TREE_TYPE_MENU);
+        spr.save(permission);
+        return true;
 			}
-      permission.setType(SysPermission.MENU_TREE_TYPE_MENU);
-			spr.save(permission);
-			return true;
 		}
 
 		return false;
@@ -121,7 +121,8 @@ public class SysPermissionServics {
 
 	public SysPermission getOne(long id){
 	  if(id == 0){
-      return spr.getRoot().get(0);
+      List<SysPermission> list = spr.getRoot();
+      return list.get(0);
     }else {
 	    return spr.findOne(id);
     }

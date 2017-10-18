@@ -12,5 +12,7 @@ import java.util.Set;
 public interface SysUserRoleRepository  extends JpaRepository<SysUserRole, Long> {
 	List<SysUserRole> findBySysUserId(String userId);
 
-	Set<SysUserRole> findBySysUserId(long userId);
+	//Set<SysUserRole> findBySysUserId(String userId);
+
+	List<SysUserRole> findBySysRoleId(String roleId);
 }

@@ -66,7 +66,7 @@ desired effect
 						<!-- Menu Footer-->
 						<li class="user-footer">
 							<div class="pull-left">
-								<a href="admin_access/user/psd.do" class="btn btn-default btn-flat">修改密码</a>
+								<a href="access/user/psd.do" class="btn btn-default btn-flat">修改密码</a>
 							</div>
 							<div class="pull-right">
 								<a href="logout.do" class="btn btn-default btn-flat" ">退出登录</a>
@@ -127,7 +127,7 @@ desired effect
 					<i class="fa fa-dashboard"></i> <span>请假系统</span> <i class="fa fa-angle-left pull-right"></i>
 				</a>
 				<ul class="treeview-menu ">
-					<li class=""><a href="admin_access/ex/studentView.do"><i class="fa fa-circle-o"></i>查看请假记录</a></li>
+					<li class=""><a href="access/ex/studentView.do"><i class="fa fa-circle-o"></i>查看请假记录</a></li>
 
 				</ul>
 			</li>

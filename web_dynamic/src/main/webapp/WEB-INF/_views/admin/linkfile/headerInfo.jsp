@@ -13,7 +13,7 @@ response.setHeader("Refresh","1830");
 <script type="text/javascript">
 var t=setTimeout("_time_out_refresh_page()",1800000)
 function _time_out_refresh_page(){
-	window.location="admin_access/index.do";
+	window.location="access/index.do";
 }
 </script>
 <!--

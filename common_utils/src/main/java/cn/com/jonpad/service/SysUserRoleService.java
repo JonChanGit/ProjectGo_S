@@ -1,10 +1,17 @@
 package cn.com.jonpad.service;
 
+import cn.com.jonpad.entity.SysRole;
+import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.entity.SysUserRole;
+import cn.com.jonpad.repository.SysRoleRepository;
+import cn.com.jonpad.repository.SysUserRepository;
 import cn.com.jonpad.repository.SysUserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,7 +19,15 @@ import java.util.Set;
  */
 @Service
 public class SysUserRoleService {
+  @Autowired
 	private SysUserRoleRepository surr;
+
+  @Autowired
+	private SysRoleRepository srr;
+
+  @Autowired
+  private SysUserRepository sur;
+
 
 	public boolean addSysUserRole(long userId, String[] roleIdArr) {
 		/**
@@ -21,14 +36,15 @@ public class SysUserRoleService {
 		// Set<SysUserRole> sysUserRoleList =
 		// sysUserRoleDao.getSysUserRoleSet(userId);
 
-		/**
-		 * 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
-		 */
-		Set<SysUserRole> dbSet = surr.findBySysUserId(userId);
+		// 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
 
-		/**
-		 * 新的Set
-		 */
+    List<SysUserRole> bySysUserId = surr.findBySysUserId(String.valueOf(userId));
+    Set<SysUserRole> dbSet = new HashSet(Arrays.asList(bySysUserId));
+
+
+      /**
+		   * 新的Set
+		   */
 		Set<SysUserRole> newSet = new HashSet<>();
 
 		if (roleIdArr != null) {
@@ -71,4 +87,22 @@ public class SysUserRoleService {
 		}
 		return true;
 	}
+
+	public boolean registerAdministration(long userId){
+    SysUser uOne = sur.getOne(userId);
+    if(uOne == null){
+      return false;
+    }
+    List<SysRole> all = srr.findAll();
+    if(all.size() > 0){
+      String[] roleArr = new String[all.size()];
+      for (int i = 0; i < roleArr.length; i++) {
+        roleArr[i] = String.valueOf(all.get(i).getId());
+      }
+      this.addSysUserRole(userId,roleArr);
+      return true;
+    }
+    return false;
+  }
+
 }

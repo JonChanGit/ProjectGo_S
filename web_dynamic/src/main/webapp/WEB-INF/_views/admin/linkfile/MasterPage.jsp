@@ -28,7 +28,7 @@
 			<small>控制中心</small>
 		  </h1>
 					<ol class="breadcrumb">
-						<li><a href="admin_access/index.do"><i class="fa fa-dashboard"></i> Home</a></li>
+						<li><a href="access/index.do"><i class="fa fa-dashboard"></i> Home</a></li>
 						<li class="active">仪表板</li>
 					</ol>
 				</section>
