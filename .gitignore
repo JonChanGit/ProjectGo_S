@@ -19,3 +19,4 @@ node_modules/
 npmdist/
 webapp/module/
 webapp/static/*
+package-lock.json

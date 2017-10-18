@@ -18,3 +18,5 @@ IDEA项目
 
 ### 关于许可证的选择
 [阮一峰的这篇博客《如何选择开源许可证？》](http://www.ruanyifeng.com/blog/2011/05/how_to_choose_free_software_licenses.html)
+
+`git rm  -r -n --cached   */bin/\* ` (注意：此命令会真正删除文件，你可以加上"-n"参数 查看文件列表)
