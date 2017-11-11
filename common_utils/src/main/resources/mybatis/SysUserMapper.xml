@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.jonpad.mybatis.SysUserDao">
+  <insert id="add" parameterType="cn.com.jonpad.entity.SysUser" useGeneratedKeys="true">
+    INSERT INTO `mzjpa`.`t_sys_user` (`c_email`, `c_head`, `c_info`, `i_locked`, `c_usercode`, `c_username`)
+    VALUES ( #{email}, #{head}, #{info}, #{locked}, #{usercode}, #{username});
+  </insert>
+</mapper>

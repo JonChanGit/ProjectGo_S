@@ -15,7 +15,8 @@
 		<jdk.version>1.8</jdk.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<shiro.version>1.2.3</shiro.version>
-	</properties>
+    <mybatis.version>3.4.5</mybatis.version>
+  </properties>
 
 	<modules>
 		<module>common_utils</module>
