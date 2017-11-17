@@ -152,15 +152,15 @@
         });
       },
       deleteNode:function () {
-        let _this = this;
 
-        layer.confirm('确定删除?', {icon: 3, title:'警告'}, function(index){
-          console.log(_this.pnode.id);
+        layer.confirm('确定删除?', {icon: 3, title:'警告'}, (index)=>{
+          console.log(this.pnode.id);
           Axios.post('/access/user_and_permission/permissionDelete.do',
-            Qs.stringify({permissionId: _this.pnode.id,})
+            Qs.stringify({permissionId: this.pnode.id,})
           ).then((response) => {
-            Tools.requestFeedback({response,successCallback:function () {
+            Tools.requestFeedback({response,successCallback:()=>{
               layer.msg('操作成功');
+              this.$parent.open();
               },
             });
           }).catch((error) => {
