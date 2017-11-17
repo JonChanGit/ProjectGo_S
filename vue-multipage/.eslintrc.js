@@ -26,7 +26,7 @@ module.exports = {
     quotes: ['error', 'single'],
     'no-unused-vars': ['warn'],
     indent: [0, 2],
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': ['error', 'windows'],
     //增加分号
     semi: ['error', 'always'],
     // 允许控制台输出

@@ -11,7 +11,7 @@
     <base href="<%=basePath %>" />
 <%@include file="../linkfile/headerInfo.jsp" %>
      <title>功能管理<c:out value="${app_PageTitle}" default=" -- [未设置应用程序名称]"></c:out></title>
-    <link href="/npmdist/static/css/module/permissionIndex.4de53ed64e7d3ec98cf61682038bcc2a.css?869d7b0f4433f0e0f278" rel="stylesheet">
+    <link href="/npmdist/static/css/module/permissionIndex.css?" rel="stylesheet">
   </head>
   <body class="skin-black">
     <div class="wrapper">
@@ -44,7 +44,7 @@
 
   </body>
 <%@include file="../linkfile/footInfo.jsp" %>
-  <script type="text/javascript" src="/npmdist/static/js/manifest.js?95e31338de56980279e4"></script><script type="text/javascript" src="/npmdist/static/js/vendor.js?95e31338de56980279e4"></script><script type="text/javascript" src="/npmdist/static/js/module/permissionIndex.js?95e31338de56980279e4"></script>
+  <script type="text/javascript" src="/npmdist/static/js/manifest.js"></script><script type="text/javascript" src="/npmdist/static/js/vendor.js"></script><script type="text/javascript" src="/npmdist/static/js/module/permissionIndex.js"></script>
   <script type="text/javascript">
 function init(){
 

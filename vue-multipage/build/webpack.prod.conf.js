@@ -40,9 +40,9 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: true
     }),
     // extract css into its own file
-    new CleanPlugin(['../dist']), //清空生成目录
+    new CleanPlugin(['../../web_dynamic/target/web_dynamic/npmdist']), //清空生成目录
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css')
+      filename: utils.assetsPath('css/[name].css') // 原值css/[name].[contenthash].css
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -58,6 +58,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: config.build.index,
       template: 'index.html',
       inject: true,
+      hash:false, // 拒绝Hash(JS部分)
       minify: {
         removeComments: true,
         collapseWhitespace: true,

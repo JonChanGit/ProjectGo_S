@@ -31,7 +31,8 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      hash:false // 拒绝Hash(JS部分)
     }),
     new FriendlyErrorsPlugin()
   ]
