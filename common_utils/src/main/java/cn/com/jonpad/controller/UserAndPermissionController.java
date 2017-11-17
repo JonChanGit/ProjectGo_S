@@ -316,9 +316,9 @@ public class UserAndPermissionController extends BaseController{
 	 */
 	@RequestMapping(value = "/permissionDelete", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
-	public void permissionDelete(SysPermission permission, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void permissionDelete(long permissionId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		boolean b = sps.deletePermission(permission.getId());
+		boolean b = sps.deletePermission(permissionId);
 		if (b) {
       JsonTool.toJson(true, "删除成功", response);
     } else {

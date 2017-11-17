@@ -97,7 +97,7 @@ public class SysPermissionServics {
 		return null;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean deletePermission(long id) {
 		// 获取节点
 		SysPermission permission = spr.findById(id);

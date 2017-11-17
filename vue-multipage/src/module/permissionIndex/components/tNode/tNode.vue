@@ -13,7 +13,7 @@
       <div class="btn-group">
         <button type="button" class="btn btn-primary" @click="newDialog()"><span class="glyphicon glyphicon-plus"></span></button>
         <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
-        <button type="button" class="btn btn-danger" disabled="disabled"><span class="glyphicon glyphicon-trash"></span></button>
+        <button type="button" class="btn btn-danger" @click="deleteNode()"><span class="glyphicon glyphicon-trash"></span></button>
         </div>
 
       &nbsp;
@@ -49,8 +49,8 @@
       'treeNode': treeNode
     },
     props: {
-      'isActive': Boolean,
-      'pnode': {}
+      'isActive': Boolean, // 是否激活
+      'pnode': {}, // 当前节点对象
     },
     computed: {
       glyphiconDown: function () {
@@ -96,12 +96,9 @@
           layer.closeAll();
         });
         this.isOpen = true;
-
         /* let list = [{'available':0,'id':2,'name':'1','parentid':1,'parentids':'[1]','percode':'1','rootPparentid':1,'sortstring':'1','url':'1'},{'available':0,'id':3,'name':'2','parentid':1,'parentids':'0,1','percode':'2','rootPparentid':1,'sortstring':'2','url':'2'},{'available':0,'id':4,'name':'3','parentid':1,'parentids':'0,1','percode':'3','rootPparentid':1,'sortstring':'3','type':'menu','url':'3'}];
 
          this.children = list;*/
-
-
       },
       close: function () {
         console.log('close');
@@ -153,6 +150,26 @@
           },
           thisVue: this
         });
+      },
+      deleteNode:function () {
+        let _this = this;
+
+        layer.confirm('确定删除?', {icon: 3, title:'警告'}, function(index){
+          console.log(_this.pnode.id);
+          Axios.post('/access/user_and_permission/permissionDelete.do',
+            Qs.stringify({permissionId: _this.pnode.id,})
+          ).then((response) => {
+            Tools.requestFeedback({response,successCallback:function () {
+              layer.msg('操作成功');
+              },
+            });
+          }).catch((error) => {
+            console.log(error);
+            layer.closeAll();
+          });
+          layer.close(index);
+        });
+
       }
     }
   };

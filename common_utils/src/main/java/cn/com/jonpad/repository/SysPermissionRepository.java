@@ -38,6 +38,7 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	List<SysPermission> getMenuByRoot(long rootId);
 
 	SysPermission findById(long parentid);
+	long countById(long parentid);
 
 	/**
 	 * 查找子节点
