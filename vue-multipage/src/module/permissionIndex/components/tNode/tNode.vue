@@ -34,6 +34,26 @@
   import Tools from '@/components/Tool.js';
   import treeNode from './tNode.vue';
 
+  const html_template = `
+            <input type="hidden"  id="p_Id" value="{{id}}">
+            <div class="input-group">
+              <span class="input-group-addon">名称</span>
+              <input type="text" class="form-control" id="p_Name" placeholder="菜单名称" aria-describedby="" value="{{name}}">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">排序</span>
+              <input type="text" class="form-control" id="p_c_sortstring" placeholder="c_sortstring" aria-describedby="" value="{{sortstring}}">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">URL</span>
+              <input type="text" class="form-control" id="p_Url" placeholder="访问路径" aria-describedby="" value="{{url}}">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon" id="">标识</span>
+              <input type="text" class="form-control" id="p_percode" placeholder="权限标识字符串" aria-describedby="" value="{{percode}}">
+            </div>
+            `;
+
 
   export default {
     name: 'treeNode',
@@ -112,24 +132,7 @@
         // let index =
         layer.open({
           title: '新增功能',
-          content: `
-            <div class="input-group">
-              <span class="input-group-addon">名称</span>
-              <input type="text" class="form-control" id="p_Name" placeholder="菜单名称" aria-describedby="">
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon">排序</span>
-              <input type="text" class="form-control" id="p_c_sortstring" placeholder="c_sortstring" aria-describedby="">
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon">URL</span>
-              <input type="text" class="form-control" id="p_Url" placeholder="访问路径" aria-describedby="">
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon" id="">标识</span>
-              <input type="text" class="form-control" id="p_percode" placeholder="权限标识字符串" aria-describedby="">
-            </div>
-            `,
+          content: html_template,
           'yes': function (index, layero) {
             Axios.post('/access/user_and_permission/permissionAdd.do',
               Qs.stringify({
