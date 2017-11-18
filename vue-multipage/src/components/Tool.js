@@ -1,8 +1,10 @@
 /**
  * Created by jon75 on 2017/10/15.
  */
-/* global layer ,$*/
+/* global layer ,$, template*/
 export default{
+  //uslPre:'/api',
+  uslPre:'',
   msg: function (responseData) {
     console.log(responseData);
     layer.msg(responseData.message);
@@ -21,6 +23,16 @@ export default{
     }else{
       layer.msg(data.message);
     }
+  },
+  /**
+   * 使用artTemplate渲染模板
+   * https://aui.github.io/art-template/zh-cn/docs/api.html#template-filename-content
+   * @param htmlTemplate 模板字符串
+   * @param data 需要渲染的数据
+   */
+  render:function (htmlTemplate,data) {
+    let render = template.compile(htmlTemplate);
+    return render(data);//渲染模板
   }
 };
 

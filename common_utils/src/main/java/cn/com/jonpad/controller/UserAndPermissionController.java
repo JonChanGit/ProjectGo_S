@@ -357,10 +357,22 @@ public class UserAndPermissionController extends BaseController{
 	 */
 	@RequestMapping(value = "/permissionChangeState", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_STATE)
-	public void permissionChangeState(SysPermission permission, HttpServletRequest request, HttpServletResponse response)
+	public void permissionChangeState(long permissionId, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		boolean b = sps.modifypermissionState(permission);
+		boolean b = sps.modifypermissionState(permissionId);
+		if (b) {
+      JsonTool.toJson(true, "状态修改成功", response);
+    } else {
+			JsonTool.toJson(false, "状态修改失败", response);
+		}
+	}
+
+  @RequestMapping(value = "/permissionChangeData", method = RequestMethod.POST)
+	public void permissionChangeData(long permissionId, String name,String percode,String sortstring,String url, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		boolean b = sps.edit(permissionId,name,percode,sortstring,url);
 		if (b) {
       JsonTool.toJson(true, "状态修改成功", response);
     } else {

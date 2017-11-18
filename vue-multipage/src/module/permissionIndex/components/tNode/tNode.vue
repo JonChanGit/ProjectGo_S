@@ -12,7 +12,7 @@
 
       <div class="btn-group">
         <button type="button" class="btn btn-primary" @click="newDialog()"><span class="glyphicon glyphicon-plus"></span></button>
-        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+        <button type="button" class="btn btn-primary" @click="editDialog()"><i class="fa fa-edit"></i></button>
         <button type="button" class="btn btn-danger" @click="deleteNode()"><span class="glyphicon glyphicon-trash"></span></button>
         </div>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  /* global layer ,$*/
+  /* global layer ,$ */
   import Axios from 'axios';
   import Qs from 'qs';
   import Tools from '@/components/Tool.js';
@@ -100,7 +100,7 @@
       open: function () {
         console.log('open');
         layer.load(2, {time: 10*1000});
-        Axios.post('/access/user_and_permission/permissionGetChildrenNode.do',
+        Axios.post(Tools.uslPre+'/access/user_and_permission/permissionGetChildrenNode.do',
           Qs.stringify({pid: this.pnode.id,})
         ).then((response) => {
           let data = response.data;
@@ -129,12 +129,11 @@
        * 添加数据
        */
       newDialog: function () {
-        // let index =
         layer.open({
           title: '新增功能',
-          content: html_template,
+          content: Tools.render(html_template,{}),
           'yes': function (index, layero) {
-            Axios.post('/access/user_and_permission/permissionAdd.do',
+            Axios.post(Tools.uslPre+'/access/user_and_permission/permissionAdd.do',
               Qs.stringify({
                 'name': $('#p_Name').val(),
                 'percode': $('#p_percode').val(),
@@ -154,11 +153,40 @@
           thisVue: this
         });
       },
+      /**
+       * 编辑数据
+       */
+      editDialog: function () {
+        let _html = Tools.render(html_template,this.pnode);
+        layer.open({
+          title: '新增功能',
+          content: _html,
+          'yes': (index, layero)=>{
+            Axios.post(Tools.uslPre+'/access/user_and_permission/permissionChangeData.do',
+              Qs.stringify({
+                'name': $('#p_Name').val(),
+                'percode': $('#p_percode').val(),
+                'sortstring': $('#p_c_sortstring').val(),
+                'url': $('#p_Url').val(),
+                'permissionId': this.pnode.id,
+              })
+            ).then((response) => {
+              let data = response.data;
+              Tools.msg(data);
+              this.$parent.open();
+            }).catch((error) => {
+              console.log(error);
+            });
+            layer.close(index);
+          },
+          thisVue: this
+        });
+      },
       deleteNode:function () {
 
         layer.confirm('确定删除?', {icon: 3, title:'警告'}, (index)=>{
           console.log(this.pnode.id);
-          Axios.post('/access/user_and_permission/permissionDelete.do',
+          Axios.post(Tools.uslPre+'/access/user_and_permission/permissionDelete.do',
             Qs.stringify({permissionId: this.pnode.id,})
           ).then((response) => {
             Tools.requestFeedback({response,successCallback:()=>{

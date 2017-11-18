@@ -52,6 +52,7 @@
     <script src="require/comstomer/js/service.js" type="text/javascript"></script>
     <script src="require/comstomer/js/alert.js" type="text/javascript"></script>
     <script src="require/pulgins/layer/layer.js" type="text/javascript"></script>
+    <script src="require/pulgins/template-web.js" type="text/javascript"></script>
     <script type="application/javascript">
     	$(document).ready(function(){
     		appendAlertSuccess("alertDivSID","页面加载完成");

@@ -7,6 +7,7 @@ import cn.com.jonpad.util.ValidateTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +98,28 @@ public class SysPermissionServics {
 		return null;
 	}
 
+  @Transactional(rollbackFor = Exception.class)
+	public boolean edit(long permissionId, String name,String percode,String sortstring,String url){
+    SysPermission permission = spr.findById(permissionId);
+    if (permission == null) {
+      return false;
+    }
+    if(!StringUtils.isEmpty(name)){
+      permission.setName(name);
+    }
+    if(!StringUtils.isEmpty(percode)){
+      permission.setPercode(percode);
+    }
+    if(!StringUtils.isEmpty(sortstring)){
+      permission.setSortstring(sortstring);
+    }
+    if(!StringUtils.isEmpty(url)){
+      permission.setUrl(url);
+    }
+    spr.saveAndFlush(permission);
+    return true;
+  }
+
 	@Transactional(rollbackFor = Exception.class)
 	public boolean deletePermission(long id) {
 		// 获取节点
@@ -147,8 +170,8 @@ public class SysPermissionServics {
 	}
 
 	@Transactional
-	public boolean modifypermissionState(SysPermission permission) {
-		SysPermission hPer = spr.findById(permission.getId());
+	public boolean modifypermissionState(long permissionId) {
+		SysPermission hPer = spr.findById(permissionId);
 		if (hPer == null) {
 			//
 			return false;
