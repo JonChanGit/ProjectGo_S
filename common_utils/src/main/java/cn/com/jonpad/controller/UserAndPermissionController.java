@@ -468,7 +468,7 @@ public class UserAndPermissionController extends BaseController{
 		List<SysPermission> listPer = sps.getAllEnableSysPermission();
 		model.addAttribute("perList", listPer);
 
-		return MVC_VIEW_ROOT_PATH + "AssignManagement";
+		return MVC_VIEW_ROOT_PATH + "assignMenu_iframe";
 	}
 
 

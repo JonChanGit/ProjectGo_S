@@ -99,6 +99,9 @@
 												<button onclick="submitDeleteState(${item.id})" type="button"
 														class="btn btn-danger" aria-label="删除${item.name}">删除
 												</button>
+												<button onclick="assignMenu(${item.id})" type="button"
+														class="btn btn-danger" aria-label="功能管理${item.name}">功能管理
+												</button>
 											</div>
 										</td>
 									</tr>
@@ -261,6 +264,21 @@
 			}
 		);
 	}
+
+	function assignMenu(id) {
+    layer.open({
+      type: 2,
+      id:'assignIframe',
+      'area': ['540px', '350px'],
+      yes: function (index, layero) {
+        var iframeWin = window[layero.find('iframe')[0]['name']];
+        var my_vue = iframeWin.my_vue;
+
+      },
+      btn :'确定',
+      content: ['access/user_and_permission/assignIndex.do', 'no'],
+    });
+  }
 
 	function init() {
 

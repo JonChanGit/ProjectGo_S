@@ -3,8 +3,8 @@
  */
 /* global layer ,$, template*/
 export default{
-  //uslPre:'/api',
-  uslPre:'',
+  uslPre:'/api',
+  // uslPre:'',
   msg: function (responseData) {
     console.log(responseData);
     layer.msg(responseData.message);
@@ -19,7 +19,11 @@ export default{
     console.log(obj);
     let data = obj.response.data;
     if(data.flag === true){
-      obj.successCallback(obj.option);
+      if(obj.option == null){
+        obj.successCallback(data,obj.option);
+      }else{
+        obj.successCallback(obj.option);
+      }
     }else{
       layer.msg(data.message);
     }
@@ -32,7 +36,7 @@ export default{
    */
   render:function (htmlTemplate,data) {
     let render = template.compile(htmlTemplate);
-    return render(data);//渲染模板
+    return render(data);// 渲染模板
   }
 };
 

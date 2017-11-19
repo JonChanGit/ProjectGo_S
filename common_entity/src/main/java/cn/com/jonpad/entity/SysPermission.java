@@ -1,11 +1,6 @@
 package cn.com.jonpad.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -102,6 +97,12 @@ public class SysPermission implements java.io.Serializable{
 	@Column(name="c_url")
 	private String url;
 
+  /**
+   * 是否为叶子节点(最终节点)
+   */
+  @Transient
+  private boolean leaf;
+
 	public int getAvailable() {
 		return available;
 	}
@@ -184,4 +185,28 @@ public class SysPermission implements java.io.Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+  public boolean isLeaf() {
+    return leaf;
+  }
+
+  public void setLeaf(boolean leaf) {
+    this.leaf = leaf;
+  }
+
+  public SysPermission() {
+  }
+
+  public SysPermission(SysPermission oldObj) {
+	  this.id = oldObj.getId();
+    this.available = oldObj.getAvailable();
+    this.name = oldObj.getName();
+    this.parentid = oldObj.getParentid();
+    this.parentids = oldObj.getParentids();
+    this.percode = oldObj.getPercode();
+    this.rootPparentid = oldObj.getRootPparentid();
+    this.sortstring = oldObj.getSortstring();
+    this.type = oldObj.getType();
+    this.url = oldObj.getUrl();
+  }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class SysPermissionServics {
 		return null;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean addPermission(SysPermission permission) {
     if (!ValidateTool.isEmptyString(permission.getName())) {
 			// if
@@ -165,11 +166,20 @@ public class SysPermissionServics {
 		}
 		ms.setDetails(item);
 		List<SysPermission> buttons = spr.findChildPermission(item.getId());
-		ms.setChildren(buttons);
+    List<SysPermission> buttonsre = new ArrayList<>();
+
+    for (SysPermission itemis : buttons) {
+      long cSize = spr.countByParentid(itemis.getId());
+      SysPermission i = new SysPermission(itemis);
+      i.setLeaf(cSize==0?true:false);
+      buttonsre.add(i);
+    }
+
+		ms.setChildren(buttonsre);
 		return ms;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean modifypermissionState(long permissionId) {
 		SysPermission hPer = spr.findById(permissionId);
 		if (hPer == null) {

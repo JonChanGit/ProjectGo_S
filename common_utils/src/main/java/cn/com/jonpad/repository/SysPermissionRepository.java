@@ -56,4 +56,11 @@ public interface SysPermissionRepository extends JpaRepository<SysPermission, Lo
 	List<SysPermission> findChildrenSysPermission(long id);
 
 	List<SysPermission> findByAvailable(int available);
+
+  /**
+   * 根据父节点查找终节点数量
+   * @param parentid
+   * @return
+   */
+	long countByParentid(long parentid);
 }
