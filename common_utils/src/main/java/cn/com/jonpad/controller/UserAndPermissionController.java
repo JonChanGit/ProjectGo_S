@@ -460,13 +460,13 @@ public class UserAndPermissionController extends BaseController{
 	@RequestMapping(value = "/assignIndex", method = RequestMethod.GET)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
 	public String assignIndexPage(Model model) {
-		List<SysRole> listRole = srs.getAllAvailableSysRole();
+		/*List<SysRole> listRole = srs.getAllAvailableSysRole();
 
 		// 通过model传到页面
 		model.addAttribute("roleList", listRole);
 
 		List<SysPermission> listPer = sps.getAllEnableSysPermission();
-		model.addAttribute("perList", listPer);
+		model.addAttribute("perList", listPer);*/
 
 		return MVC_VIEW_ROOT_PATH + "assignMenu_iframe";
 	}
@@ -475,23 +475,14 @@ public class UserAndPermissionController extends BaseController{
 	/**
 	 * 注册对应信息
 	 * @param roleId 用户ID
-	 * @param perIds 角色ID列表  【使用，隔开】
+	 * @param perStrArr 角色ID列表  【使用，隔开】
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/assignRegist", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN_SAVE)
-	public void assignRegist(long roleId,String perIds,HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
-
-		String[] perStrArr = null;
-		if (perIds != null && !"".equals(perIds)) {
-			perStrArr = perIds.split(",");
-		}else{
-
-		}
+	public void assignRegist(long roleId,String[] perStrArr,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		boolean b = srps.addSysRolePermission(roleId,perStrArr);
 		JsonTool.toJson(b, "数据操作完成", response);
 	}

@@ -274,6 +274,14 @@
         var iframeWin = window[layero.find('iframe')[0]['name']];
         var my_vue = iframeWin.my_vue;
         console.log(my_vue.$store.getters.getData);
+        miniAjax('access/user_and_permission/assignRegist.do',
+          {
+            'id': id,
+            'perStrArr':my_vue.$store.getters.getData,
+          }, function (data) {
+            appendAlertInfo("alertDivSID", data.flag + " " + data.message);
+          }
+        );
       },
       btn :'确定',
       content: ['access/user_and_permission/assignIndex.do', 'no'],
