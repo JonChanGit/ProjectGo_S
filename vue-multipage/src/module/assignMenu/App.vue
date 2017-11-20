@@ -30,12 +30,25 @@
     methods: {
       text() {
         let nodes = this.$refs.tree.getCheckedNodes(false);
+        let resultArr = [];
+        let map = Tool.map;
         for(let item of nodes){
           let ids = item.parentids;
           let arr = ids.split(',');
-          console.log(arr);
-          console.log(item.id);
+          for(let ix of arr){
+            if(Number.isFinite(ix)){
+              map.put(ix,ix);
+            }else{
+              map.put(Number.parseInt(ix),Number.parseInt(ix));
+            }
+          }
+          map.put(item.id,item.id);
         }
+        let mapArr = map.getArr();
+        for(let item of mapArr){
+          resultArr[resultArr.length] = item.key;
+        }
+        return resultArr;
       },
       handleNodeClick(data) {
       },
