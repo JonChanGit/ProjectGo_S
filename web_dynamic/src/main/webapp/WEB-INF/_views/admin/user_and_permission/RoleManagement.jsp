@@ -276,7 +276,7 @@
         console.log(my_vue.$store.getters.getData);
         miniAjax('access/user_and_permission/assignRegist.do',
           {
-            'id': id,
+            'roleId': id,
             'perStrArr':my_vue.$store.getters.getData,
           }, function (data) {
             appendAlertInfo("alertDivSID", data.flag + " " + data.message);

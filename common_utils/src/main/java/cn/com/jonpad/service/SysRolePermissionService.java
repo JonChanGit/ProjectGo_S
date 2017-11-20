@@ -29,7 +29,7 @@ public class SysRolePermissionService {
 		 * 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
 		 */
 
-		Set<SysRolePermission> dbSet = srpr.findBySysRoleId(roleId);
+		Set<SysRolePermission> dbSet = srpr.findBySysRoleId(String.valueOf(roleId));
 
 		/**
 		 * 新的Set
@@ -38,6 +38,9 @@ public class SysRolePermissionService {
 
 		if (perStrArr != null) {
 			for (int index = 0; index < perStrArr.length; index++) {
+			  if("0".equals(perStrArr[index])){
+			    continue;
+        }
 				SysRolePermission tmp = new SysRolePermission();
 				tmp.setSysPermissionId(perStrArr[index]);
 				tmp.setSysRoleId(roleId + "");
@@ -77,7 +80,7 @@ public class SysRolePermissionService {
 	}
 
 	public List<SysRolePermission> getSysRolePermissionList(long id) {
-		Set<SysRolePermission> set = srpr.findBySysRoleId(id);
+		Set<SysRolePermission> set = srpr.findBySysRoleId(String.valueOf(id));
 		return new ArrayList<>(set);
 	}
 }

@@ -10,5 +10,5 @@ import java.util.Set;
  * Created by jon75 on 2017/9/9.
  */
 public interface SysRolePermissionRepository extends JpaRepository<SysRolePermission, Long> {
-	Set<SysRolePermission> findBySysRoleId(long roleId);
+	Set<SysRolePermission> findBySysRoleId(String roleId);
 }

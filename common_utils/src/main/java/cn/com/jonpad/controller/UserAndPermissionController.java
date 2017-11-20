@@ -482,7 +482,7 @@ public class UserAndPermissionController extends BaseController{
 	 */
 	@RequestMapping(value = "/assignRegist", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN_SAVE)
-	public void assignRegist(long roleId,String[] perStrArr,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void assignRegist(long roleId,@RequestParam(value = "perStrArr[]")String[] perStrArr,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		boolean b = srps.addSysRolePermission(roleId,perStrArr);
 		JsonTool.toJson(b, "数据操作完成", response);
 	}
