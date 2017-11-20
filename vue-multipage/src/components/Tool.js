@@ -3,8 +3,8 @@
  */
 /* global layer ,$, template*/
 export default{
-  uslPre: '/api',
-  // uslPre:'',
+  // uslPre: '/api',
+  uslPre:'',
   msg: function (responseData) {
     console.log(responseData);
     layer.msg(responseData.message);
@@ -90,6 +90,9 @@ export default{
     },
     getArr: function(){
       return Array.from(this.arr);
+    },
+    clear:function () {
+      this.arr = new Array();
     },
     arr: new Array(),
   }

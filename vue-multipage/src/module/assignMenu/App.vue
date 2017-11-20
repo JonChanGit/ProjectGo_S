@@ -1,8 +1,13 @@
 <template>
- <div>
-   <el-tree :load="loadNode" show-checkbox lazy node-key="id" :default-expand-all="canChecked" :show-checkbox="canChecked" :props="defaultProps" ref="tree" @node-click="handleNodeClick"></el-tree>
-   <el-button @click="text">test</el-button>
- </div>
+  <div>
+    <el-tree :load="loadNode" show-checkbox lazy
+             node-key="id"
+             :default-expand-all="canChecked"
+             :show-checkbox="canChecked"
+             :props="defaultProps"
+             ref="tree"
+             @check-change="getSelectIds"></el-tree>
+  </div>
 </template>
 
 <script>
@@ -23,37 +28,38 @@
         },
         value1: [1, 2],
         loading: true,
-        canChecked:true,
+        canChecked: true,
       };
     },
 
     methods: {
-      text() {
+      getSelectIds() {
         let nodes = this.$refs.tree.getCheckedNodes(false);
         let resultArr = [];
         let map = Tool.map;
-        for(let item of nodes){
+        map.clear();//清空原来的Map
+        for (let item of nodes) {
           let ids = item.parentids;
           let arr = ids.split(',');
-          for(let ix of arr){
-            if(Number.isFinite(ix)){
-              map.put(ix,ix);
-            }else{
-              map.put(Number.parseInt(ix),Number.parseInt(ix));
+          for (let ix of arr) {
+            if (Number.isFinite(ix)) {
+              map.put(ix, ix);
+            } else {
+              map.put(Number.parseInt(ix), Number.parseInt(ix));
             }
           }
-          map.put(item.id,item.id);
+          map.put(item.id, item.id);
         }
         let mapArr = map.getArr();
-        for(let item of mapArr){
+        for (let item of mapArr) {
           resultArr[resultArr.length] = item.key;
         }
+        console.log(resultArr);
+        this.$store.commit('setData',resultArr);
         return resultArr;
       },
-      handleNodeClick(data) {
-      },
       loadNode: function (node, resolve) {
-        let [queryObj,url] = [{},''];
+        let [queryObj, url] = [{}, ''];
 
         if (node.level === 0) {
           queryObj = {pid: 0,};
@@ -69,9 +75,9 @@
           Tool.requestFeedback({
             response,
             successCallback: (data) => {
-              if(node.level === 0){
+              if (node.level === 0) {
                 return resolve([data.entity]);
-              }else{
+              } else {
                 return resolve(data.entity.children);
               }
             }
