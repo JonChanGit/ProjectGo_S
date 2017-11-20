@@ -3,8 +3,8 @@
  */
 /* global layer ,$, template*/
 export default{
-  // uslPre: '/api',
-  uslPre:'',
+  uslPre: '/api',
+  // uslPre:'',
   msg: function (responseData) {
     console.log(responseData);
     layer.msg(responseData.message);

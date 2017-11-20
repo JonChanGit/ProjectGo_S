@@ -35,7 +35,7 @@ module.exports = {
     proxyTable: {
       // 反向代理设置，解决不能跨越问题
       '/api':{
-        target: 'http://localhost:8180',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

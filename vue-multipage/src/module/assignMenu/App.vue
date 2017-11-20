@@ -37,6 +37,7 @@
         let nodes = this.$refs.tree.getCheckedNodes(false);
         let resultArr = [];
         let map = Tool.map;
+        console.log(map);
         map.clear();//清空原来的Map
         for (let item of nodes) {
           let ids = item.parentids;
