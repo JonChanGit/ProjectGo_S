@@ -1,6 +1,7 @@
 package cn.com.jonpad.controller;
 
 import cn.com.jonpad.dto.MeunDetails;
+import cn.com.jonpad.dto.RolePermission;
 import cn.com.jonpad.entity.*;
 import cn.com.jonpad.service.*;
 import cn.com.jonpad.util.JsonTool;
@@ -495,11 +496,16 @@ public class UserAndPermissionController extends BaseController{
 	 */
 	@RequestMapping(value = "/assignGetRolePermissionInfo", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
-	public void assignGetRolePermissionInfo(SysRole role,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void assignGetRolePermissionInfo(long roleId,HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		List<SysRolePermission> list = srps.getSysRolePermissionList(role.getId());
+    List<RolePermission> list = null;
+    try {
+      list = srps.getSysRolePermissionList(roleId);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-		if(list!= null && list.size() > 0){
+    if(list!= null && list.size() > 0){
 			JsonTransportEntity jte = new JsonTransportEntity();
 			jte.setEntity(list);
 			jte.setFlag(true);

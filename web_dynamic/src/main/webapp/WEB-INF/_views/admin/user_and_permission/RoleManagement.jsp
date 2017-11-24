@@ -284,7 +284,7 @@
         );
       },
       btn :'确定',
-      content: ['access/user_and_permission/assignIndex.do', 'no'],
+      content: ['access/user_and_permission/assignIndex.do?rolerId='+id, 'no'],
     });
   }
 

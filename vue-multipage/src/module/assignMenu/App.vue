@@ -2,7 +2,7 @@
   <div>
     <el-tree :load="loadNode" show-checkbox lazy
              node-key="id"
-             :default-expand-all="canChecked"
+             :default-expand-all=true
              :show-checkbox="canChecked"
              :props="defaultProps"
              ref="tree"
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
   import Axios from 'axios';
   import Qs from 'qs';
   import Tool from '../../components/Tool';
@@ -28,7 +27,7 @@
         },
         value1: [1, 2],
         loading: true,
-        canChecked: true,
+        canChecked: false,
       };
     },
 
@@ -38,7 +37,7 @@
         let resultArr = [];
         let map = Tool.map;
         console.log(map);
-        map.clear();//清空原来的Map
+        map.clear();// 清空原来的Map
         for (let item of nodes) {
           let ids = item.parentids;
           let arr = ids.split(',');
@@ -88,7 +87,34 @@
         });
 
       }
-    }
+    },
+    mounted(){
+      if(window.roleId != null){
+        Axios.post(Tool.uslPre+'/access/user_and_permission/assignGetRolePermissionInfo.do',
+          Qs.stringify({roleId:window.roleId})
+        ).then((response) => {
+          Tool.requestFeedback({
+            response,
+            successCallback: (data) => {
+             console.log(data);
+             let keys = [];
+             for(let item of data.entity){
+               if(item.leaf){
+                 keys[keys.length] = item.permissionId;
+               }
+             }
+             console.log('keys');
+             console.log(data.entity.length);
+             console.log(keys);
+             this.$refs.tree.setCheckedKeys(keys,false);
+            }
+          });
+        }).catch((error) => {
+          console.error(error);
+        });
+        this.canChecked = true;
+      }
+    },
   };
 </script>
 

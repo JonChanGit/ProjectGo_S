@@ -3,8 +3,8 @@
  */
 /* global layer ,$, template*/
 export default{
-  // uslPre: '/api',
-  uslPre:'',
+  uslPre: '/api',
+  // uslPre:'',
   msg: function (responseData) {
     console.log(responseData);
     layer.msg(responseData.message);
@@ -95,6 +95,11 @@ export default{
       this.arr = new Array();
     },
     arr: new Array(),
+  },
+  getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURIComponent(r[2]); return null;
   }
 };
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.jonpad.mybatis.SysPermissionDao">
+
+  <select id="findSysRolePermissionListBySysRoleId" parameterType="long" resultType="cn.com.jonpad.dto.RolePermission">
+      SELECT
+        tp.f_c_sys_permission_id permissionId,
+        p.c_type type,
+        tp.f_c_sys_role_id roleId,
+        tmp1.level
+      FROM
+        t_sys_role_permission tp
+      LEFT JOIN t_sys_permission p ON tp.f_c_sys_permission_id = p.p_i_id
+      LEFT JOIN (
+        SELECT
+          p2.p_i_id pid,
+          LENGTH(
+            REPLACE (p2.c_parentids, ",", "")
+          ) `level`
+        FROM
+          t_sys_permission p2
+      ) tmp1 ON tmp1.pid = p.p_i_id
+      WHERE
+        tp.f_c_sys_role_id = #{roleId};
+  </select>
+</mapper>

@@ -1,14 +1,14 @@
 package cn.com.jonpad.service;
 
+import cn.com.jonpad.dto.RolePermission;
 import cn.com.jonpad.entity.SysRolePermission;
+import cn.com.jonpad.mybatis.SysPermissionDao;
+import cn.com.jonpad.repository.SysPermissionRepository;
 import cn.com.jonpad.repository.SysRolePermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by jon75 on 2017/9/9.
@@ -17,6 +17,12 @@ import java.util.Set;
 public class SysRolePermissionService {
 	@Autowired
 	private SysRolePermissionRepository srpr;
+
+  @Autowired
+  private SysPermissionRepository spr;
+
+	@Autowired
+	private SysPermissionDao spDao;
 
 	public boolean addSysRolePermission(long roleId, String[] perStrArr) {
 		/**
@@ -79,8 +85,16 @@ public class SysRolePermissionService {
 		return true;
 	}
 
-	public List<SysRolePermission> getSysRolePermissionList(long id) {
-		Set<SysRolePermission> set = srpr.findBySysRoleId(String.valueOf(id));
-		return new ArrayList<>(set);
+	public List<RolePermission> getSysRolePermissionList(long id) {
+    List<RolePermission> list = spDao.findSysRolePermissionListBySysRoleId(id);
+    //Set<SysRolePermission> set = srpr.findBySysRoleId(String.valueOf(id));
+    List<RolePermission> rlist = new ArrayList<>();
+    for (RolePermission item : list) {
+      RolePermission n = new RolePermission(item);
+      long cSize = spr.countByParentid(item.getPermissionId());
+      n.setLeaf(cSize<1);
+      rlist.add(n);
+    }
+    return rlist;
 	}
 }
