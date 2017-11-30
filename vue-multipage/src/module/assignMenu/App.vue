@@ -103,9 +103,6 @@
                  keys[keys.length] = item.permissionId;
                }
              }
-             console.log('keys');
-             console.log(data.entity.length);
-             console.log(keys);
              this.$refs.tree.setCheckedKeys(keys,false);
             }
           });
