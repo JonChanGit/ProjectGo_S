@@ -166,7 +166,12 @@ const app = {
         setCurrentPageName (state, name) {
             state.currentPageName = name;
         },
-        setAvator (state, path) {
+		/**
+         * 设置头像
+		 * @param state
+		 * @param path 头像地址
+		 */
+		setAvator (state, path) {
             localStorage.avatorImgPath = path;
         },
         switchLang (state, lang) {
