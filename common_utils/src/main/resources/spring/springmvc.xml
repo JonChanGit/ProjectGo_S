@@ -30,5 +30,31 @@
   <mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
 	<!-- 静态资源访问 end -->
 
-	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:annotation-driven>
+    <mvc:message-converters>
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="defaultCharset" value="UTF-8" />
+        <property name="supportedMediaTypes">
+          <list>
+            <value>application/json</value>
+            <value>application/json;charset=UTF-8</value>
+          </list>
+        </property>
+      </bean>
+      <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+          <list>
+            <value>application/json</value>
+            <value>application/json;charset=UTF-8</value>
+          </list>
+        </property>
+        <property name="fastJsonConfig" ref="fastJsonConfig" />
+      </bean>
+    </mvc:message-converters>
+  </mvc:annotation-driven>
+
+  <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+    <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />
+  </bean>
+
 </beans>
