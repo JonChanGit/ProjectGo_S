@@ -24,7 +24,8 @@
 		<module>web_html</module>
 		<module>web_dynamic</module>
 		<module>common_entity</module>
-	</modules>
+    <module>common_rest</module>
+  </modules>
 
 	<build>
 		<!--<finalName>web_html</finalName>-->

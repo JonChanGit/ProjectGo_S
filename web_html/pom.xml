@@ -20,7 +20,7 @@
 		<!--依赖引用 自己的类库-->
 		<dependency>
 			<groupId>cn.com.jonpad</groupId>
-			<artifactId>common_utils</artifactId>
+			<artifactId>common_rest</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
