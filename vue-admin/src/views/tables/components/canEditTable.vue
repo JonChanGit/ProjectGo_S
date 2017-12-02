@@ -222,8 +222,6 @@ export default {
             this.thisTableData = res;
             this.edittingStore = JSON.parse(JSON.stringify(this.thisTableData));
             this.columnsList.forEach(item => {
-            	console.log('item');
-            	console.log(item);
                 if (item.editable) {
                     item.render = (h, param) => {
                         let currentRow = this.thisTableData[param.index];
@@ -249,6 +247,13 @@ export default {
                                         }
                                     }, [
                                         currentRow.edittingCell[param.column.key] ? saveIncellEditBtn(this, h, param) : incellEditBtn(this, h, param)
+                                    ]),
+                                    h('Col', {
+                                        props: {
+                                            span: '2'
+                                        }
+                                    }, [
+                                        currentRow.edittingCell[param.column.key] ? saveIncellEditBtn(this, h, param) : cellSelect(this, h, param)
                                     ])
                                 ]);
                             } else {
@@ -260,7 +265,7 @@ export default {
 											return value.label;
                                         }
                                     });
-									return h('span', findItem.label+'');
+									return h('span', findItem==null?'':findItem.label+'');
                                 }else{
 									return h('span', currentRow[item.key]);//一般数据显示
                                 }

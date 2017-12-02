@@ -7,7 +7,7 @@
 					可编辑单元行
 				</p>
 				<div class="edittable-table-height-con">
-					<can-edit-table refs="table2" v-model="editInlineData" :columns-list="editInlineColumns"></can-edit-table>
+					<can-edit-table refs="table2" v-model="editInlineData" :columns-list="editInlineColumns" @on-change="submitChange"></can-edit-table>
 				</div>
 			</Card>
 		</Card>
@@ -82,6 +82,11 @@
 		components: {
 			canEditTable
 		},
+		methods:{
+			submitChange(){
+				alert();
+			}
+		},
 		mounted:function () {
 			Tool.get({
 				iView:this,
@@ -90,7 +95,7 @@
 					this.editInlineData = data.list;
 				}
 			});
-		}
+		},
 	};
 </script>
 
