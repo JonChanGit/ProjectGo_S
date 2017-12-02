@@ -83,8 +83,10 @@
 			canEditTable
 		},
 		methods:{
-			submitChange(){
-				alert();
+			submitChange(val, index){
+				this.$Message.success('修改了第' + (index + 1) + '行数据');
+				console.log('val is : ');
+				console.log(val);
 			}
 		},
 		mounted:function () {

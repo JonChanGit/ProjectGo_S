@@ -247,18 +247,12 @@ export default {
                                         }
                                     }, [
                                         currentRow.edittingCell[param.column.key] ? saveIncellEditBtn(this, h, param) : incellEditBtn(this, h, param)
-                                    ]),
-                                    h('Col', {
-                                        props: {
-                                            span: '2'
-                                        }
-                                    }, [
-                                        currentRow.edittingCell[param.column.key] ? saveIncellEditBtn(this, h, param) : cellSelect(this, h, param)
                                     ])
                                 ]);
                             } else {
                             	//正常显示数据
 								if(item.inputType == 'select'){//选择框显示
+                                    //发现在没有设置 inputType = 'select' 时，也会进入
 									let key = currentRow[item.key];
 									let findItem = item.selectItems.find((value,index,arr)=>{
 										if(value.value == key){
@@ -287,8 +281,6 @@ export default {
                                     );
                                 });
 
-								console.log(options);
-
 								return h('Select', {
 									props: {
 										value: currentRow[item.key]
@@ -296,7 +288,7 @@ export default {
 									on: {
 										'on-change' (event) {
 											let key = param.column.key;
-											vm.edittingStore[param.index][key] = event.target.value;
+											vm.edittingStore[param.index][key] = event;
 										}
 									}
 								},
