@@ -38,8 +38,6 @@
 </template>
 
 <script>
-	import Axios from 'axios';
-	import Qs from 'qs';
 	import Cookies from 'js-cookie';
 	import Tool from '../libs/Tool';
 
@@ -65,26 +63,19 @@
 				this.$refs.loginForm.validate((valid) => {
 					if (valid) {
 
-						Axios.post('/api/login.do',
-							Qs.stringify({
+						Tool.post({
+							iView:this,
+							data:{
 								'loginKey': this.form.userName,
 								'loginToken': this.form.password,
-							})
-						).then((response)=>{
-							console.log(response);
-							Tool.requestFeedback({
-								response,
-								successCallback:(data)=>{
-									Cookies.set('user', this.form.userName);
-									Cookies.set('password', this.form.password);
-									this.$router.push({
-										name: 'home_index'
-									});
-								},
-								iView:this,
-							});
-						}).catch(function (error) {
-							console.error(error);
+							},
+							successCallback:(data)=>{
+								Cookies.set('user', this.form.userName);
+								Cookies.set('password', this.form.password);
+								this.$router.push({
+									name: 'home_index'
+								});
+							},
 						});
 
 						/*

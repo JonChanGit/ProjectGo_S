@@ -2,6 +2,10 @@
  * Created by jon75 on 2017/10/15.
  */
 /* global layer ,$, template*/
+
+import Axios from 'axios';
+import Qs from 'qs';
+
 export default{
   uslPre: '/api',
   // uslPre:'',
@@ -16,8 +20,6 @@ export default{
    * @param {Object} obj.iView iView实例 必须
    */
   requestFeedback: function (obj) {
-    console.log('requestFeedback : ');
-    console.log(obj);
     let data = obj.response.data;
     if (data.flag === true) {
       if (obj.option == null) {
@@ -30,11 +32,42 @@ export default{
 		obj.iView.$Message.error(data.msg);
     }
   },
+
+	/**
+     * post 请求
+	 * @param {Object} obj.data 请求参数
+	 * @param {Function} obj.successCallback 成功返回
+	 * @param {Object} obj.option 回调参数
+	 * @param {Object} obj.iView iView实例 必须
+	 */
+	post:function (obj) {
+		Axios.post('/api/login.do',
+			Qs.stringify(obj.data)
+		).then((response)=>{
+			console.log(response);
+			let data =response.data;
+			if (data.flag === true) {
+				if (obj.option == null) {
+					obj.successCallback(data, obj.option);
+				} else {
+					obj.successCallback(data);
+				}
+			} else {
+				console.log(this);
+				obj.iView.$Message.error(data.msg);
+			}
+		}).catch(function (error) {
+			obj.iView.$Message.error(error);
+		});
+
+	},
+
+
   /**
    * 使用artTemplate渲染模板
    * https://aui.github.io/art-template/zh-cn/docs/api.html#template-filename-content
-   * @param htmlTemplate 模板字符串
-   * @param data 需要渲染的数据
+   * @param {String} htmlTemplate 模板字符串
+   * @param {Object} data 需要渲染的数据
    */
   render: function (htmlTemplate, data) {
     let render = template.compile(htmlTemplate);
