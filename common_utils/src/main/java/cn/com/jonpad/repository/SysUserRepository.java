@@ -9,6 +9,6 @@ import java.util.List;
  * Created by jon75 on 2017/6/2.
  */
 public interface SysUserRepository  extends JpaRepository<SysUser, Long> {
-	public SysUser findByEmailOrUsercode(String email,String usercode);
+	SysUser findByEmail(String email);
 
 }

@@ -35,11 +35,11 @@ public class SysUserService {
   private SysUserRoleService surs;
 
   public boolean hasUser(String key){
-		return sur.findByEmailOrUsercode(key,key) == null ?false:true;
+		return sur.findByEmail(key) == null ?false:true;
 	}
 
 	public SysUser findByEmailOrUsercode(String key){
-		return   sur.findByEmailOrUsercode(key,key);
+		return   sur.findByEmail(key);
 	}
 
 	public long getUserCount(){
@@ -85,7 +85,7 @@ public class SysUserService {
 	@Transactional(rollbackFor = Exception.class)
 	public boolean addUser(SysUser user){
 
-		SysUser dbUser = sur.findByEmailOrUsercode(user.getEmail(), user.getUsercode());
+		SysUser dbUser = sur.findByEmail(user.getEmail());
 		if(dbUser != null){
 			return false;
 		}

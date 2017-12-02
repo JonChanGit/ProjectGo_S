@@ -131,4 +131,14 @@ public class SysUser implements Serializable {
 	public void setSecurity(SysUserSecurity security) {
 		this.security = security;
 	}
+
+  public SysUser() {
+  }
+
+  public SysUser(long id,String email, int locked, String username) {
+    this.email = email;
+    this.locked = locked;
+    this.username = username;
+    this.id = id;
+  }
 }

@@ -70,6 +70,12 @@ public class JsonTool {
 		jsonTransportEntity.setFlag(flag);
 		toJson(jsonTransportEntity, response);
 	}
+	public static JsonTransportEntity toJson(Boolean flag, String message) throws IOException {
+		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
+		jsonTransportEntity.setMessage(message);
+		jsonTransportEntity.setFlag(flag);
+		return jsonTransportEntity;
+	}
 
 	/**
 	 * 传输 集合(list)对象实体

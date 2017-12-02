@@ -39,7 +39,7 @@ public class Authentication {
       return jo;
     } catch (AuthenticationException e) {
       jo.put("flag",false);
-      jo.put("msg",e.getMessage());
+      jo.put("message",e.getMessage());
       return jo;
     }
   }
