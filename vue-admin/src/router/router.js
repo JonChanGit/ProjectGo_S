@@ -67,6 +67,30 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
+		path: '/uga',
+		icon: 'social-buffer',
+		name: 'user-group-access',
+		title: '用户，组与权限',
+		component: Main,
+		children:[
+			{
+				path: 'u',
+				icon: 'compose',
+				name: 'user',
+				title: '用户管理',
+				component: resolve => { require(['@/views/01-user-group-access/01-user-magment/user.vue'], resolve); }
+			},
+			{
+				path: 'md-editor',
+				icon: 'pound',
+				name: 'md-editor',
+				title: 'Markdown编辑器',
+				component: resolve => { require(['@/views/my-components/markdown-editor/markdown-editor.vue'], resolve); }
+			},
+        ]
+    },
+    //===================
+    {
         path: '/access',
         icon: 'key',
         name: 'access',
@@ -108,6 +132,7 @@ export const appRouter = [
                 path: 'text-editor',
                 icon: 'compose',
                 name: 'text-editor',
+				access: 0,
                 title: '富文本编辑器',
                 component: resolve => { require(['@/views/my-components/text-editor/text-editor.vue'], resolve); }
             },

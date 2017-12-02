@@ -64,6 +64,7 @@
 					if (valid) {
 
 						Tool.post({
+							url:'/api/login.do',
 							iView:this,
 							data:{
 								'loginKey': this.form.userName,

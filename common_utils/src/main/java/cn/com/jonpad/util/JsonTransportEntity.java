@@ -1,5 +1,7 @@
 package cn.com.jonpad.util;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 /**
@@ -130,6 +132,14 @@ public class JsonTransportEntity<T,E> {
 	}
 
 
+	public static JsonTransportEntity getInstance(Page page){
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setFlag(true);
+    jte.setList(page.getContent());
+    jte.setTotalSize(page.getTotalElements());
+    jte.setTotalPage(Long.valueOf(page.getTotalPages()));
+    return jte;
+  }
 
 
 }

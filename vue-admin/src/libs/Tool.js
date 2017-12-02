@@ -35,16 +35,46 @@ export default{
 
 	/**
      * post 请求
+	 * @param {String} obj.url 请求地址
 	 * @param {Object} obj.data 请求参数
 	 * @param {Function} obj.successCallback 成功返回
 	 * @param {Object} obj.option 回调参数
 	 * @param {Object} obj.iView iView实例 必须
 	 */
 	post:function (obj) {
-		Axios.post('/api/login.do',
-			Qs.stringify(obj.data)
+		Axios.post(obj.url,
+			Qs.stringify(obj.data==null?{}:obj.data)
 		).then((response)=>{
 			console.log(response);
+			let data =response.data;
+			if (data.flag === true) {
+				if (obj.option == null) {
+					obj.successCallback(data, obj.option);
+				} else {
+					obj.successCallback(data);
+				}
+			} else {
+				console.log(this);
+				obj.iView.$Message.error(data.msg);
+			}
+		}).catch(function (error) {
+			obj.iView.$Message.error(error);
+		});
+
+	},
+
+	/**
+	 * get 请求
+	 * @param {String} obj.url 请求地址
+	 * @param {Object} obj.data 请求参数
+	 * @param {Function} obj.successCallback 成功返回
+	 * @param {Object} obj.option 回调参数
+	 * @param {Object} obj.iView iView实例 必须
+	 */
+	get:function (obj) {
+		Axios.get(obj.url,
+			Qs.stringify(obj.data==null?{}:obj.data)
+		).then((response)=>{
 			let data =response.data;
 			if (data.flag === true) {
 				if (obj.option == null) {

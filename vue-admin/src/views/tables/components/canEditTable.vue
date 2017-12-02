@@ -134,6 +134,19 @@ const cellInput = (vm, h, param, item) => {
         }
     });
 };
+const cellSelect = (vm, h, param, item) => {
+    return h('Select', {
+        props: {
+            value: vm.edittingStore[param.index][item.key]
+        },
+        on: {
+            'on-change' (event) {
+                let key = item.key;
+                vm.edittingStore[param.index][key] = event.target.value;
+            }
+        }
+    });
+};
 export default {
     name: 'canEditTable',
     props: {
@@ -145,10 +158,14 @@ export default {
             type: Boolean,
             default: false
         },
+        editSelectIncell: {
+            type: Boolean,
+            default: false
+        },
         hoverShow: {
             type: Boolean,
             default: false
-        }
+        },
     },
     data () {
         return {
@@ -163,6 +180,7 @@ export default {
     methods: {
         init () {
             let vm = this;
+            //读取可以编辑的列,列的定义
             let editableCell = this.columnsList.filter(item => {
                 if (item.editable) {
                     if (item.editable === true) {
@@ -170,8 +188,11 @@ export default {
                     }
                 }
             });
+
+            //数据副本
             let cloneData = JSON.parse(JSON.stringify(this.value));
             let res = [];
+            //看不懂
             res = cloneData.map((item, index) => {
                 let isEditting = false;
                 if (this.thisTableData[index]) {
@@ -186,6 +207,7 @@ export default {
                     }
                 }
                 if (isEditting) {
+                	console.error('isEdittingED');
                     return this.thisTableData[index];
                 } else {
                     this.$set(item, 'editting', false);
@@ -200,6 +222,8 @@ export default {
             this.thisTableData = res;
             this.edittingStore = JSON.parse(JSON.stringify(this.thisTableData));
             this.columnsList.forEach(item => {
+            	console.log('item');
+            	console.log(item);
                 if (item.editable) {
                     item.render = (h, param) => {
                         let currentRow = this.thisTableData[param.index];
@@ -231,18 +255,53 @@ export default {
                                 return h('span', currentRow[item.key]);
                             }
                         } else {
-                            return h('Input', {
-                                props: {
-                                    type: 'text',
-                                    value: currentRow[item.key]
-                                },
-                                on: {
-                                    'on-change' (event) {
-                                        let key = param.column.key;
-                                        vm.edittingStore[param.index][key] = event.target.value;
-                                    }
-                                }
-                            });
+                        	//单点击编辑时绘制编辑框
+                            if(item.inputType == 'select'){
+
+                            	let options = [];
+								options = item.selectItems.map((itm)=>{
+									return h(
+										'Option',
+                                        {
+											props:{
+												value:itm.value,
+												key:itm.value,
+                                            }
+                                        },
+										itm.label
+                                    );
+                                });
+
+								console.log(options);
+
+								return h('Select', {
+									props: {
+										value: currentRow[item.key]
+									},
+									on: {
+										'on-change' (event) {
+											let key = param.column.key;
+											vm.edittingStore[param.index][key] = event.target.value;
+										}
+									}
+								},
+                                //子节点
+									options
+                                );
+                            }else{
+								return h('Input', {
+									props: {
+										type: 'text',
+										value: currentRow[item.key]
+									},
+									on: {
+										'on-change' (event) {
+											let key = param.column.key;
+											vm.edittingStore[param.index][key] = event.target.value;
+										}
+									}
+								});
+                            }
                         }
                     };
                 }

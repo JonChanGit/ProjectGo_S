@@ -1,12 +1,14 @@
 package cn.com.jonpad.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "t_sys_user")
 public class SysUser implements Serializable {
-	
+
 	/**
 	 * 账号签名
 	 */
@@ -36,7 +38,8 @@ public class SysUser implements Serializable {
 	private int locked;
 
 
-	@OneToOne(mappedBy="sysUser")
+	@OneToOne(mappedBy="sysUser",fetch = FetchType.LAZY)
+  @JSONField(serialize = false)
 	private SysUserSecurity security;
 
 
@@ -49,7 +52,7 @@ public class SysUser implements Serializable {
 
 	@Column(name="c_username")
 	private String username;
-	
+
 	/**
 	 * 头像
 	 * 用户自己设置
@@ -58,8 +61,8 @@ public class SysUser implements Serializable {
 	private String head;
 
 	/**
-	 * 
-	 * @Title: getEmail 
+	 *
+	 * @Title: getEmail
 	 * @return
 	 */
 	public String getEmail() {
@@ -78,7 +81,7 @@ public class SysUser implements Serializable {
 		return locked;
 	}
 
- 
+
 
 
 	public String getUsercode() {
@@ -90,8 +93,8 @@ public class SysUser implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @Title: setEmail 
+	 *
+	 * @Title: setEmail
 	 * @param email
 	 */
 	public void setEmail(String email) {
@@ -102,7 +105,7 @@ public class SysUser implements Serializable {
 		this.head = head;
 	}
 
- 
+
 	public void setId(long id) {
 		this.id = id;
 	}
