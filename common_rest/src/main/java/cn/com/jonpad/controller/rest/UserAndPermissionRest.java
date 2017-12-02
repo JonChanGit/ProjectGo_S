@@ -21,9 +21,11 @@ public class UserAndPermissionRest {
   private SysUserService sus;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
-  public JsonTransportEntity getUserList(@RequestParam(value = "page", defaultValue = "1") int page,
-                                         @RequestParam(value = "searchKey", defaultValue = "") String searchKey) {
-    Page<SysUser> userPage = sus.getPage(page, 10);
+  public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
+                                         @RequestParam(defaultValue = "1")int currPage,
+                                         @RequestParam(defaultValue = "10")int pageSize
+                                         ) {
+    Page<SysUser> userPage = sus.getPage(currPage, pageSize);
 
     return JsonTransportEntity.getInstance(userPage);
   }
@@ -31,7 +33,6 @@ public class UserAndPermissionRest {
 
   /**
    * 修改用户
-   * @param user
    * @return
    * @throws IOException
    */

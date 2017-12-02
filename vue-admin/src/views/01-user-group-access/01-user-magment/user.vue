@@ -13,7 +13,9 @@
 
 			<br/>
 			<br/>
-			<Page :total="pageInfo.totalSize" :current="pageInfo.currPage" :page-size="pageInfo.pageSize" show-sizer></Page>
+			<Page :total="pageInfo.totalSize"
+				  :current="pageInfo.currPage"
+				  :page-size="pageInfo.pageSize" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"></Page>
 
 		</Card>
 
@@ -141,17 +143,29 @@
 			getData(){
 				Tool.get({
 					iView:this,
+					data:{
+						...this.pageInfo,
+					},
 					url:'/api/access/user_and_permission/userList.do',
 					successCallback:(data)=>{
 						this.editInlineData = data.list;
+						this.pageInfo.totalSize = data.totalSize;
 					}
 				});
-			}
+			},
+			changePage(val){
+				this.pageInfo.currPage = val;
+				this.getData();
+			},
+			changePageSize(val){
+				this.pageInfo.pageSize = val;
+				this.getData();
+			},
 		},
 		beforeCreate:function () {
-			this.getPageInfo = Tool.getPageInfo();
 		},
 		mounted:function () {
+			this.pageInfo = Tool.getPageInfo();
 			this.getData();
 		},
 	};
