@@ -252,12 +252,22 @@ export default {
                                     ])
                                 ]);
                             } else {
-                                return h('span', currentRow[item.key]);
+                            	//正常显示数据
+								if(item.inputType == 'select'){//选择框显示
+									let key = currentRow[item.key];
+									let findItem = item.selectItems.find((value,index,arr)=>{
+										if(value.value == key){
+											return value.label;
+                                        }
+                                    });
+									return h('span', findItem.label+'');
+                                }else{
+									return h('span', currentRow[item.key]);//一般数据显示
+                                }
                             }
                         } else {
                         	//单点击编辑时绘制编辑框
                             if(item.inputType == 'select'){
-
                             	let options = [];
 								options = item.selectItems.map((itm)=>{
 									return h(
