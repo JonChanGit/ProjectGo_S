@@ -87,6 +87,13 @@ export const appRouter = [
 				title: '角色定义',
 				component: resolve => { require(['@/views/01-user-group-access/02-role-magment/role.vue'], resolve); }
 			},
+			{
+				path: 'resources',
+				icon: 'pound',
+				name: 'resources',
+				title: '资源管理',
+				component: resolve => { require(['@/views/01-user-group-access/03-resources/resources.vue'], resolve); }
+			},
         ]
     },
     //===================
