@@ -40,10 +40,11 @@ public class SysRoleService {
 	@Transactional(rollbackFor = Exception.class)
 	public boolean modifyRoleName(SysRole role) {
 	  //不允许重复名称
-    long size = srr.countAllByName(role.getName());
+    /*long size = srr.countAllByName(role.getName());
     if(size > 0){
       return false;
-    }
+    }*/
+
     SysRole one = srr.getOne(role.getId());
     //如果是超级管理员，拒绝更改
 		if(one != null){

@@ -70,7 +70,7 @@ public class JsonTool {
 		jsonTransportEntity.setFlag(flag);
 		toJson(jsonTransportEntity, response);
 	}
-	public static JsonTransportEntity toJson(Boolean flag, String message) throws IOException {
+	public static JsonTransportEntity getJsonTransportEntity(Boolean flag, String message) {
 		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
 		jsonTransportEntity.setMessage(message);
 		jsonTransportEntity.setFlag(flag);
@@ -88,6 +88,12 @@ public class JsonTool {
 		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
 		jsonTransportEntity.setEntity(list);
 		toJson(jsonTransportEntity, response);
+	}
+	public static JsonTransportEntity getJsonTransportEntity(List list, boolean flag) {
+		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
+		jsonTransportEntity.setEntity(list);
+		jsonTransportEntity.setFlag(flag);
+		return jsonTransportEntity;
 	}
 
 	/**

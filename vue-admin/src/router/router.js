@@ -81,11 +81,11 @@ export const appRouter = [
 				component: resolve => { require(['@/views/01-user-group-access/01-user-magment/user.vue'], resolve); }
 			},
 			{
-				path: 'md-editor',
+				path: 'r',
 				icon: 'pound',
-				name: 'md-editor',
-				title: 'Markdown编辑器',
-				component: resolve => { require(['@/views/my-components/markdown-editor/markdown-editor.vue'], resolve); }
+				name: 'role',
+				title: '角色定义',
+				component: resolve => { require(['@/views/01-user-group-access/02-role-magment/role.vue'], resolve); }
 			},
         ]
     },

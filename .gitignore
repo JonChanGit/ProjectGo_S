@@ -16,6 +16,7 @@ common_reference/.classpath
 npm-debug.log
 node_modules/
 *.iml
+*.lock
 npmdist/
 webapp/module/
 webapp/static/*

@@ -135,7 +135,6 @@
 				});
 			},
 			cancel () {
-				this.$Message.info('Clicked cancel');
 			},
 			showNewUserModal:function () {
 				this.showModal = true;

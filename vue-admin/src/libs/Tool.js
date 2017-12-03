@@ -116,7 +116,9 @@ export default {
 	 */
 	delete: function (obj) {
 		Axios.delete(obj.url,
-			Qs.stringify(obj.data == null ? {} : obj.data)
+			{
+				params:obj.data
+			}
 		).then((response) => {
 			let data = response.data;
 			if (data.flag === true) {
