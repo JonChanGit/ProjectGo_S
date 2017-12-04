@@ -1,7 +1,10 @@
 package cn.com.jonpad.controller.rest;
 
+import cn.com.jonpad.dto.MeunDetails;
+import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.service.SysUserService;
 import cn.com.jonpad.util.JsonTool;
@@ -24,6 +27,8 @@ public class UserAndPermissionRest {
   private SysUserService sus;
   @Autowired
   private SysRoleService srs;
+  @Autowired
+  private SysPermissionServics sps;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
   public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
@@ -39,7 +44,6 @@ public class UserAndPermissionRest {
   /**
    * 修改用户
    * @return
-   * @throws IOException
    */
   @RequestMapping(value = "/user", method = RequestMethod.PUT)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_USER_EDIT)
@@ -58,11 +62,10 @@ public class UserAndPermissionRest {
   /**
    * 添加用户
    * @param user
-   * @throws IOException
    */
   @RequestMapping(value = "/user", method = RequestMethod.POST)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_USER_ADD)
-  public JsonTransportEntity userAdd(SysUser user) throws IOException {
+  public JsonTransportEntity userAdd(SysUser user)  {
 
     boolean b = sus.addUser(user);
     if (b) {
@@ -88,7 +91,6 @@ public class UserAndPermissionRest {
   /**
    * 添加角色
    * @param role
-   * @throws IOException
    */
   @RequestMapping(value = "/role", method = RequestMethod.POST)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_ADD)
@@ -107,11 +109,10 @@ public class UserAndPermissionRest {
    * 修改角色 名称
    *
    * @param role
-   * @throws IOException
    */
   @RequestMapping(value = "/role", method = RequestMethod.PUT)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_EDIT)
-  public JsonTransportEntity roleModify(SysRole role) throws IOException {
+  public JsonTransportEntity roleModify(SysRole role)  {
 
     boolean b = srs.modifyRoleName(role);
     if (b) {
@@ -124,8 +125,6 @@ public class UserAndPermissionRest {
 
   /**
    * 删除角色
-   *
-   * @throws IOException
    */
   @RequestMapping(value = "/role", method = RequestMethod.DELETE)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_DELETE)
@@ -139,6 +138,127 @@ public class UserAndPermissionRest {
     }
   }
 
+
+
+// 资源 Begin
+  /**
+   * 只有节点信息
+   * @param pid
+   * @throws IOException
+   */
+  @RequestMapping(value = "/permissionGetNode" /*, method = RequestMethod.POST*/)
+  public JsonTransportEntity permissionGetNode(@RequestParam(value = "pid",defaultValue = "0") long pid ) throws IOException {
+    SysPermission meun = sps.getOne(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    return jte;
+  }
+
+  /**
+   * 节点和子节点
+   * @param pid
+   * @throws IOException
+   */
+  @RequestMapping(value = "/permissionGetChildrenNode" /*, method = RequestMethod.POST*/)
+  public JsonTransportEntity permissionGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid) throws IOException {
+    if(pid<=0){
+      return JsonTool.getJsonTransportEntity(false,"参数不正确");
+    }
+    MeunDetails meun = sps.getMeunDetails(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    return jte;
+  }
+
+
+
+  /**
+   * 添加权限/菜单/按钮等
+   *
+   * 对permission表的操作
+   *
+   * @throws IOException
+   */
+  @RequestMapping(value = "/permissionAdd", method = RequestMethod.POST)
+  //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_ADD)
+  public JsonTransportEntity permissionAdd(SysPermission permission) throws IOException {
+
+    boolean b = sps.addPermission(permission);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "功能添加成功");
+    } else {
+      return JsonTool.getJsonTransportEntity(false, "功能添加失败");
+    }
+  }
+
+
+  /**
+   * 删除permission
+   *
+   * @throws IOException
+   */
+  @RequestMapping(value = "/permissionDelete", method = RequestMethod.POST)
+  //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
+  public JsonTransportEntity permissionDelete(long permissionId)  {
+
+    boolean b = sps.deletePermission(permissionId);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "删除成功");
+    } else {
+      return  JsonTool.getJsonTransportEntity(false, "删除失败");
+    }
+  }
+
+
+
+  /**
+   * 获取菜单详情
+   *
+   */
+  @RequestMapping(value = "/permissionGetMeunDetails", method = RequestMethod.POST)
+  //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
+  public JsonTransportEntity permissionGetMeunDetails(SysPermission permission)  {
+
+    MeunDetails ms= sps.getMeunDetails(permission.getId());
+    JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
+    if(ms != null){
+      jsonTransportEntity.setFlag(true);
+      jsonTransportEntity.setEntity(ms);
+    }
+    return jsonTransportEntity;
+  }
+
+  /**
+   * 修改权限可用状态
+   *
+   */
+  @RequestMapping(value = "/permissionChangeState", method = RequestMethod.POST)
+  //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_STATE)
+  public JsonTransportEntity permissionChangeState(long permissionId)
+     {
+
+    boolean b = sps.modifypermissionState(permissionId);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "状态修改成功");
+    } else {
+      return  JsonTool.getJsonTransportEntity(false, "状态修改失败");
+    }
+  }
+
+  @RequestMapping(value = "/permissionChangeData", method = RequestMethod.POST)
+  public JsonTransportEntity permissionChangeData(long permissionId, String name,String percode,String sortstring,String url)
+     {
+
+    boolean b = sps.edit(permissionId,name,percode,sortstring,url);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "状态修改成功");
+    } else {
+      return  JsonTool.getJsonTransportEntity(false, "状态修改失败");
+    }
+  }
+// 资源 End
 
 
 }
