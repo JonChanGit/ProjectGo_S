@@ -2,19 +2,18 @@
   <div>
     <li class="list-group-item" :class="{active:isOpen}" @click="clickMenu()">
     <span class="badge ">
-      <span class="glyphicon"
-            :class="{'glyphicon-chevron-down':glyphiconDown,'glyphicon-chevron-up':glyphiconUp}"></span>
+      <Icon type="arrow-down-b" v-show="isOpen"></Icon>
+      <Icon type="arrow-right-b" v-show="!isOpen"></Icon>
     </span>
-      <span class="glyphicon glyphicon-chevron-right" v-for="item in parentids" v-if="false"></span>
       {{pnode.name}}&nbsp;
     </li>
     <li class="list-group-item tool-bar" :class="{'hidden':glyphiconDown}">
 
       <div class="btn-group">
-        <button type="button" class="btn btn-primary" @click="newDialog()"><span class="glyphicon glyphicon-plus"></span></button>
-        <button type="button" class="btn btn-primary" @click="editDialog()"><i class="fa fa-edit"></i></button>
-        <button type="button" class="btn btn-danger" @click="deleteNode()"><span class="glyphicon glyphicon-trash"></span></button>
-        </div>
+        <Button type="primary" @click="newDialog()"><Icon type="plus-circled"></Icon></Button>
+        <Button type="info"  @click="editDialog()"><Icon type="edit"></Icon></Button>
+        <Button type="error" @click="deleteNode()"><Icon type="trash-a"></Icon></Button>
+      </div>
 
       &nbsp;
     </li>
@@ -98,7 +97,7 @@
       },
       open: function () {
         console.log('open');
-        Axios.post(Tools.uslPre+'/access/user_and_permission/permissionGetChildrenNode.do',
+        Axios.get(Tools.uslPre+'/access/user_and_permission/resourcesChildrenNode.do',
           Qs.stringify({pid: this.pnode.id,})
         ).then((response) => {
           let data = response.data;

@@ -146,7 +146,7 @@ public class UserAndPermissionRest {
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/permissionGetNode" /*, method = RequestMethod.POST*/)
+  @RequestMapping(value = "/resourcesNode" ,method = RequestMethod.GET)
   public JsonTransportEntity permissionGetNode(@RequestParam(value = "pid",defaultValue = "0") long pid ) throws IOException {
     SysPermission meun = sps.getOne(pid);
     JsonTransportEntity jte = new JsonTransportEntity();
@@ -160,7 +160,7 @@ public class UserAndPermissionRest {
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/permissionGetChildrenNode" /*, method = RequestMethod.POST*/)
+  @RequestMapping(value = "/resourcesChildrenNode" , method = RequestMethod.GET)
   public JsonTransportEntity permissionGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid) throws IOException {
     if(pid<=0){
       return JsonTool.getJsonTransportEntity(false,"参数不正确");
@@ -181,7 +181,7 @@ public class UserAndPermissionRest {
    *
    * @throws IOException
    */
-  @RequestMapping(value = "/permissionAdd", method = RequestMethod.POST)
+  @RequestMapping(value = "/resourcesNode", method = RequestMethod.POST)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_ADD)
   public JsonTransportEntity permissionAdd(SysPermission permission) throws IOException {
 
@@ -199,7 +199,7 @@ public class UserAndPermissionRest {
    *
    * @throws IOException
    */
-  @RequestMapping(value = "/permissionDelete", method = RequestMethod.POST)
+  @RequestMapping(value = "/resourcesNode", method = RequestMethod.DELETE)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
   public JsonTransportEntity permissionDelete(long permissionId)  {
 
@@ -217,7 +217,7 @@ public class UserAndPermissionRest {
    * 获取菜单详情
    *
    */
-  @RequestMapping(value = "/permissionGetMeunDetails", method = RequestMethod.POST)
+  @RequestMapping(value = "/resourcesNodeMeunDetails", method = RequestMethod.GET)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
   public JsonTransportEntity permissionGetMeunDetails(SysPermission permission)  {
 
@@ -234,7 +234,7 @@ public class UserAndPermissionRest {
    * 修改权限可用状态
    *
    */
-  @RequestMapping(value = "/permissionChangeState", method = RequestMethod.POST)
+  @RequestMapping(value = "/resourcesNodeChangeState", method = RequestMethod.PUT)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_STATE)
   public JsonTransportEntity permissionChangeState(long permissionId)
      {
@@ -247,7 +247,7 @@ public class UserAndPermissionRest {
     }
   }
 
-  @RequestMapping(value = "/permissionChangeData", method = RequestMethod.POST)
+  @RequestMapping(value = "/resourcesNode", method = RequestMethod.PUT)
   public JsonTransportEntity permissionChangeData(long permissionId, String name,String percode,String sortstring,String url)
      {
 
