@@ -248,14 +248,14 @@ public class UserAndPermissionRest {
   }
 
   @RequestMapping(value = "/resourcesNode", method = RequestMethod.PUT)
-  public JsonTransportEntity permissionChangeData(long permissionId, String name,String percode,String sortstring,String url)
+  public JsonTransportEntity permissionChangeData(long id, String name,String percode,String sortstring,String url)
      {
 
-    boolean b = sps.edit(permissionId,name,percode,sortstring,url);
+    boolean b = sps.edit(id,name,percode,sortstring,url);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "状态修改成功");
+      return  JsonTool.getJsonTransportEntity(true, "修改成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "状态修改失败");
+      return  JsonTool.getJsonTransportEntity(false, "修改失败");
     }
   }
 // 资源 End

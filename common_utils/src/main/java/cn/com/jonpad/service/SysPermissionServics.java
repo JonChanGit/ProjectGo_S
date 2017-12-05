@@ -60,6 +60,7 @@ public class SysPermissionServics {
 			// permission.getType()) == null) {
 			if ("root".equals(permission.getType())) {
         spr.save(permission);
+        return true;
 			} else {
 				// 直接父亲节点
 				SysPermission parentSp = spr.findById(permission.getParentid());
