@@ -96,21 +96,23 @@
         }
       },
       open: function () {
-        console.log('open');
-        Axios.get(Tools.uslPre+'/access/user_and_permission/resourcesChildrenNode.do',
-          Qs.stringify({pid: this.pnode.id,})
-        ).then((response) => {
-          let data = response.data;
-          if (data.flag == true) {
-            this.children = data.entity.children;
+		  console.log('open');
+      	Tools.get({
+			iView:this,
+			data:{
+				pid: this.pnode.id,
+			},
+			url:'/api/access/user_and_permission/resourcesChildrenNode.do',
+			successCallback:(data)=>{
+				if (data.flag == true) {
+					this.children = data.entity.children;
 
-            this.hasChild = true;
-          }
-          this.active = true;
-        }).catch((error) => {
-          console.log(error);
+					this.hasChild = true;
+				}
+				this.active = true;
+				this.isOpen = true;
+			}
         });
-        this.isOpen = true;
         /* let list = [{'available':0,'id':2,'name':'1','parentid':1,'parentids':'[1]','percode':'1','rootPparentid':1,'sortstring':'1','url':'1'},{'available':0,'id':3,'name':'2','parentid':1,'parentids':'0,1','percode':'2','rootPparentid':1,'sortstring':'2','url':'2'},{'available':0,'id':4,'name':'3','parentid':1,'parentids':'0,1','percode':'3','rootPparentid':1,'sortstring':'3','type':'menu','url':'3'}];
 
          this.children = list;*/
