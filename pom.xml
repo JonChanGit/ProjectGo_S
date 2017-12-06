@@ -11,11 +11,12 @@
 
 	<properties>
 		<spring.version>4.3.7.RELEASE</spring.version>
-		<spring.data.version>1.11.1.RELEASE</spring.data.version>
+		<spring.data.version>1.11.9.RELEASE</spring.data.version>
 		<jdk.version>1.8</jdk.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<shiro.version>1.2.3</shiro.version>
     <mybatis.version>3.4.5</mybatis.version>
+    <druid-version>1.0.9</druid-version>
   </properties>
 
 	<modules>

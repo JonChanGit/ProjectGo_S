@@ -1,8 +1,10 @@
 package cn.com.jonpad.springtest;
 
+import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.mybatis.SysUserDao;
 import cn.com.jonpad.repository.SysUserRepository;
+import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.util.JsonTool;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class SpringTestImpl extends SpringTest{
   @Autowired
   SysUserDao sysUserDao;
 
+  @Autowired
+  SysRoleService srs;
+
   @Test
   public void loadTest(){
     System.out.printf("Spring装载测试");
@@ -33,6 +38,18 @@ public class SpringTestImpl extends SpringTest{
     List<SysUser> all = sur.findAll();
     String str = JsonTool.toFastjson(all);
     System.out.printf(str);
+  }
+
+  @Test
+  public void testJpa01(){
+    SysRole administratorRole = new SysRole();
+    administratorRole.setAvailable(SysRole.AVAILABLE_TRUE);
+    administratorRole.setName("JPASAVETEST23");
+    try {
+      srs.addRole(administratorRole);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**

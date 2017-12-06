@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<!-- 1. 配置自动扫描的包 -->
 	<!-- 此处配置与MVC相反，配置为不扫描这两个包 -->
 	<context:component-scan base-package="cn.com.jonpad">
@@ -15,19 +15,33 @@
 			expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.RestController" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.RestControllerAdvice" />
 	</context:component-scan>
 
 	<!-- 2. 配置数据源 -->
 	<context:property-placeholder location="classpath:spring/db.properties" />
 
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="user" value="${database.username}"></property>
-		<property name="password" value="${database.password}"></property>
-		<property name="driverClass" value="${database.driverClassName}"></property>
-		<property name="jdbcUrl" value="${database.url}"></property>
-
-		<!-- 配置其他属性 -->
-	</bean>
+  <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <property name="url" value="${database.url}"/>
+    <property name="username" value="${database.username}"/>
+    <property name="password" value="${database.password}"/>
+    <property name="initialSize" value="${druid.initialSize}"/>
+    <property name="minIdle" value="${druid.minIdle}"/>
+    <property name="maxActive" value="${druid.maxActive}"/>
+    <property name="maxWait" value="${druid.maxWait}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+    <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+    <property name="validationQuery" value="${druid.validationQuery}"/>
+    <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+    <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+    <property name="testOnReturn" value="${druid.testOnReturn}"/>
+    <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
+    <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+    <property name="filters" value="${druid.filters}"/>
+  </bean>
 
 	<!-- 配置 JPA 的 EntityManagerFactory -->
 	<bean id="entityManagerFactory"
@@ -65,7 +79,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<!-- 配置 SpringData -->
-	<jpa:repositories base-package="cn.com.jonpad"
+	<jpa:repositories base-package="cn.com.jonpad.repository"
 		entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
 
   <import resource="application-mybatis.xml"/>
