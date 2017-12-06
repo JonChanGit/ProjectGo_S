@@ -18,28 +18,62 @@ public class SysGroupServics {
   @Autowired
   SysGroupRepository sgr;
 
+  public SysGroup findOne(long id){
+    return sgr.findOne(id);
+  }
+
+  public long count(){
+    return sgr.count();
+  }
+
 
   @Transactional(rollbackFor = Exception.class)
-  public boolean addPermission(SysGroup group) {
+  public boolean addGroup(SysGroup group) {
     if (!ValidateTool.isEmptyString(group.getName())) {
-      /*// 直接父亲节点
-      SysPermission parentSp = sgr.findById(group.getParentid());
+      if (group.getParentid() == 0) {
+        sgr.save(group);
+        return true;
+      }
+      // 直接父亲节点
+      SysGroup parentSg = sgr.findOne(group.getParentid());
       // 最终父亲节点
-      SysPermission rootParentsp = this.getRootPparentByParentPermission(parentSp);
-      if (rootParentsp != null) {
-        group.setRootParentid(rootParentsp.getId());
+      SysGroup rootParentsg = this.getRootParentByParentGroup(parentSg);
+      if (rootParentsg != null) {
+        group.setRootParentid(rootParentsg.getId());
       } else {
-        group.setRootParentid(parentSp.getId());
+        group.setRootParentid(parentSg.getId());
       }
-      if (!ValidateTool.isEmptyString(parentSp.getParentids())) {
-        group.setParentids(parentSp.getParentids() + "," + parentSp.getId());
+      if (!ValidateTool.isEmptyString(parentSg.getParentids())) {
+        group.setParentids(parentSg.getParentids() + "," + parentSg.getId());
       } else {
-        group.setParentids(parentSp.getId() + "");
+        group.setParentids(parentSg.getId() + "");
       }
-      sgr.save(permission);*/
+      sgr.save(group);
       return true;
     }
 
     return false;
   }
+
+  /**
+   * 获取最终父亲节点
+   * @param parentSg
+   * @return
+   */
+  public SysGroup getRootParentByParentGroup(SysGroup parentSg) {
+    if (parentSg != null) {
+      String[] tmpRootArr = null;
+      if (parentSg.getParentids() != null) {
+        tmpRootArr = parentSg.getParentids().split(",");
+      }
+      if (tmpRootArr != null && tmpRootArr.length > 0) {
+        long tmpRootId = Integer.parseInt(tmpRootArr[0]);
+        return sgr.findOne(tmpRootId);
+      }
+
+    }
+    return null;
+  }
+
+
 }

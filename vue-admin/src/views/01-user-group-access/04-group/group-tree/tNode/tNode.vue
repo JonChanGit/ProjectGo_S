@@ -39,18 +39,12 @@
 			   title="Common Modal dialog box title"
 			   @on-ok="ok"
 			   @on-cancel="cancel">
-			<Form :model="resourcesData" :label-width="80">
-				<FormItem label="菜单标题">
-					<Input v-model="resourcesData.name" placeholder=""></Input>
+			<Form :model="groupData" :label-width="80">
+				<FormItem label="组名">
+					<Input v-model="groupData.name" placeholder=""></Input>
 				</FormItem>
 				<FormItem label="排序">
-					<Input v-model="resourcesData.sortstring" placeholder=""></Input>
-				</FormItem>
-				<FormItem label="URL">
-					<Input v-model="resourcesData.url" placeholder=""></Input>
-				</FormItem>
-				<FormItem label="标识">
-					<Input v-model="resourcesData.percode" placeholder=""></Input>
+					<Input v-model="groupData.sortstring" placeholder=""></Input>
 				</FormItem>
 			</Form>
 		</Modal>
@@ -91,7 +85,7 @@
 				'showModel':false,//显示模态框
 				'showDeleteModel':false,//显示删除模态框
 				'delete_modal_loading': false,
-				'resourcesData':{},//编辑数据
+				'groupData':{},//编辑数据
 				'modelOkFunction':{},//模态框动态绑定OK方法
 			};
 		},
@@ -153,12 +147,12 @@
 			},
 			openModel:function (type) {
 				if(type == 'new'){
-					this.resourcesData.id = 0;
-					this.resourcesData.parentid = this.pnode.id;
+					this.groupData.id = 0;
+					this.groupData.parentid = this.pnode.id;
 					this.modelOkFunction = this.newDialog;
 				}else {
-					this.resourcesData = this.pnode;
-					//this.resourcesData.parentid = 0;
+					this.groupData = this.pnode;
+					//this.groupData.parentid = 0;
 					this.modelOkFunction = this.editDialog;
 				}
 				this.showModel = true;
@@ -167,11 +161,11 @@
 			 * 添加数据
 			 */
 			newDialog: function () {
-				console.log(this.resourcesData);
+				console.log(this.groupData);
 				Tool.post({
 					iView:this,
-					data:this.resourcesData,
-					url:'/api/access/user_and_permission/resourcesNode.do',
+					data:this.groupData,
+					url:'/api/access/user_and_permission/groupNode.do',
 					successCallback:(data)=>{
 						this.$Message.success(data.message);
 						this.open();
@@ -184,7 +178,7 @@
 			editDialog: function () {
 				Tool.put({
 					iView:this,
-					data:this.resourcesData,
+					data:this.groupData,
 					url:'/api/access/user_and_permission/resourcesNode.do',
 					successCallback:(data)=>{
 						this.$Message.success(data.message);

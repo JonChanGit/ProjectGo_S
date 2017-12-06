@@ -35,9 +35,10 @@ public class SpringTestImpl extends SpringTest{
    */
   @Test
   public void testJpa(){
-    List<SysUser> all = sur.findAll();
-    String str = JsonTool.toFastjson(all);
-    System.out.printf(str);
+    SysRole administratorRole = new SysRole();
+    administratorRole.setAvailable(SysRole.AVAILABLE_TRUE);
+    administratorRole.setName(SysRole.Super_Administrator_Name);
+    srs.addRole(administratorRole);
   }
 
   @Test

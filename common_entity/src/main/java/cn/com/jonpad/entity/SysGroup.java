@@ -54,7 +54,7 @@ public class SysGroup implements java.io.Serializable{
 	 * 即祖宗
 	 */
 	@Column(name="i_rootParentid")
-	private Long rootPparentid;
+	private Long rootParentid;
 
 	/**
 	 * 排序号
@@ -90,9 +90,6 @@ public class SysGroup implements java.io.Serializable{
 	}
 
 
-	public Long getRootPparentid() {
-		return rootPparentid;
-	}
 
 	public String getSortstring() {
 		return sortstring;
@@ -118,12 +115,15 @@ public class SysGroup implements java.io.Serializable{
 		this.parentids = parentids;
 	}
 
+  public Long getRootParentid() {
+    return rootParentid;
+  }
 
-	public void setRootPparentid(Long rootPparentid) {
-		this.rootPparentid = rootPparentid;
-	}
+  public void setRootParentid(Long rootParentid) {
+    this.rootParentid = rootParentid;
+  }
 
-	public void setSortstring(String sortstring) {
+  public void setSortstring(String sortstring) {
 		this.sortstring = sortstring;
 	}
 
@@ -144,7 +144,7 @@ public class SysGroup implements java.io.Serializable{
     this.name = oldObj.getName();
     this.parentid = oldObj.getParentid();
     this.parentids = oldObj.getParentids();
-    this.rootPparentid = oldObj.getRootPparentid();
+    this.rootParentid = oldObj.getRootParentid();
     this.sortstring = oldObj.getSortstring();
   }
 }

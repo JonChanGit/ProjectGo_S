@@ -5,6 +5,7 @@ import cn.com.jonpad.entity.SysGroup;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
+import cn.com.jonpad.service.SysGroupServics;
 import cn.com.jonpad.service.SysPermissionServics;
 import cn.com.jonpad.service.SysRoleService;
 import cn.com.jonpad.service.SysUserService;
@@ -30,6 +31,8 @@ public class UserAndPermissionRest {
   private SysRoleService srs;
   @Autowired
   private SysPermissionServics sps;
+  @Autowired
+  private SysGroupServics sgs;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
   public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
@@ -261,9 +264,28 @@ public class UserAndPermissionRest {
   }
 // 资源 End
 
-  //@RequestMapping(value = "/resourcesNode", method = RequestMethod.POST)
+  @RequestMapping(value = "/groupNode", method = RequestMethod.POST)
   public JsonTransportEntity groupAdd(SysGroup group){
-    return null;
+    boolean b = sgs.addGroup(group);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "功能添加成功");
+    } else {
+      return JsonTool.getJsonTransportEntity(false, "功能添加失败");
+    }
+  }
+
+  /**
+   * 只有节点信息
+   * @param pid
+   * @throws IOException
+   */
+  @RequestMapping(value = "/groupNode" ,method = RequestMethod.GET)
+  public JsonTransportEntity groupNode(@RequestParam(value = "pid",defaultValue = "0") long pid ) throws IOException {
+    SysGroup meun = sgs.findOne(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    return jte;
   }
 
 

@@ -25,18 +25,19 @@
     computed: {},
     created: function () {
       console.log('创建完成');
-      Axios.post('/access/user_and_permission/permissionGetNode.do',
-        Qs.stringify({pid: 0,})
-      ).then((response) => {
-        let data = response.data;
-        if (data.flag == true) {
-          let root = data.entity;
-          this.child = root;
-        }
-        this.active = true;
-      }).catch((error) => {
-        console.log(error);
-      });
+		Tool.get({
+			iView: this,
+			data: {pid: 0,},
+			url: '/api/access/user_and_permission/groupNode.do',
+			successCallback: (data) => {
+				if (data.flag == true) {
+					let root = data.entity;
+					this.child = root;
+					console.log(this.child);
+				}
+				this.active = true;
+			}
+		});
 
       this.child = {'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'};
     },
