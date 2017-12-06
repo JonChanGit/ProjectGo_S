@@ -1,6 +1,7 @@
 package cn.com.jonpad.controller.rest;
 
 import cn.com.jonpad.dto.MeunDetails;
+import cn.com.jonpad.entity.SysGroup;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
@@ -259,6 +260,11 @@ public class UserAndPermissionRest {
     }
   }
 // 资源 End
+
+  //@RequestMapping(value = "/resourcesNode", method = RequestMethod.POST)
+  public JsonTransportEntity groupAdd(SysGroup group){
+    return null;
+  }
 
 
 }

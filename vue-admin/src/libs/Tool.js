@@ -102,7 +102,7 @@ export default {
 				obj.iView.$Message.error(data.message);
 			}
 		}).catch(function (error) {
-			obj.iView.$Message.error(error);
+			obj.iView.$Message.error('抱歉,发生错误!');
 		});
 
 	},

@@ -94,6 +94,13 @@ export const appRouter = [
 				title: '资源管理',
 				component: resolve => { require(['@/views/01-user-group-access/03-resources/resources.vue'], resolve); }
 			},
+            {
+				path: 'gropu',
+				icon: 'pound',
+				name: 'gropu',
+				title: '组管理',
+				component: resolve => { require(['@/views/01-user-group-access/04-group/group.vue'], resolve); }
+			},
         ]
     },
     //===================

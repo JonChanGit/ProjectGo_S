@@ -3,36 +3,20 @@ package cn.com.jonpad.entity;
 import javax.persistence.*;
 
 /**
- *
- *
- * @Title: SysPermission.java
+ * @Title: SysGroup.java
  * @Package com.jon.web.entity
- * @Description: 资源 --- 菜单
+ * @Description: 用户组
  * @author JonChan
- * @date 2016年5月22日 上午8:44:03
+ * @date 2017年12月6日 上午8:44:03
  * @version V1.0
  *
  */
 @Entity
-@Table(name = "t_sys_permission")
-public class SysPermission implements java.io.Serializable{
-	/**
-	 * 菜单
-	 */
-	public static final String MENU_TREE_TYPE_MENU = "menu";
-	/**
-	 * 根
-	 */
-	public static final String MENU_TREE_TYPE_ROOT = "root";
-	/**
-	 * 按钮
-	 */
-	public static final String MENU_TREE_TYPE_BUTTON = "button";
+@Table(name = "t_sys_group")
+public class SysGroup implements java.io.Serializable{
 
 	public static final  int AVAILABLE_TREU = 1;
 	public static final  int AVAILABLE_FALSE = 0;
-
-
 
 	/**
 	 * 是否可用,1：可用，0不可用
@@ -46,7 +30,7 @@ public class SysPermission implements java.io.Serializable{
 	private long id;
 
 	/**
-	 * 资源名称
+	 * 组名称
 	 */
 	@Column(name="c_name")
 	private String name;
@@ -65,19 +49,12 @@ public class SysPermission implements java.io.Serializable{
 	@Column(name="c_parentids")
 	private String parentids;
 
-
-	/**
-	 * 权限代码字符串
-	 */
-	@Column(name="c_percode")
-	private String percode;
-
 	/**
 	 * 最终父结点id
 	 * 即祖宗
 	 */
 	@Column(name="i_rootParentid")
-	private Long rootParentid;
+	private Long rootPparentid;
 
 	/**
 	 * 排序号
@@ -85,17 +62,6 @@ public class SysPermission implements java.io.Serializable{
 	@Column(name="c_sortstring")
 	private String sortstring;
 
-	/**
-	 * 资源类型：root,menu,button,
-	 */
-	@Column(name="c_type")
-	private String type;
-
-	/**
-	 * 访问url地址
-	 */
-	@Column(name="c_url")
-	private String url;
 
   /**
    * 是否为叶子节点(最终节点)
@@ -111,8 +77,6 @@ public class SysPermission implements java.io.Serializable{
 		return id;
 	}
 
-
-
 	public String getName() {
 		return name;
 	}
@@ -125,22 +89,14 @@ public class SysPermission implements java.io.Serializable{
 		return parentids;
 	}
 
-	public String getPercode() {
-		return percode;
+
+	public Long getRootPparentid() {
+		return rootPparentid;
 	}
 
 	public String getSortstring() {
 		return sortstring;
 	}
-
-	public String getType() {
-		return type;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
 
 	public void setAvailable(int available) {
 		this.available = available;
@@ -162,28 +118,13 @@ public class SysPermission implements java.io.Serializable{
 		this.parentids = parentids;
 	}
 
-	public void setPercode(String percode) {
-		this.percode = percode;
+
+	public void setRootPparentid(Long rootPparentid) {
+		this.rootPparentid = rootPparentid;
 	}
 
-  public Long getRootParentid() {
-    return rootParentid;
-  }
-
-  public void setRootParentid(Long rootParentid) {
-    this.rootParentid = rootParentid;
-  }
-
-  public void setSortstring(String sortstring) {
+	public void setSortstring(String sortstring) {
 		this.sortstring = sortstring;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
   public boolean isLeaf() {
@@ -194,19 +135,16 @@ public class SysPermission implements java.io.Serializable{
     this.leaf = leaf;
   }
 
-  public SysPermission() {
+  public SysGroup() {
   }
 
-  public SysPermission(SysPermission oldObj) {
+  public SysGroup(SysGroup oldObj) {
 	  this.id = oldObj.getId();
     this.available = oldObj.getAvailable();
     this.name = oldObj.getName();
     this.parentid = oldObj.getParentid();
     this.parentids = oldObj.getParentids();
-    this.percode = oldObj.getPercode();
+    this.rootPparentid = oldObj.getRootPparentid();
     this.sortstring = oldObj.getSortstring();
-    this.type = oldObj.getType();
-    this.url = oldObj.getUrl();
-    this.rootParentid = oldObj.getRootParentid();
   }
 }

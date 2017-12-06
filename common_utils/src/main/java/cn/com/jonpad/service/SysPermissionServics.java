@@ -67,9 +67,9 @@ public class SysPermissionServics {
 				// 最终父亲节点
 				SysPermission rootParentsp = this.getRootPparentByParentPermission(parentSp);
 				if (rootParentsp != null) {
-					permission.setRootPparentid(rootParentsp.getId());
+					permission.setRootParentid(rootParentsp.getId());
 				} else {
-					permission.setRootPparentid(parentSp.getId());
+					permission.setRootParentid(parentSp.getId());
 				}
 				if (!ValidateTool.isEmptyString(parentSp.getParentids())) {
 					permission.setParentids(parentSp.getParentids() + "," + parentSp.getId());

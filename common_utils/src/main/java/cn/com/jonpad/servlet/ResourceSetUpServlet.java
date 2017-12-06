@@ -100,7 +100,7 @@ public class ResourceSetUpServlet extends HttpServlet {
       sp.setParentid(0L);
       sp.setParentids("0");
       sp.setPercode("root");
-      sp.setRootPparentid(0L);
+      sp.setRootParentid(0L);
       sp.setSortstring("0");
       sp.setType(SysPermission.MENU_TREE_TYPE_ROOT);
       sp.setUrl("/#");
