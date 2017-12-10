@@ -22,7 +22,7 @@ public class SysGroup implements java.io.Serializable{
 	 * 是否可用,1：可用，0不可用
 	 */
 	@Column(name="i_available")
-	private int available;
+	private int available = AVAILABLE_TREU;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

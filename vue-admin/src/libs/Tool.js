@@ -141,6 +141,7 @@ export default {
 	 * @param {String} obj.url 请求地址
 	 * @param {Object} obj.data 请求参数
 	 * @param {Function} obj.successCallback 成功返回
+	 * @param {Function} obj.successFailCallback 成功都是服务的执行失败的回掉
 	 * @param {Object} obj.option 回调参数
 	 * @param {Object} obj.iView iView实例 必须
 	 */
@@ -158,6 +159,9 @@ export default {
 			} else {
 				console.log(this);
 				obj.iView.$Message.error(data.message);
+				if(obj.successFailCallback != null){
+					obj.successFailCallback();
+				}
 			}
 		}).catch(function (error) {
 			obj.iView.$Message.error(error);

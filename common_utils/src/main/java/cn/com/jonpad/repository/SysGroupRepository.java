@@ -10,5 +10,13 @@ import java.util.List;
  */
 public interface SysGroupRepository extends JpaRepository<SysGroup, Long> {
 
+  List<SysGroup> findByParentid(long parentid);
+
+  /**
+   * 根据父节点查找子节点数量
+   * @param parentid
+   * @return
+   */
+  long countByParentid(long parentid);
 
 }

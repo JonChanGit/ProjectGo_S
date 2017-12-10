@@ -128,7 +128,7 @@
 					data: {
 						pid: this.pnode.id,
 					},
-					url: '/api/access/user_and_permission/resourcesChildrenNode.do',
+					url: '/api/access/user_and_permission/groupChildrenNode.do',
 					successCallback: (data) => {
 						if (data.flag == true) {
 							this.children = data.entity.children;
@@ -179,9 +179,12 @@
 				Tool.put({
 					iView:this,
 					data:this.groupData,
-					url:'/api/access/user_and_permission/resourcesNode.do',
+					url:'/api/access/user_and_permission/groupNode.do',
 					successCallback:(data)=>{
 						this.$Message.success(data.message);
+					},
+					successFailCallback:()=>{
+						this.open();
 					}
 				});
 			},
@@ -209,9 +212,9 @@
 				Tool.delete({
 					iView:this,
 					data:{
-						permissionId:this.pnode.id,
+						id:this.pnode.id,
 					},
-					url:'/api/access/user_and_permission/resourcesNode.do',
+					url:'/api/access/user_and_permission/groupNode.do',
 					successCallback:(data)=>{
 						this.showDeleteModel = false;
 						this.$Message.success(data.message);

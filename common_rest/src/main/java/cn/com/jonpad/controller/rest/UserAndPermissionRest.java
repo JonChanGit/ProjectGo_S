@@ -1,5 +1,6 @@
 package cn.com.jonpad.controller.rest;
 
+import cn.com.jonpad.dto.GroupDetails;
 import cn.com.jonpad.dto.MeunDetails;
 import cn.com.jonpad.entity.SysGroup;
 import cn.com.jonpad.entity.SysPermission;
@@ -287,6 +288,60 @@ public class UserAndPermissionRest {
     jte.setFlag(meun==null?false:true);
     return jte;
   }
+
+  /**
+   * 节点和子节点
+   * @param pid
+   * @throws IOException
+   */
+  @RequestMapping(value = "/groupChildrenNode" , method = RequestMethod.GET)
+  public JsonTransportEntity groupGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid) throws IOException {
+    if(pid<=0){
+      return JsonTool.getJsonTransportEntity(false,"参数不正确");
+    }
+    GroupDetails meun = sgs.getGroupDetails(pid);
+    JsonTransportEntity jte = new JsonTransportEntity();
+    jte.setEntity(meun);
+    jte.setFlag(meun==null?false:true);
+    return jte;
+  }
+
+  /**
+   * 删除 groupNode
+   *
+   * @throws IOException
+   */
+  @RequestMapping(value = "/groupNode", method = RequestMethod.DELETE)
+  //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
+  public JsonTransportEntity groupNodeDelete(long id)  {
+
+    boolean b = sgs.deleteGroup(id);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "删除成功");
+    } else {
+      return  JsonTool.getJsonTransportEntity(false, "删除失败");
+    }
+  }
+
+  /**
+   * 编辑
+   * @param id
+   * @param name
+   * @param sortstring
+   * @return
+   */
+  @RequestMapping(value = "/groupNode", method = RequestMethod.PUT)
+  public JsonTransportEntity groupChangeData(long id, String name ,String sortstring)
+  {
+
+    boolean b = sgs.edit(id,name,sortstring);
+    if (b) {
+      return  JsonTool.getJsonTransportEntity(true, "修改成功");
+    } else {
+      return  JsonTool.getJsonTransportEntity(false, "修改失败");
+    }
+  }
+
 
 
 }

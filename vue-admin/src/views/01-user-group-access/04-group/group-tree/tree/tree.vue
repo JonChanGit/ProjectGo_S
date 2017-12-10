@@ -7,6 +7,7 @@
 <script>
   import Axios from 'axios';
   import Qs from 'qs';
+  import Tool from '@/libs/Tool.js';
   import tNode from '../tNode/tNode.vue';
 
   export default {
@@ -27,7 +28,7 @@
       console.log('创建完成');
 		Tool.get({
 			iView: this,
-			data: {pid: 0,},
+			data: {pid: 1,},
 			url: '/api/access/user_and_permission/groupNode.do',
 			successCallback: (data) => {
 				if (data.flag == true) {
