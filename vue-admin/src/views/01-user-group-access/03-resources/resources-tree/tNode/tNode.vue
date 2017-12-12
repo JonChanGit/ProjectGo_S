@@ -19,6 +19,9 @@
 				<Button type="error" @click="deleteNode()">
 					<Icon type="trash-a"></Icon>
 				</Button>
+				<Button type="success" @click="openAccessNode()">
+					<Icon type="ios-gear"></Icon>
+				</Button>
 			</div>
 
 			&nbsp;
@@ -36,7 +39,7 @@
 		</Spin>
 
 		<Modal v-model="showModel"
-			   title="Common Modal dialog box title"
+			   :title="modelTitle"
 			   @on-ok="ok"
 			   @on-cancel="cancel">
 			<Form :model="resourcesData" :label-width="80">
@@ -68,7 +71,34 @@
 				<Button type="error" size="large" long :loading="delete_modal_loading" @click="del">Delete</Button>
 			</div>
 		</Modal>
-
+		<Modal v-model="showAccessModel"  width="900"
+			   title="权限配置"
+			   @on-ok="ok"
+			   @on-cancel="cancel">
+			<Tabs value="name1">
+				<TabPane label="角色" name="name1">
+					<Transfer
+							:data="transferRoleData"
+							:target-keys="transferRoleTargetKeys"
+							:render-format="transferRoleRender"
+							@on-change="transferRoleOnChange"></Transfer>
+				</TabPane>
+				<TabPane label="组" name="name2">
+					<Transfer
+							:data="transferGroupData"
+							:target-keys="transferGroupTargetKeys"
+							:render-format="transferGroupRender"
+							@on-change="transferGroupOnChange"></Transfer>
+				</TabPane>
+				<TabPane label="多维度" name="name3">
+					<Transfer
+							:data="transferDimensionData"
+							:target-keys="transferDimensionTargetKeys"
+							:render-format="transferDimensionRender"
+							@on-change="transferDimensionOnChange"></Transfer>
+				</TabPane>
+			</Tabs>
+		</Modal>
 
 	</div>
 </template>
@@ -89,10 +119,36 @@
 				'parentids': [],
 				'spinShow': false,//显示加载提示
 				'showModel':false,//显示模态框
+				'modelTitle':'添加菜单',//显示模态框
 				'showDeleteModel':false,//显示删除模态框
+				'showAccessModel':false,//显示权限配置模态框
 				'delete_modal_loading': false,
 				'resourcesData':{},//编辑数据
 				'modelOkFunction':{},//模态框动态绑定OK方法
+				//穿梭框-角色数据
+				'transferRoleData':[
+					{ "key": "1", "label": "Content 1", "disabled": false },
+					{ "key": "2", "label": "Content 2", "disabled": true },
+					{ "key": "3", "label": "Content 3", "disabled": false }
+				],
+				//穿梭框-角色被选择数据
+				'transferRoleTargetKeys': ["1","2"],
+				//穿梭框-组数据
+				'transferGroupData':[
+					{ "key": "1", "label": "Content 1", "disabled": false },
+					{ "key": "2", "label": "Content 2", "disabled": true },
+					{ "key": "3", "label": "Content 3", "disabled": false }
+				],
+				//穿梭框-组被选择数据
+				'transferGroupTargetKeys': ["1","2"],
+				//穿梭框-维度数据
+				'transferDimensionData':[
+					{ "key": "1", "label": "Content 1", "disabled": false },
+					{ "key": "2", "label": "Content 2", "disabled": true },
+					{ "key": "3", "label": "Content 3", "disabled": false }
+				],
+				//穿梭框-维度被选择数据
+				'transferDimensionTargetKeys': ["1","2"],
 			};
 		},
 		components: {
@@ -120,6 +176,30 @@
 
 		},
 		methods: {
+			//穿梭框-角色自定义输出
+			transferRoleRender (item) {
+				return item.key + ':' + item.label;
+			},
+			//穿梭框-角色数据变更
+			transferRoleOnChange (newTargetKeys) {
+				this.transferRoleTargetKeys = newTargetKeys;
+			},
+			//穿梭框-组自定义输出
+			transferGroupRender (item) {
+				return item.key + ':' + item.label;
+			},
+			//穿梭框-组数据变更
+			transferGroupOnChange (newTargetKeys) {
+				this.transferGroupTargetKeys = newTargetKeys;
+			},
+			//穿梭框-维度自定义输出
+			transferDimensionRender (item) {
+				return item.key + ':' + item.label;
+			},
+			//穿梭框-维度数据变更
+			transferDimensionOnChange (newTargetKeys) {
+				this.transferGroupTargetKeys = newTargetKeys;
+			},
 			clickMenu: function () {
 				if (!this.isOpen) {
 					this.open();
@@ -153,15 +233,20 @@
 			},
 			openModel:function (type) {
 				if(type == 'new'){
+					this.modelTitle = "添加菜单";
 					this.resourcesData.id = 0;
 					this.resourcesData.parentid = this.pnode.id;
 					this.modelOkFunction = this.newDialog;
 				}else {
+					this.modelTitle = "编辑菜单";
 					this.resourcesData = this.pnode;
 					//this.resourcesData.parentid = 0;
 					this.modelOkFunction = this.editDialog;
 				}
 				this.showModel = true;
+			},
+			openAccessNode:function () {
+				this.showAccessModel= true;
 			},
 			/**
 			 * 添加数据
@@ -193,23 +278,6 @@
 			},
 			deleteNode: function () {
 				this.showDeleteModel = true;
-				/* layer.confirm('确定删除?', {icon: 3, title:'警告'}, (index)=>{
-				   console.log(this.pnode.id);
-				   Axios.post(Tools.uslPre+'/access/user_and_permission/permissionDelete.do',
-					 Qs.stringify({permissionId: this.pnode.id,})
-				   ).then((response) => {
-					 Tools.requestFeedback({response,successCallback:()=>{
-					   layer.msg('操作成功');
-					   this.$parent.open();
-					   },
-					 });
-				   }).catch((error) => {
-					 console.log(error);
-					 layer.closeAll();
-				   });
-				   layer.close(index);
-				 });*/
-
 			},
 			del:function () {
 				Tool.delete({
