@@ -39,7 +39,20 @@
 				this.active = true;
 			}
 		});
-      //this.child = {'available':1,'id':1,'name':'Root','parentid':0,'parentids':'0','percode':'','rootPparentid':0,'sortstring':'0','type':'root','url':'#'};
+		//获取角色列表
+		Tool.get({
+			iView: this,
+			data: {},
+			url: '/api/access/user_and_permission/roleList.do',
+			successCallback: (data) => {
+				if (data.flag == true) {
+					let list = data.list;
+					this.$store.commit('setRoleList',list);
+				}
+			}
+		});
+
+
     },
   };
 </script>

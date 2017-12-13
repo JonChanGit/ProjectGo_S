@@ -10,7 +10,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_sys_role")
 public class SysRole {
+  /**
+   * 可用
+   */
 	public static  final int AVAILABLE_TRUE  = 1;
+  /**
+   * 不可用
+   */
 	public static  final int AVAILABLE_FALSE  = 0;
 
   public static  final String Super_Administrator_Name = "AdministratorRole";

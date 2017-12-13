@@ -54,6 +54,7 @@ public class SysRoleService {
       }
 
 			one.setName(role.getName());
+      one.setAvailable(role.getAvailable());
 			srr.save(one);
 			return  true;
 		}

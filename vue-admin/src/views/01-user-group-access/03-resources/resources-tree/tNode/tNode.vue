@@ -82,6 +82,8 @@
 							:target-keys="transferRoleTargetKeys"
 							:render-format="transferRoleRender"
 							@on-change="transferRoleOnChange"></Transfer>
+					<br/>
+					<Button type="success" long>提交</Button>
 				</TabPane>
 				<TabPane label="组" name="name2">
 					<Transfer
@@ -89,6 +91,8 @@
 							:target-keys="transferGroupTargetKeys"
 							:render-format="transferGroupRender"
 							@on-change="transferGroupOnChange"></Transfer>
+					<br/>
+					<Button type="success" long>提交</Button>
 				</TabPane>
 				<TabPane label="多维度" name="name3">
 					<Transfer
@@ -96,8 +100,12 @@
 							:target-keys="transferDimensionTargetKeys"
 							:render-format="transferDimensionRender"
 							@on-change="transferDimensionOnChange"></Transfer>
+					<br/>
+					<Button type="success" long>提交</Button>
 				</TabPane>
 			</Tabs>
+			<div slot="footer">
+			</div>
 		</Modal>
 
 	</div>
@@ -126,13 +134,9 @@
 				'resourcesData':{},//编辑数据
 				'modelOkFunction':{},//模态框动态绑定OK方法
 				//穿梭框-角色数据
-				'transferRoleData':[
-					{ "key": "1", "label": "Content 1", "disabled": false },
-					{ "key": "2", "label": "Content 2", "disabled": true },
-					{ "key": "3", "label": "Content 3", "disabled": false }
-				],
+				'transferRoleData':[],
 				//穿梭框-角色被选择数据
-				'transferRoleTargetKeys': ["1","2"],
+				'transferRoleTargetKeys': [1],
 				//穿梭框-组数据
 				'transferGroupData':[
 					{ "key": "1", "label": "Content 1", "disabled": false },
@@ -167,6 +171,9 @@
 			}
 		},
 		created: function () {
+			this.transferRoleData = this.$store.getters.getRoleListView;
+			console.log('this.transferRoleData');
+			console.log(this.transferRoleData);
 			this.isOpen = this.isActive;
 			try {
 				this.parentids = this.pnode.parentids.split(',');
@@ -178,7 +185,7 @@
 		methods: {
 			//穿梭框-角色自定义输出
 			transferRoleRender (item) {
-				return item.key + ':' + item.label;
+				return item.label;
 			},
 			//穿梭框-角色数据变更
 			transferRoleOnChange (newTargetKeys) {
