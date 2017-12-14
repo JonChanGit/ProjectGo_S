@@ -32,6 +32,12 @@ public class SysRolePermissionService {
       .filter(l -> !l.equals(1L))
       .collect(Collectors.toList());
     dao.regist(pid,roleIds);
-    return new JsonTransportEntity().setFlag(true);
+    return new JsonTransportEntity().setFlag(true).setMessage("操作成功");
   }
+
+  public JsonTransportEntity getRoleListByPermission( long permissionId){
+    List<Long> roleListByPermission = dao.findRoleListByPermission(permissionId);
+    return new JsonTransportEntity().setFlag(true).setList(roleListByPermission);
+  }
+
 }

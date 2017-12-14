@@ -119,8 +119,9 @@ public class JsonTransportEntity<T,E> {
 		return list;
 	}
 
-	public void setList(List<T> list) {
+	public JsonTransportEntity setList(List<T> list) {
 		this.list = list;
+		return this;
 	}
 
 	public E getEntity() {

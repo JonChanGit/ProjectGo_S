@@ -360,6 +360,18 @@ public class UserAndPermissionRest {
     return jte;
   }
 
+  /**
+   * 获取注册列表rolePermission
+   * @param pid
+   * @return
+   */
+  @RequestMapping(value = "/rolePermission", method = RequestMethod.GET)
+  public JsonTransportEntity getRolePermission(long pid){
+    JsonTransportEntity jte = srps.getRoleListByPermission(pid);
+    return jte;
+  }
+
+
 
 
 }

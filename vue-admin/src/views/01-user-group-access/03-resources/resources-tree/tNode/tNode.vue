@@ -73,8 +73,7 @@
 		</Modal>
 		<Modal v-model="showAccessModel"  width="900"
 			   title="权限配置"
-			   @on-ok="ok"
-			   @on-cancel="cancel">
+			   @on-visible-change="accessModelVChange">
 			<Tabs value="name1">
 				<TabPane label="角色" name="name1">
 					<Transfer
@@ -215,6 +214,22 @@
 
 		},
 		methods: {
+			accessModelVChange(v){
+				if(v){
+					Tool.get({
+						iView: this,
+						data: {
+							pid: this.pnode.id,
+						},
+						url: '/api/access/user_and_permission/rolePermission.do',
+						successCallback: (data) => {
+							//使用对象拓展运算符，拆开数据，然后在方法中使用Rest运算符合并成新数组
+							let lst = Tool.restMergeArray(...this.transferRoleTargetKeys,...data.list);
+							this.transferRoleTargetKeys = lst;
+						}
+					});
+				}
+			},
 			//穿梭框-角色自定义输出
 			transferRoleRender (item) {
 				return item.label;
@@ -232,7 +247,7 @@
 					},
 					url: '/api/access/user_and_permission/rolePermission.do',
 					successCallback: (data) => {
-
+						obj.iView.$Message.success(data.message);
 					}
 				});
 			},
