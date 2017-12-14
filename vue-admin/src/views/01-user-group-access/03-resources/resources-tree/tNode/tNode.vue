@@ -80,6 +80,7 @@
 					<Transfer
 							:data="transferRoleData"
 							:target-keys="transferRoleTargetKeys"
+							:list-style="unTransferDimensionListStyle"
 							:render-format="transferRoleRender"
 							@on-change="transferRoleOnChange"></Transfer>
 					<br/>
@@ -89,17 +90,31 @@
 					<Transfer
 							:data="transferGroupData"
 							:target-keys="transferGroupTargetKeys"
+							:list-style="unTransferDimensionListStyle"
 							:render-format="transferGroupRender"
 							@on-change="transferGroupOnChange"></Transfer>
 					<br/>
 					<Button type="success" long>提交</Button>
 				</TabPane>
 				<TabPane label="多维度" name="name3">
-					<Transfer
-							:data="transferDimensionData"
-							:target-keys="transferDimensionTargetKeys"
-							:render-format="transferDimensionRender"
-							@on-change="transferDimensionOnChange"></Transfer>
+					<Row>
+						<Col span="12">
+							<Transfer
+								:data="transferDimensionData"
+								:target-keys="transferDimensionTargetKeys"
+								:list-style="transferDimensionListStyle"
+								:render-format="transferDimensionRender"
+								@on-change="transferDimensionOnChange"></Transfer>
+						</Col>
+						<Col span="12">
+							<Transfer
+								:data="transferDimensionData"
+								:target-keys="transferDimensionTargetKeys"
+								:list-style="transferDimensionListStyle"
+								:render-format="transferDimensionRender"
+								@on-change="transferDimensionOnChange"></Transfer>
+						</Col>
+					</Row>
 					<br/>
 					<Button type="success" long>提交</Button>
 				</TabPane>
@@ -153,6 +168,15 @@
 				],
 				//穿梭框-维度被选择数据
 				'transferDimensionTargetKeys': ["1","2"],
+				//非穿梭框样式
+				'unTransferDimensionListStyle': {
+					width: '403px',
+					height: '300px'
+				},
+				//穿梭框样式
+				'transferDimensionListStyle': {
+					height: '300px'
+				}
 			};
 		},
 		components: {
