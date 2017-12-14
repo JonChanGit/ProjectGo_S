@@ -82,9 +82,10 @@
 							:target-keys="transferRoleTargetKeys"
 							:list-style="unTransferDimensionListStyle"
 							:render-format="transferRoleRender"
+							:titles="transferRoleTitles"
 							@on-change="transferRoleOnChange"></Transfer>
 					<br/>
-					<Button type="success" long>提交</Button>
+					<Button type="success" long @click="submitRole()">提交</Button>
 				</TabPane>
 				<TabPane label="组" name="name2">
 					<Transfer
@@ -92,6 +93,7 @@
 							:target-keys="transferGroupTargetKeys"
 							:list-style="unTransferDimensionListStyle"
 							:render-format="transferGroupRender"
+							:titles="transferGroupTitles"
 							@on-change="transferGroupOnChange"></Transfer>
 					<br/>
 					<Button type="success" long>提交</Button>
@@ -104,6 +106,7 @@
 								:target-keys="transferDimensionTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
+								:titles="transferRoleTitles"
 								@on-change="transferDimensionOnChange"></Transfer>
 						</Col>
 						<Col span="12">
@@ -112,6 +115,7 @@
 								:target-keys="transferDimensionTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
+								:titles="transferGroupTitles"
 								@on-change="transferDimensionOnChange"></Transfer>
 						</Col>
 					</Row>
@@ -148,6 +152,10 @@
 				'delete_modal_loading': false,
 				'resourcesData':{},//编辑数据
 				'modelOkFunction':{},//模态框动态绑定OK方法
+				//穿梭框-角色标题
+				'transferRoleTitles':['可选择角色','已选择角色'],
+				//穿梭框-组标题
+				'transferGroupTitles':['可选择组','已选择组'],
 				//穿梭框-角色数据
 				'transferRoleData':[],
 				//穿梭框-角色被选择数据
@@ -214,6 +222,19 @@
 			//穿梭框-角色数据变更
 			transferRoleOnChange (newTargetKeys) {
 				this.transferRoleTargetKeys = newTargetKeys;
+			},
+			submitRole(){
+				Tool.post({
+					iView: this,
+					data: {
+						pid: this.pnode.id,
+						'roles':this.transferRoleTargetKeys.join(","),
+					},
+					url: '/api/access/user_and_permission/rolePermission.do',
+					successCallback: (data) => {
+
+					}
+				});
 			},
 			//穿梭框-组自定义输出
 			transferGroupRender (item) {

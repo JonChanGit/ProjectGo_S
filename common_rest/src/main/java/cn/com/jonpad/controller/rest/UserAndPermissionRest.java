@@ -6,10 +6,7 @@ import cn.com.jonpad.entity.SysGroup;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.entity.SysRole;
 import cn.com.jonpad.entity.SysUser;
-import cn.com.jonpad.service.SysGroupServics;
-import cn.com.jonpad.service.SysPermissionServics;
-import cn.com.jonpad.service.SysRoleService;
-import cn.com.jonpad.service.SysUserService;
+import cn.com.jonpad.service.*;
 import cn.com.jonpad.util.JsonTool;
 import cn.com.jonpad.util.JsonTransportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(value = "/api/access/user_and_permission")
@@ -34,6 +34,8 @@ public class UserAndPermissionRest {
   private SysPermissionServics sps;
   @Autowired
   private SysGroupServics sgs;
+  @Autowired
+  private SysRolePermissionService srps;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
   public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
@@ -340,6 +342,22 @@ public class UserAndPermissionRest {
     } else {
       return  JsonTool.getJsonTransportEntity(false, "修改失败");
     }
+  }
+
+
+  /**
+   * 注册rolePermission
+   * @param pid
+   * @param roles
+   * @return
+   */
+  @RequestMapping(value = "/rolePermission", method = RequestMethod.POST)
+  public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles") String roles){
+    String[] roleIdstr = roles.split(",");
+    List<Long> roleIds = Arrays.stream(roleIdstr)
+      .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+    JsonTransportEntity jte = srps.regist(pid, roleIds);
+    return jte;
   }
 
 

@@ -481,12 +481,12 @@ public class UserAndPermissionController extends BaseController{
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/assignRegist", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/assignRegist", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN_SAVE)
 	public void assignRegist(long roleId,@RequestParam(value = "perStrArr[]")String[] perStrArr,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		boolean b = srps.addSysRolePermission(roleId,perStrArr);
 		JsonTool.toJson(b, "数据操作完成", response);
-	}
+	}*/
 
 
 	/**
@@ -494,7 +494,7 @@ public class UserAndPermissionController extends BaseController{
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/assignGetRolePermissionInfo", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/assignGetRolePermissionInfo", method = RequestMethod.POST)
 	//@RequiresPermissions(ConstantesPermission.PERMISSION_ASSIGN)
 	public void assignGetRolePermissionInfo(long roleId,HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -515,7 +515,7 @@ public class UserAndPermissionController extends BaseController{
 			JsonTool.toJson(false, "该角色没有任何已分配的权限", response);
 		}
 
-	}
+	}*/
 
 
 

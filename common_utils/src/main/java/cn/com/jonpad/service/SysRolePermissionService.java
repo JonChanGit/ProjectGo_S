@@ -3,98 +3,35 @@ package cn.com.jonpad.service;
 import cn.com.jonpad.dto.RolePermission;
 import cn.com.jonpad.entity.SysRolePermission;
 import cn.com.jonpad.mybatis.SysPermissionDao;
+import cn.com.jonpad.mybatis.SysRolePermissionDao;
 import cn.com.jonpad.repository.SysPermissionRepository;
 import cn.com.jonpad.repository.SysRolePermissionRepository;
+import cn.com.jonpad.util.JsonTransportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by jon75 on 2017/9/9.
  */
 @Service
 public class SysRolePermissionService {
-	@Autowired
-	private SysRolePermissionRepository srpr;
-
   @Autowired
-  private SysPermissionRepository spr;
+  private SysRolePermissionDao dao;
+  @Autowired
+  private SysRolePermissionRepository srpr;
 
-	@Autowired
-	private SysPermissionDao spDao;
-
-	public boolean addSysRolePermission(long roleId, String[] perStrArr) {
-		/**
-		 * 库中有的
-		 */
-		// Set<SysUserRole> sysUserRoleList =
-		// sysUserRoleDao.getSysUserRoleSet(userId);
-
-		/**
-		 * 使用Set 由于数据库逻辑和Set相似，所以可以这样使用 如果有BUG后面修复
-		 */
-
-		Set<SysRolePermission> dbSet = srpr.findBySysRoleId(String.valueOf(roleId));
-
-		/**
-		 * 新的Set
-		 */
-		Set<SysRolePermission> newSet = new HashSet<>();
-
-		if (perStrArr != null) {
-			for (int index = 0; index < perStrArr.length; index++) {
-			  if("0".equals(perStrArr[index])){
-			    continue;
-        }
-				SysRolePermission tmp = new SysRolePermission();
-				tmp.setSysPermissionId(perStrArr[index]);
-				tmp.setSysRoleId(roleId + "");
-				newSet.add(tmp);
-			}
-		}
-
-		// 临时Set 一个备份
-		Set<SysRolePermission> tmpSet = tmpSet = new HashSet<>(dbSet);
-
-		if (dbSet.equals(newSet)) {
-			// 没有变动，不做任何操作
-			return true;
-		} else {
-			// 找出变动的元素
-			// 加入新增的
-			dbSet.addAll(newSet);
-			// 移除不存在的？
-			// 保留新集合中的元素
-			dbSet.retainAll(newSet);
-			// 需要删除的集合
-			tmpSet.removeAll(dbSet);
-
-			// 提交更改
-			return this.saveOrUpdataAll(dbSet, tmpSet);
-		}
-	}
-
-	private boolean saveOrUpdataAll(Set<SysRolePermission> dbSet, Set<SysRolePermission> deleteSet) {
-		for (SysRolePermission item : dbSet) {
-			srpr.saveAndFlush(item);
-		}
-		for (SysRolePermission item : deleteSet) {
-			srpr.delete(item);
-		}
-		return true;
-	}
-
-	public List<RolePermission> getSysRolePermissionList(long id) {
-    List<RolePermission> list = spDao.findSysRolePermissionListBySysRoleId(id);
-    //Set<SysRolePermission> set = srpr.findBySysRoleId(String.valueOf(id));
-    List<RolePermission> rlist = new ArrayList<>();
-    for (RolePermission item : list) {
-      RolePermission n = new RolePermission(item);
-      long cSize = spr.countByParentid(item.getPermissionId());
-      n.setLeaf(cSize<1);
-      rlist.add(n);
-    }
-    return rlist;
-	}
+  @Transactional(rollbackFor = Exception.class)
+  public JsonTransportEntity regist(long pid, List<Long> roleIds){
+    srpr.deleteBySysPermissionId(String.valueOf(pid));
+    //去除超级管理员角色
+    roleIds = roleIds.stream()
+      .filter(l -> !l.equals(1L))
+      .collect(Collectors.toList());
+    dao.regist(pid,roleIds);
+    return new JsonTransportEntity().setFlag(true);
+  }
 }
