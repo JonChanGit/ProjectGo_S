@@ -133,6 +133,7 @@
 	import Axios from 'axios';
 	import Qs from 'qs';
 	import Tool from '@/libs/Tool.js';
+	import C from '@/libs/GlobalConstant.js';
 	import treeNode from './tNode.vue';
 
 	export default {
@@ -158,7 +159,7 @@
 				//穿梭框-角色数据
 				'transferRoleData':[],
 				//穿梭框-角色被选择数据
-				'transferRoleTargetKeys': [1],
+				'transferRoleTargetKeys': [C.ROLE_Administrator],
 				//穿梭框-组数据
 				'transferGroupData':[
 					{ "key": "1", "label": "Content 1", "disabled": false },
@@ -224,7 +225,7 @@
 						url: '/api/access/user_and_permission/rolePermission.do',
 						successCallback: (data) => {
 							//使用对象拓展运算符，拆开数据，然后在方法中使用Rest运算符合并成新数组
-							let lst = Tool.restMergeArray(...this.transferRoleTargetKeys,...data.list);
+							let lst = Tool.restMergeArray(C.ROLE_Administrator,...data.list);
 							this.transferRoleTargetKeys = lst;
 						}
 					});
