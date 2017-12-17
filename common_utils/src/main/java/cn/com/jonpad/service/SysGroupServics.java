@@ -3,6 +3,7 @@ package cn.com.jonpad.service;
 import cn.com.jonpad.dto.GroupDetails;
 import cn.com.jonpad.entity.SysGroup;
 import cn.com.jonpad.entity.SysPermission;
+import cn.com.jonpad.mybatis.SysGroupDao;
 import cn.com.jonpad.repository.SysGroupRepository;
 import cn.com.jonpad.util.ValidateTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 public class SysGroupServics {
   @Autowired
   SysGroupRepository sgr;
+  @Autowired
+  SysGroupDao dao;
 
   public SysGroup findOne(long id) {
     return sgr.findOne(id);
@@ -133,5 +136,9 @@ public class SysGroupServics {
     sgr.saveAndFlush(group);
 
     return true;
+  }
+
+  public List<SysGroup> getAll() {
+    return dao.findAllOrder();
   }
 }

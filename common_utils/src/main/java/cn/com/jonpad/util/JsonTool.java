@@ -91,7 +91,7 @@ public class JsonTool {
 	}
 	public static JsonTransportEntity getJsonTransportEntity(List list, boolean flag) {
 		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
-		jsonTransportEntity.setEntity(list);
+		jsonTransportEntity.setList(list);
 		jsonTransportEntity.setFlag(flag);
 		return jsonTransportEntity;
 	}

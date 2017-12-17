@@ -9,6 +9,7 @@ import cn.com.jonpad.entity.SysUser;
 import cn.com.jonpad.service.*;
 import cn.com.jonpad.util.JsonTool;
 import cn.com.jonpad.util.JsonTransportEntity;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +37,14 @@ public class UserAndPermissionRest {
   private SysGroupServics sgs;
   @Autowired
   private SysRolePermissionService srps;
+  @Autowired
+  private SysGroupPermissionService sgps;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
   public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
-                                         @RequestParam(defaultValue = "1")int currPage,
-                                         @RequestParam(defaultValue = "10")int pageSize
-                                         ) {
+                                         @RequestParam(defaultValue = "1") int currPage,
+                                         @RequestParam(defaultValue = "10") int pageSize
+  ) {
     Page<SysUser> userPage = sus.getPage(currPage, pageSize);
 
     return JsonTransportEntity.getInstance(userPage);
@@ -50,13 +53,14 @@ public class UserAndPermissionRest {
 
   /**
    * 修改用户
+   *
    * @return
    */
   @RequestMapping(value = "/user", method = RequestMethod.PUT)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_USER_EDIT)
-  public JsonTransportEntity userModify(@RequestParam int locked,@RequestParam long id,@RequestParam String email,@RequestParam String username) {
+  public JsonTransportEntity userModify(@RequestParam int locked, @RequestParam long id, @RequestParam String email, @RequestParam String username) {
 
-    SysUser user = new SysUser(id,email,locked,username);
+    SysUser user = new SysUser(id, email, locked, username);
 
     boolean b = sus.modifyUser(user);
     if (b) {
@@ -68,11 +72,12 @@ public class UserAndPermissionRest {
 
   /**
    * 添加用户
+   *
    * @param user
    */
   @RequestMapping(value = "/user", method = RequestMethod.POST)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_USER_ADD)
-  public JsonTransportEntity userAdd(SysUser user)  {
+  public JsonTransportEntity userAdd(SysUser user) {
 
     boolean b = sus.addUser(user);
     if (b) {
@@ -84,10 +89,11 @@ public class UserAndPermissionRest {
 
   /**
    * 获取角色列表
+   *
    * @return
    */
   @RequestMapping(value = "/roleList", method = RequestMethod.GET)
-  public JsonTransportEntity getUserList(){
+  public JsonTransportEntity getUserList() {
     List<SysRole> list = srs.getAllSysRole();
     JsonTransportEntity jte = new JsonTransportEntity();
     jte.setFlag(true);
@@ -97,18 +103,18 @@ public class UserAndPermissionRest {
 
   /**
    * 添加角色
+   *
    * @param role
    */
   @RequestMapping(value = "/role", method = RequestMethod.POST)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_ADD)
-  public JsonTransportEntity roleAdd(SysRole role)  {
+  public JsonTransportEntity roleAdd(SysRole role) {
 
     boolean b = srs.addRole(role);
-    if (b){
+    if (b) {
       return JsonTool.getJsonTransportEntity(true, "角色添加成功");
-    }
-    else {
-      return  JsonTool.getJsonTransportEntity(false, "角色添加失败");
+    } else {
+      return JsonTool.getJsonTransportEntity(false, "角色添加失败");
     }
   }
 
@@ -119,7 +125,7 @@ public class UserAndPermissionRest {
    */
   @RequestMapping(value = "/role", method = RequestMethod.PUT)
   // @RequiresPermissions(ConstantesPermission.PERMISSION_ROLE_EDIT)
-  public JsonTransportEntity roleModify(SysRole role)  {
+  public JsonTransportEntity roleModify(SysRole role) {
 
     boolean b = srs.modifyRoleName(role);
     if (b) {
@@ -146,44 +152,45 @@ public class UserAndPermissionRest {
   }
 
 
-
 // 资源 Begin
+
   /**
    * 只有节点信息
+   *
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/resourcesNode" ,method = RequestMethod.GET)
-  public JsonTransportEntity permissionGetNode(@RequestParam(value = "pid",defaultValue = "0") long pid ) throws IOException {
+  @RequestMapping(value = "/resourcesNode", method = RequestMethod.GET)
+  public JsonTransportEntity permissionGetNode(@RequestParam(value = "pid", defaultValue = "0") long pid) throws IOException {
     SysPermission meun = sps.getOne(pid);
     JsonTransportEntity jte = new JsonTransportEntity();
     jte.setEntity(meun);
-    jte.setFlag(meun==null?false:true);
+    jte.setFlag(meun == null ? false : true);
     return jte;
   }
 
   /**
    * 节点和子节点
+   *
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/resourcesChildrenNode" , method = RequestMethod.GET)
-  public JsonTransportEntity permissionGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid) throws IOException {
-    if(pid<=0){
-      return JsonTool.getJsonTransportEntity(false,"参数不正确");
+  @RequestMapping(value = "/resourcesChildrenNode", method = RequestMethod.GET)
+  public JsonTransportEntity permissionGetChildrenNode(@RequestParam(value = "pid", defaultValue = "0") long pid) throws IOException {
+    if (pid <= 0) {
+      return JsonTool.getJsonTransportEntity(false, "参数不正确");
     }
     MeunDetails meun = sps.getMeunDetails(pid);
     JsonTransportEntity jte = new JsonTransportEntity();
     jte.setEntity(meun);
-    jte.setFlag(meun==null?false:true);
+    jte.setFlag(meun == null ? false : true);
     return jte;
   }
 
 
-
   /**
    * 添加权限/菜单/按钮等
-   *
+   * <p>
    * 对permission表的操作
    *
    * @throws IOException
@@ -194,7 +201,7 @@ public class UserAndPermissionRest {
 
     boolean b = sps.addPermission(permission);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "功能添加成功");
+      return JsonTool.getJsonTransportEntity(true, "功能添加成功");
     } else {
       return JsonTool.getJsonTransportEntity(false, "功能添加失败");
     }
@@ -208,29 +215,27 @@ public class UserAndPermissionRest {
    */
   @RequestMapping(value = "/resourcesNode", method = RequestMethod.DELETE)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
-  public JsonTransportEntity permissionDelete(long permissionId)  {
+  public JsonTransportEntity permissionDelete(long permissionId) {
 
     boolean b = sps.deletePermission(permissionId);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "删除成功");
+      return JsonTool.getJsonTransportEntity(true, "删除成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "删除失败");
+      return JsonTool.getJsonTransportEntity(false, "删除失败");
     }
   }
 
 
-
   /**
    * 获取菜单详情
-   *
    */
   @RequestMapping(value = "/resourcesNodeMeunDetails", method = RequestMethod.GET)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION)
-  public JsonTransportEntity permissionGetMeunDetails(SysPermission permission)  {
+  public JsonTransportEntity permissionGetMeunDetails(SysPermission permission) {
 
-    MeunDetails ms= sps.getMeunDetails(permission.getId());
+    MeunDetails ms = sps.getMeunDetails(permission.getId());
     JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
-    if(ms != null){
+    if (ms != null) {
       jsonTransportEntity.setFlag(true);
       jsonTransportEntity.setEntity(ms);
     }
@@ -239,39 +244,43 @@ public class UserAndPermissionRest {
 
   /**
    * 修改权限可用状态
-   *
    */
   @RequestMapping(value = "/resourcesNodeChangeState", method = RequestMethod.PUT)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_STATE)
-  public JsonTransportEntity permissionChangeState(long permissionId)
-     {
+  public JsonTransportEntity permissionChangeState(long permissionId) {
 
     boolean b = sps.modifypermissionState(permissionId);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "状态修改成功");
+      return JsonTool.getJsonTransportEntity(true, "状态修改成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "状态修改失败");
+      return JsonTool.getJsonTransportEntity(false, "状态修改失败");
     }
   }
 
   @RequestMapping(value = "/resourcesNode", method = RequestMethod.PUT)
-  public JsonTransportEntity permissionChangeData(long id, String name,String percode,String sortstring,String url)
-     {
+  public JsonTransportEntity permissionChangeData(long id, String name, String percode, String sortstring, String url) {
 
-    boolean b = sps.edit(id,name,percode,sortstring,url);
+    boolean b = sps.edit(id, name, percode, sortstring, url);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "修改成功");
+      return JsonTool.getJsonTransportEntity(true, "修改成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "修改失败");
+      return JsonTool.getJsonTransportEntity(false, "修改失败");
     }
   }
 // 资源 End
+// 组 begin
+
+  @RequestMapping(value = "/groupList", method = RequestMethod.GET)
+  public JsonTransportEntity groupList() {
+    List<SysGroup> all = sgs.getAll();
+    return JsonTool.getJsonTransportEntity(all, true);
+  }
 
   @RequestMapping(value = "/groupNode", method = RequestMethod.POST)
-  public JsonTransportEntity groupAdd(SysGroup group){
+  public JsonTransportEntity groupAdd(SysGroup group) {
     boolean b = sgs.addGroup(group);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "功能添加成功");
+      return JsonTool.getJsonTransportEntity(true, "功能添加成功");
     } else {
       return JsonTool.getJsonTransportEntity(false, "功能添加失败");
     }
@@ -279,32 +288,34 @@ public class UserAndPermissionRest {
 
   /**
    * 只有节点信息
+   *
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/groupNode" ,method = RequestMethod.GET)
-  public JsonTransportEntity groupNode(@RequestParam(value = "pid",defaultValue = "0") long pid ) throws IOException {
+  @RequestMapping(value = "/groupNode", method = RequestMethod.GET)
+  public JsonTransportEntity groupNode(@RequestParam(value = "pid", defaultValue = "0") long pid) throws IOException {
     SysGroup meun = sgs.findOne(pid);
     JsonTransportEntity jte = new JsonTransportEntity();
     jte.setEntity(meun);
-    jte.setFlag(meun==null?false:true);
+    jte.setFlag(meun == null ? false : true);
     return jte;
   }
 
   /**
    * 节点和子节点
+   *
    * @param pid
    * @throws IOException
    */
-  @RequestMapping(value = "/groupChildrenNode" , method = RequestMethod.GET)
-  public JsonTransportEntity groupGetChildrenNode(@RequestParam(value = "pid",defaultValue = "0") long pid) throws IOException {
-    if(pid<=0){
-      return JsonTool.getJsonTransportEntity(false,"参数不正确");
+  @RequestMapping(value = "/groupChildrenNode", method = RequestMethod.GET)
+  public JsonTransportEntity groupGetChildrenNode(@RequestParam(value = "pid", defaultValue = "0") long pid) throws IOException {
+    if (pid <= 0) {
+      return JsonTool.getJsonTransportEntity(false, "参数不正确");
     }
     GroupDetails meun = sgs.getGroupDetails(pid);
     JsonTransportEntity jte = new JsonTransportEntity();
     jte.setEntity(meun);
-    jte.setFlag(meun==null?false:true);
+    jte.setFlag(meun == null ? false : true);
     return jte;
   }
 
@@ -315,63 +326,80 @@ public class UserAndPermissionRest {
    */
   @RequestMapping(value = "/groupNode", method = RequestMethod.DELETE)
   //@RequiresPermissions(ConstantesPermission.PERMISSION_PERMISSION_DELETE)
-  public JsonTransportEntity groupNodeDelete(long id)  {
+  public JsonTransportEntity groupNodeDelete(long id) {
 
     boolean b = sgs.deleteGroup(id);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "删除成功");
+      return JsonTool.getJsonTransportEntity(true, "删除成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "删除失败");
+      return JsonTool.getJsonTransportEntity(false, "删除失败");
     }
   }
 
   /**
    * 编辑
+   *
    * @param id
    * @param name
    * @param sortstring
    * @return
    */
   @RequestMapping(value = "/groupNode", method = RequestMethod.PUT)
-  public JsonTransportEntity groupChangeData(long id, String name ,String sortstring)
-  {
+  public JsonTransportEntity groupChangeData(long id, String name, String sortstring) {
 
-    boolean b = sgs.edit(id,name,sortstring);
+    boolean b = sgs.edit(id, name, sortstring);
     if (b) {
-      return  JsonTool.getJsonTransportEntity(true, "修改成功");
+      return JsonTool.getJsonTransportEntity(true, "修改成功");
     } else {
-      return  JsonTool.getJsonTransportEntity(false, "修改失败");
+      return JsonTool.getJsonTransportEntity(false, "修改失败");
     }
   }
-
+// 组 End
 
   /**
    * 注册rolePermission
+   *
    * @param pid
    * @param roles
    * @return
    */
   @RequestMapping(value = "/rolePermission", method = RequestMethod.POST)
-  public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles") String roles){
+  public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles") String roles) {
     String[] roleIdstr = roles.split(",");
     List<Long> roleIds = Arrays.stream(roleIdstr)
       .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
     JsonTransportEntity jte = srps.regist(pid, roleIds);
     return jte;
   }
-
   /**
-   * 获取注册列表rolePermission
+   * 注册groupPermission
+   *
    * @param pid
+   * @param groups
    * @return
    */
-  @RequestMapping(value = "/rolePermission", method = RequestMethod.GET)
-  public JsonTransportEntity getRolePermission(long pid){
-    JsonTransportEntity jte = srps.getRoleListByPermission(pid);
+  @RequestMapping(value = "/groupPermission", method = RequestMethod.POST)
+  public JsonTransportEntity groupPermission(long pid, @RequestParam(value = "roles") String groups) {
+    String[] groupIds = groups.split(",");
+    List<Long> gIds = Arrays.stream(groupIds)
+      .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+    JsonTransportEntity jte = sgps.regist(pid, gIds);
     return jte;
   }
 
-
+  /**
+   * 获取资源注册信息
+   *
+   * @param pid
+   * @return
+   */
+  @RequestMapping(value = "/access", method = RequestMethod.GET)
+  public JsonTransportEntity accessPermission(long pid) {
+    JsonTransportEntity jte = new JsonTransportEntity().setFlag(false);
+    JSONObject jsonObject = sps.getAccessPermission(pid);
+    jte.setEntity(jsonObject);
+    return jte.setFlag(true);
+  }
 
 
 }

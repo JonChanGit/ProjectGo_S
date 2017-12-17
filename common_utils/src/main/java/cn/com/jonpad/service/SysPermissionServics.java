@@ -2,8 +2,10 @@ package cn.com.jonpad.service;
 
 import cn.com.jonpad.dto.MeunDetails;
 import cn.com.jonpad.entity.SysPermission;
+import cn.com.jonpad.mybatis.SysRolePermissionDao;
 import cn.com.jonpad.repository.SysPermissionRepository;
 import cn.com.jonpad.util.ValidateTool;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,9 @@ import java.util.Map;
  */
 @Service
 public class SysPermissionServics {
+
+  @Autowired
+  private SysRolePermissionDao srpDao;
 	@Autowired
 	private SysPermissionRepository spr;
 
@@ -209,4 +214,18 @@ public class SysPermissionServics {
 	public List<SysPermission> getAllEnableSysPermission() {
 		return  spr.findByAvailable(SysPermission.AVAILABLE_TREU);
 	}
+
+  /**
+   * 获取分配给资源得角色，组，角色+组得数据
+   * @param permissionId
+   * @return
+   */
+	public JSONObject getAccessPermission(long permissionId){
+    JSONObject jo = new JSONObject(3);
+    List<Long> roleList = srpDao.findRoleListByPermission(permissionId);
+    jo.put("roleList",roleList);
+    //
+    return jo;
+  }
+
 }

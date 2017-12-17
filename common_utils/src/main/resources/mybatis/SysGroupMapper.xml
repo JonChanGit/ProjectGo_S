@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.jonpad.mybatis.SysGroupDao">
+ <select id="findAllOrder" resultType="SysGroup">
+   select
+        sysgroup0_.p_i_id as id,
+        sysgroup0_.i_available as available ,
+        sysgroup0_.c_name as name,
+        sysgroup0_.i_parentid as parentid,
+        sysgroup0_.c_parentids as parentids,
+        sysgroup0_.i_root_parentid as rootParentid,
+        sysgroup0_.c_sortstring as sortstring
+    from
+        t_sys_group sysgroup0_
+   order BY sysgroup0_.c_parentids,sysgroup0_.c_sortstring
+ </select>
+</mapper>

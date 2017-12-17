@@ -95,13 +95,13 @@
 							:titles="transferGroupTitles"
 							@on-change="transferGroupOnChange"></Transfer>
 					<br/>
-					<Button type="success" long>提交</Button>
+					<Button type="success" long @click="submitGroup()">提交</Button>
 				</TabPane>
 				<TabPane label="多维度" name="name3">
 					<Row>
 						<Col span="12">
 							<Transfer
-								:data="transferDimensionData"
+								:data="transferDimensionDataRole"
 								:target-keys="transferDimensionTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
@@ -110,7 +110,7 @@
 						</Col>
 						<Col span="12">
 							<Transfer
-								:data="transferDimensionData"
+								:data="transferDimensionDataGroup"
 								:target-keys="transferDimensionTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
@@ -161,19 +161,13 @@
 				//穿梭框-角色被选择数据
 				'transferRoleTargetKeys': [C.ROLE_Administrator],
 				//穿梭框-组数据
-				'transferGroupData':[
-					{ "key": "1", "label": "Content 1", "disabled": false },
-					{ "key": "2", "label": "Content 2", "disabled": true },
-					{ "key": "3", "label": "Content 3", "disabled": false }
-				],
+				'transferGroupData':[],
 				//穿梭框-组被选择数据
-				'transferGroupTargetKeys': ["1","2"],
-				//穿梭框-维度数据
-				'transferDimensionData':[
-					{ "key": "1", "label": "Content 1", "disabled": false },
-					{ "key": "2", "label": "Content 2", "disabled": true },
-					{ "key": "3", "label": "Content 3", "disabled": false }
-				],
+				'transferGroupTargetKeys': [],
+				//穿梭框-维度数据-角色
+				'transferDimensionDataRole':[],
+				//穿梭框-维度数据-组
+				'transferDimensionDataGroup':[],
 				//穿梭框-维度被选择数据
 				'transferDimensionTargetKeys': ["1","2"],
 				//非穿梭框样式
@@ -204,6 +198,9 @@
 		},
 		created: function () {
 			this.transferRoleData = this.$store.getters.getRoleListView;
+			this.transferDimensionDataRole = this.$store.getters.getRoleListView;
+			this.transferGroupData = this.$store.getters.getGroupListView;
+			this.transferDimensionDataGroup = this.$store.getters.getGroupListView;
 			console.log('this.transferRoleData');
 			console.log(this.transferRoleData);
 			this.isOpen = this.isActive;
@@ -215,6 +212,9 @@
 
 		},
 		methods: {
+			/**
+			 * 展开权限配置模态框时
+			 * */
 			accessModelVChange(v){
 				if(v){
 					Tool.get({
@@ -222,10 +222,10 @@
 						data: {
 							pid: this.pnode.id,
 						},
-						url: '/api/access/user_and_permission/rolePermission.do',
+						url: '/api/access/user_and_permission/access.do',
 						successCallback: (data) => {
 							//使用对象拓展运算符，拆开数据，然后在方法中使用Rest运算符合并成新数组
-							let lst = Tool.restMergeArray(C.ROLE_Administrator,...data.list);
+							let lst = Tool.restMergeArray(C.ROLE_Administrator,...data.entity.roleList);
 							this.transferRoleTargetKeys = lst;
 						}
 					});
@@ -247,6 +247,19 @@
 						'roles':this.transferRoleTargetKeys.join(","),
 					},
 					url: '/api/access/user_and_permission/rolePermission.do',
+					successCallback: (data) => {
+						obj.iView.$Message.success(data.message);
+					}
+				});
+			},
+			submitGroup(){
+				Tool.post({
+					iView: this,
+					data: {
+						pid: this.pnode.id,
+						'roles':this.transferGroupTargetKeys.join(","),
+					},
+					url: '/api/access/user_and_permission/groupPermission.do',
 					successCallback: (data) => {
 						obj.iView.$Message.success(data.message);
 					}

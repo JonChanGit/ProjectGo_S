@@ -68,8 +68,19 @@ public class SysGroup implements java.io.Serializable{
    */
   @Transient
   private boolean leaf;
+  @Transient
+  /**
+   * 当前节点等级
+   * 只读
+   */
+  private int leve;
 
-	public int getAvailable() {
+  public int getLeve() {
+    String[] split = this.getParentids().substring(1).split(",");
+    return split.length;
+  }
+
+  public int getAvailable() {
 		return available;
 	}
 

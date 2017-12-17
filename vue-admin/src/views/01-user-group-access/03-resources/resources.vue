@@ -47,6 +47,17 @@
 					}
 				}
 			});
+			Tool.get({
+				iView: this,
+				data: {},
+				url: '/api/access/user_and_permission/groupList.do',
+				successCallback: (data) => {
+					if (data.flag == true) {
+						let list = data.list;
+						this.$store.commit('setGroupList',list);
+					}
+				}
+			});
 		},
 		activated:function () {
 		}
