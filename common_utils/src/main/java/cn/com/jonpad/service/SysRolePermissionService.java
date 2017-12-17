@@ -31,7 +31,9 @@ public class SysRolePermissionService {
     roleIds = roleIds.stream()
       .filter(l -> !l.equals(1L))
       .collect(Collectors.toList());
-    dao.regist(pid,roleIds);
+    if(roleIds.size() > 0 ){
+      dao.regist(pid,roleIds);
+    }
     return new JsonTransportEntity().setFlag(true).setMessage("操作成功");
   }
 

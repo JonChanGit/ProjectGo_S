@@ -227,6 +227,7 @@
 							//使用对象拓展运算符，拆开数据，然后在方法中使用Rest运算符合并成新数组
 							let lst = Tool.restMergeArray(C.ROLE_Administrator,...data.entity.roleList);
 							this.transferRoleTargetKeys = lst;
+							this.transferGroupTargetKeys = data.entity.groupList;
 						}
 					});
 				}

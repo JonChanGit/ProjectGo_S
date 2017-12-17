@@ -2,6 +2,7 @@ package cn.com.jonpad.service;
 
 import cn.com.jonpad.mybatis.SysGroupPermissionDao;
 import cn.com.jonpad.mybatis.SysRolePermissionDao;
+import cn.com.jonpad.repository.SysGroupPermissionRepository;
 import cn.com.jonpad.repository.SysRolePermissionRepository;
 import cn.com.jonpad.util.JsonTransportEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,15 @@ import java.util.stream.Collectors;
 public class SysGroupPermissionService {
   @Autowired
   private SysGroupPermissionDao dao;
-  //@Autowired
- // private SysRolePermissionRepository srpr;
+  @Autowired
+  private SysGroupPermissionRepository srpr;
 
   @Transactional(rollbackFor = Exception.class)
   public JsonTransportEntity regist(long pid, List<Long> groupIds){
-    //srpr.deleteBySysPermissionId(String.valueOf(pid));
-    dao.regist(pid,groupIds);
+    srpr.deleteBySysPermissionId(String.valueOf(pid));
+    if(groupIds.size() > 0){
+      dao.regist(pid,groupIds);
+    }
     return new JsonTransportEntity().setFlag(true).setMessage("操作成功");
   }
 

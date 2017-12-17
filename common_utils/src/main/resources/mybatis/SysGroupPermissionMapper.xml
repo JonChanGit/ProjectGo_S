@@ -7,10 +7,15 @@
   <insert id="regist" useGeneratedKeys="true">
     INSERT INTO `t_sys_group_permission` (`f_c_sys_group_id`, `f_c_sys_permission_id`) VALUES
     <foreach collection="list" item="g" index="index" separator=",">
-      (#{permissionId}, #{g})
+      (#{g}, #{permissionId})
     </foreach>
     ;
   </insert>
+
+  <select id="findGroupListByPermission" resultType="java.lang.Long">
+    select f_c_sys_group_id from t_sys_group_permission
+    WHERE f_c_sys_permission_id = #{pid};
+  </select>
 
 
 </mapper>

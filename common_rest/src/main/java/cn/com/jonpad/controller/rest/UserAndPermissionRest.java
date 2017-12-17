@@ -12,12 +12,14 @@ import cn.com.jonpad.util.JsonTransportEntity;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -364,10 +366,16 @@ public class UserAndPermissionRest {
    * @return
    */
   @RequestMapping(value = "/rolePermission", method = RequestMethod.POST)
-  public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles") String roles) {
-    String[] roleIdstr = roles.split(",");
-    List<Long> roleIds = Arrays.stream(roleIdstr)
-      .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+  public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles", required = false) String roles) {
+    List<Long> roleIds = null;
+    if(StringUtils.isEmpty(roles)){
+      roles = "";
+      roleIds = new ArrayList<>();
+    }else{
+      String[] roleIdstr = roles.split(",");
+      roleIds =  Arrays.stream(roleIdstr)
+        .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+    }
     JsonTransportEntity jte = srps.regist(pid, roleIds);
     return jte;
   }
@@ -379,10 +387,16 @@ public class UserAndPermissionRest {
    * @return
    */
   @RequestMapping(value = "/groupPermission", method = RequestMethod.POST)
-  public JsonTransportEntity groupPermission(long pid, @RequestParam(value = "roles") String groups) {
-    String[] groupIds = groups.split(",");
-    List<Long> gIds = Arrays.stream(groupIds)
-      .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+  public JsonTransportEntity groupPermission(long pid, @RequestParam(value = "roles" , required = false) String groups) {
+    List<Long> gIds = null;
+    if(StringUtils.isEmpty(groups)){
+      groups = "";
+      gIds = new ArrayList<>();
+    }else{
+      String[] groupIds = groups.split(",");
+      gIds = Arrays.stream(groupIds)
+        .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+    }
     JsonTransportEntity jte = sgps.regist(pid, gIds);
     return jte;
   }
