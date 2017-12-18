@@ -99,27 +99,47 @@
 				</TabPane>
 				<TabPane label="多维度" name="name3">
 					<Row>
+						<Col span="24">
+							<div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+								<Checkbox >全选</Checkbox>
+							</div>
+							<CheckboxGroup  >
+								<Checkbox label="香蕉"></Checkbox>
+								<Checkbox label="苹果"></Checkbox>
+								<Checkbox label="西瓜"></Checkbox>
+							</CheckboxGroup>
+							<br/>
+							<hr/>
+							<br/>
+							<Button type="error" long>删除选中组合</Button>
+							<br/>
+							<br/>
+							<hr/>
+							<br/>
+						</Col>
+					</Row>
+					<Row>
 						<Col span="12">
 							<Transfer
 								:data="transferDimensionDataRole"
-								:target-keys="transferDimensionTargetKeys"
+								:target-keys="transferDimensionRoleTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
 								:titles="transferRoleTitles"
-								@on-change="transferDimensionOnChange"></Transfer>
+								@on-change="transferDimensionRoleOnChange"></Transfer>
 						</Col>
 						<Col span="12">
 							<Transfer
 								:data="transferDimensionDataGroup"
-								:target-keys="transferDimensionTargetKeys"
+								:target-keys="transferDimensionGroupTargetKeys"
 								:list-style="transferDimensionListStyle"
 								:render-format="transferDimensionRender"
 								:titles="transferGroupTitles"
-								@on-change="transferDimensionOnChange"></Transfer>
+								@on-change="transferDimensionGroupOnChange"></Transfer>
 						</Col>
 					</Row>
 					<br/>
-					<Button type="success" long>提交</Button>
+					<Button type="success" long @click="submitRG()">提交选定组合</Button>
 				</TabPane>
 			</Tabs>
 			<div slot="footer">
@@ -168,8 +188,10 @@
 				'transferDimensionDataRole':[],
 				//穿梭框-维度数据-组
 				'transferDimensionDataGroup':[],
-				//穿梭框-维度被选择数据
-				'transferDimensionTargetKeys': ["1","2"],
+				//穿梭框-维度被选择数据-角色
+				'transferDimensionRoleTargetKeys': [],
+				//穿梭框-维度被选择数据-组
+				'transferDimensionGroupTargetKeys': [],
 				//非穿梭框样式
 				'unTransferDimensionListStyle': {
 					width: '403px',
@@ -266,6 +288,25 @@
 					}
 				});
 			},
+			submitRG(){
+				console.log(this.transferDimensionGroupTargetKeys.length);
+				if(this.transferDimensionRoleTargetKeys.length != 1 || this.transferDimensionGroupTargetKeys.length != 1){
+					this.$Message.error('请选择组合');
+					return;
+				}
+				Tool.post({
+					iView: this,
+					data: {
+						pid: this.pnode.id,
+						'groupId':this.transferDimensionRoleTargetKeys[0],
+						'roleId':this.transferDimensionGroupTargetKeys[0],
+					},
+					url: '/api/access/user_and_permission/rgPermission.do',
+					successCallback: (data) => {
+						obj.iView.$Message.success(data.message);
+					}
+				});
+			},
 			//穿梭框-组自定义输出
 			transferGroupRender (item) {
 				return item.key + ':' + item.label;
@@ -278,9 +319,21 @@
 			transferDimensionRender (item) {
 				return item.key + ':' + item.label;
 			},
-			//穿梭框-维度数据变更
-			transferDimensionOnChange (newTargetKeys) {
-				this.transferGroupTargetKeys = newTargetKeys;
+			//穿梭框-维度（角色）数据变更
+			transferDimensionRoleOnChange (newTargetKeys) {
+				if(newTargetKeys.length > 1){
+					this.$Message.info('一次只能选择一条数据');
+				}else{
+					this.transferDimensionRoleTargetKeys = newTargetKeys;
+				}
+			},
+			//穿梭框-维度（组）数据变更
+			transferDimensionGroupOnChange (newTargetKeys) {
+				if(newTargetKeys.length > 1){
+					this.$Message.info('一次只能选择一条数据');
+				}else{
+					this.transferDimensionGroupTargetKeys = newTargetKeys;
+				}
 			},
 			clickMenu: function () {
 				if (!this.isOpen) {

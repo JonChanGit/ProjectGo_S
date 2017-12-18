@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by jon75 on 2017/9/9.
+ *
+ * @author jon75
+ * @date 2017/9/9
  */
 @Service
 public class SysGroupPermissionService {

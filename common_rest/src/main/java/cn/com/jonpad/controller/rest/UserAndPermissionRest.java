@@ -41,6 +41,8 @@ public class UserAndPermissionRest {
   private SysRolePermissionService srps;
   @Autowired
   private SysGroupPermissionService sgps;
+  @Autowired
+  private SysGroupRolePermissionService sgrps;
 
   @RequestMapping(value = "/userList", method = RequestMethod.GET)
   public JsonTransportEntity getUserList(@RequestParam(value = "searchKey", defaultValue = "") String searchKey,
@@ -400,6 +402,21 @@ public class UserAndPermissionRest {
     JsonTransportEntity jte = sgps.regist(pid, gIds);
     return jte;
   }
+
+  /**
+   * 注册
+   * @param pid
+   * @param groupId
+   * @param roleId
+   * @return
+   */
+  @RequestMapping(value = "/rgPermission", method = RequestMethod.POST)
+  public JsonTransportEntity rgPermission(long pid, long groupId,long roleId) {
+    return sgrps.regist(pid,groupId,roleId);
+  }
+
+
+
 
   /**
    * 获取资源注册信息

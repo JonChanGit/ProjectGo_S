@@ -11,7 +11,7 @@ public class SysGroupPermission {
 	private long id;
 
 	/**
-	 * 角色id
+	 * 组id
 	 */
 	@Column(name="f_c_sysGroupId")
     private String sysGroupId;
