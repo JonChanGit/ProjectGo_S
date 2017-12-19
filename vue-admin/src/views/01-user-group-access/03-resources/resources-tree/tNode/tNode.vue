@@ -100,25 +100,19 @@
 				<TabPane label="多维度" name="name3">
 					<Row>
 						<Col span="24">
-							<div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-								<Checkbox >全选</Checkbox>
-							</div>
-							<CheckboxGroup  >
-								<Checkbox label="香蕉"></Checkbox>
-								<Checkbox label="苹果"></Checkbox>
-								<Checkbox label="西瓜"></Checkbox>
-							</CheckboxGroup>
-							<br/>
-							<hr/>
-							<br/>
-							<Button type="error" long>删除选中组合</Button>
-							<br/>
-							<br/>
-							<hr/>
-							<br/>
+							<dimension :list="dimensionList" @on-delete="deleteDimensionItems"></dimension>
 						</Col>
 					</Row>
 					<Row>
+						<Col span="12">
+						<Transfer
+								:data="transferDimensionDataGroup"
+								:target-keys="transferDimensionGroupTargetKeys"
+								:list-style="transferDimensionListStyle"
+								:render-format="transferDimensionRender"
+								:titles="transferGroupTitles"
+								@on-change="transferDimensionGroupOnChange"></Transfer>
+						</Col>
 						<Col span="12">
 							<Transfer
 								:data="transferDimensionDataRole"
@@ -127,15 +121,6 @@
 								:render-format="transferDimensionRender"
 								:titles="transferRoleTitles"
 								@on-change="transferDimensionRoleOnChange"></Transfer>
-						</Col>
-						<Col span="12">
-							<Transfer
-								:data="transferDimensionDataGroup"
-								:target-keys="transferDimensionGroupTargetKeys"
-								:list-style="transferDimensionListStyle"
-								:render-format="transferDimensionRender"
-								:titles="transferGroupTitles"
-								@on-change="transferDimensionGroupOnChange"></Transfer>
 						</Col>
 					</Row>
 					<br/>
@@ -155,6 +140,7 @@
 	import Tool from '@/libs/Tool.js';
 	import C from '@/libs/GlobalConstant.js';
 	import treeNode from './tNode.vue';
+	import Dimension from './DimensionListView.vue';
 
 	export default {
 		name: 'treeNode',
@@ -192,6 +178,8 @@
 				'transferDimensionRoleTargetKeys': [],
 				//穿梭框-维度被选择数据-组
 				'transferDimensionGroupTargetKeys': [],
+				//读取到的维度数据
+				'dimensionList':[],
 				//非穿梭框样式
 				'unTransferDimensionListStyle': {
 					width: '403px',
@@ -204,7 +192,8 @@
 			};
 		},
 		components: {
-			'treeNode': treeNode
+			'treeNode': treeNode,
+			Dimension
 		},
 		props: {
 			'isActive': Boolean, // 是否激活
@@ -248,6 +237,7 @@
 							let lst = Tool.restMergeArray(C.ROLE_Administrator,...data.entity.roleList);
 							this.transferRoleTargetKeys = lst;
 							this.transferGroupTargetKeys = data.entity.groupList;
+							this.dimensionList =data.entity.grList;
 						}
 					});
 				}
@@ -278,7 +268,7 @@
 					iView: this,
 					data: {
 						pid: this.pnode.id,
-						'roles':this.transferGroupTargetKeys.join(","),
+						'groups':this.transferGroupTargetKeys.join(","),
 					},
 					url: '/api/access/user_and_permission/groupPermission.do',
 					successCallback: (data) => {
@@ -296,12 +286,13 @@
 					iView: this,
 					data: {
 						pid: this.pnode.id,
-						'groupId':this.transferDimensionRoleTargetKeys[0],
-						'roleId':this.transferDimensionGroupTargetKeys[0],
+						'groupId':this.transferDimensionGroupTargetKeys[0],
+						'roleId':this.transferDimensionRoleTargetKeys[0],
 					},
 					url: '/api/access/user_and_permission/rgPermission.do',
 					successCallback: (data) => {
 						this.$Message.success(data.message);
+						this.accessModelVChange();
 					}
 				});
 			},
@@ -332,6 +323,20 @@
 				}else{
 					this.transferDimensionGroupTargetKeys = newTargetKeys;
 				}
+			},
+			//穿梭框-维度 删除
+			deleteDimensionItems(deleteItems){
+				console.log(deleteItems);
+				Tool.delete({
+					iView: this,
+					data: {
+						grIds: deleteItems.join(','),
+					},
+					url: '/api/access/user_and_permission/rgPermission.do',
+					successCallback: (data) => {
+						this.accessModelVChange();
+					}
+				});
 			},
 			clickMenu: function () {
 				if (!this.isOpen) {

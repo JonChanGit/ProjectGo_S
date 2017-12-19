@@ -370,17 +370,18 @@ public class UserAndPermissionRest {
   @RequestMapping(value = "/rolePermission", method = RequestMethod.POST)
   public JsonTransportEntity rolePermission(long pid, @RequestParam(value = "roles", required = false) String roles) {
     List<Long> roleIds = null;
-    if(StringUtils.isEmpty(roles)){
+    if (StringUtils.isEmpty(roles)) {
       roles = "";
       roleIds = new ArrayList<>();
-    }else{
+    } else {
       String[] roleIdstr = roles.split(",");
-      roleIds =  Arrays.stream(roleIdstr)
+      roleIds = Arrays.stream(roleIdstr)
         .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
     }
     JsonTransportEntity jte = srps.regist(pid, roleIds);
     return jte;
   }
+
   /**
    * 注册groupPermission
    *
@@ -389,12 +390,12 @@ public class UserAndPermissionRest {
    * @return
    */
   @RequestMapping(value = "/groupPermission", method = RequestMethod.POST)
-  public JsonTransportEntity groupPermission(long pid, @RequestParam(value = "roles" , required = false) String groups) {
+  public JsonTransportEntity groupPermission(long pid, @RequestParam(value = "groups", required = false) String groups) {
     List<Long> gIds = null;
-    if(StringUtils.isEmpty(groups)){
+    if (StringUtils.isEmpty(groups)) {
       groups = "";
       gIds = new ArrayList<>();
-    }else{
+    } else {
       String[] groupIds = groups.split(",");
       gIds = Arrays.stream(groupIds)
         .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
@@ -405,17 +406,31 @@ public class UserAndPermissionRest {
 
   /**
    * 注册
+   *
    * @param pid
    * @param groupId
    * @param roleId
    * @return
    */
   @RequestMapping(value = "/rgPermission", method = RequestMethod.POST)
-  public JsonTransportEntity rgPermission(long pid, long groupId,long roleId) {
-    return sgrps.regist(pid,groupId,roleId);
+  public JsonTransportEntity rgPermission(long pid, long groupId, long roleId) {
+    return sgrps.regist(pid, groupId, roleId);
   }
 
-
+  @RequestMapping(value = "/rgPermission", method = RequestMethod.DELETE)
+  public JsonTransportEntity deleteRgPermission(String grIds) {
+    List<Long> grArr = null;
+    if (StringUtils.isEmpty(grIds)) {
+      grIds = "";
+      grArr = new ArrayList<>();
+    } else {
+      String[] roleIdstr = grIds.split(",");
+      grArr = Arrays.stream(roleIdstr)
+        .map((str) -> Long.valueOf(str)).collect(Collectors.toList());
+    }
+    boolean flag = sgrps.delete(grArr);
+    return JsonTool.getJsonTransportEntity(flag, flag?"操作成功":"操作失败");
+  }
 
 
   /**

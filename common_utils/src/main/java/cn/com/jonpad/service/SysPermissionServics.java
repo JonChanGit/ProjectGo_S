@@ -1,8 +1,10 @@
 package cn.com.jonpad.service;
 
 import cn.com.jonpad.dto.MeunDetails;
+import cn.com.jonpad.entity.SysGroupRolePermission;
 import cn.com.jonpad.entity.SysPermission;
 import cn.com.jonpad.mybatis.SysGroupPermissionDao;
+import cn.com.jonpad.mybatis.SysGroupRolePermissionDao;
 import cn.com.jonpad.mybatis.SysRolePermissionDao;
 import cn.com.jonpad.repository.SysPermissionRepository;
 import cn.com.jonpad.util.ValidateTool;
@@ -29,6 +31,8 @@ public class SysPermissionServics {
   private SysGroupPermissionDao sgpDao;
 	@Autowired
 	private SysPermissionRepository spr;
+	@Autowired
+	private SysGroupRolePermissionDao sgrpDao;
 
 	/**
 	 * 根据用户ID获取用户菜单
@@ -227,9 +231,10 @@ public class SysPermissionServics {
     JSONObject jo = new JSONObject(3);
     List<Long> roleList = srpDao.findRoleListByPermission(permissionId);
     List<Long> groupList = sgpDao.findGroupListByPermission(permissionId);
+    List<HashMap> grList = sgrpDao.findViewByPermissionId(permissionId);
     jo.put("roleList",roleList);
     jo.put("groupList",groupList);
-    //
+    jo.put("grList",grList);
     return jo;
   }
 
