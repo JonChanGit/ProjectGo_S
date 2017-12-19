@@ -68,7 +68,6 @@ export default {
 					obj.successCallback(data);
 				}
 			} else {
-				console.log(this);
 				obj.iView.$Message.error(data.message);
 			}
 		}).catch(function (error) {

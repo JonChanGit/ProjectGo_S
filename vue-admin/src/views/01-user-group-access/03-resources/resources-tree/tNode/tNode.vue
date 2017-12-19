@@ -223,8 +223,6 @@
 			this.transferDimensionDataRole = this.$store.getters.getRoleListView;
 			this.transferGroupData = this.$store.getters.getGroupListView;
 			this.transferDimensionDataGroup = this.$store.getters.getGroupListView;
-			console.log('this.transferRoleData');
-			console.log(this.transferRoleData);
 			this.isOpen = this.isActive;
 			try {
 				this.parentids = this.pnode.parentids.split(',');
@@ -271,7 +269,7 @@
 					},
 					url: '/api/access/user_and_permission/rolePermission.do',
 					successCallback: (data) => {
-						obj.iView.$Message.success(data.message);
+						this.$Message.success(data.message);
 					}
 				});
 			},
@@ -284,7 +282,7 @@
 					},
 					url: '/api/access/user_and_permission/groupPermission.do',
 					successCallback: (data) => {
-						obj.iView.$Message.success(data.message);
+						this.$Message.success(data.message);
 					}
 				});
 			},
@@ -303,7 +301,7 @@
 					},
 					url: '/api/access/user_and_permission/rgPermission.do',
 					successCallback: (data) => {
-						obj.iView.$Message.success(data.message);
+						this.$Message.success(data.message);
 					}
 				});
 			},
