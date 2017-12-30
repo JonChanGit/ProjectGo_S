@@ -76,6 +76,11 @@ public class JsonTool {
 		jsonTransportEntity.setFlag(flag);
 		return jsonTransportEntity;
 	}
+	public static JsonTransportEntity getJsonTransportEntity(Boolean flag) {
+		JsonTransportEntity jsonTransportEntity = new JsonTransportEntity();
+		jsonTransportEntity.setFlag(flag);
+		return jsonTransportEntity;
+	}
 
 	/**
 	 * 传输 集合(list)对象实体

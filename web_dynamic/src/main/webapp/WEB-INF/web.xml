@@ -129,5 +129,14 @@
   </filter-mapping>
   <!-- shiro end -->
 
+  <filter>
+    <filter-name>SimpleCORSFilter</filter-name>
+    <filter-class>cn.com.jonpad.filter.SimpleCORSFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SimpleCORSFilter</filter-name>
+    <url-pattern>/api_s/*</url-pattern>
+  </filter-mapping>
+
 
 </web-app>

@@ -25,6 +25,7 @@
 				/require/** = anon
         /favicon.ico** = anon
         /api/login.do = anon
+        /api_s/** = anon
 				<!-- 验证码，可匿名访问 -->
 				/validatecode.jsp = anon
 
